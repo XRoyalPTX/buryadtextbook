@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Сэсэн{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extrahead %}{% endblock %}
+</head>
+<body>
+    <p>Привет из base.html</p>
+    {% block body %}{% endblock %}
+</body>
+<footer>
+    <p>Владислав Архинчеев</p>
+    <p>arkhincheevvp@student.bmstu.ru</p>
+</footer>
+</html>
