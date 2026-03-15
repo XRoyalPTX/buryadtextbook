@@ -15,26 +15,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
+    <!-- ШРИФТ TEKTUR-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&family=Tektur:wght@400..900&display=swap" rel="stylesheet">
     {% block extrahead %}{% endblock %}
 </head>
 <body>
-    <header class="container text-center">
+    <header class="container-fluid text-center">
         <div class="row justify-content-center">
-            <div class="col-md-5">
-                Привет!
+            <div class="col logo">
+                <a href="{% url 'home' %}">СЭСЭН</a>
             </div>
-            <div class="col-md-5">
-                Амар сайн!
+            <div class="col">
+                <!-- ПРОБЕЛ -->
+            </div>
+            <div class="col">
+                <!-- ПРОБЕЛ -->
+            </div>
+            <div class="col menu-button">
+                <a href="{% url 'home' %}">Главная</a>
+            </div>
+            <div class="col menu-button">
+                <a href="#">Курсы</a>
+            </div>
+            <div class="col log-in-button">
+                <a href="#">Войти</a>
             </div>
         </div>
     </header>
 
-    <main class="container">
-        {% block body %}{% endblock %}
+    <main class="container-fluid">
+        {% block body %}Привет из base.html!{% endblock %}
     </main>
 
-    <footer class="container">
-        <p>Это футер</p>
+    <footer class="container-fluid">
         <p>Владислав Архинчеев</p>
         <p>arkhincheevvp@student.bmstu.ru</p>
     </footer>

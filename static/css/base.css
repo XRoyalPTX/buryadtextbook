@@ -1,32 +1,76 @@
 body {
-    background-color: rgb(205,205,205) !important;
     font-family: "Arsenal", sans-serif !important;
     font-weight: 400 !important;
+    font-size: 17px !important;
 }
 
 header {
-    padding: 5px;
-    margin-top: 20px;
-    margin-x: 20px;
-    background-color: rgba(0,54,168,0.5);
-    border-radius: 10px;
+    height: 50px;
+    line-height: 50px;
+    background-color: rgb(13,24,70);
+}
+
+header a {
+    color: rgb(227,227,227);
+    text-decoration: none;
+}
+
+header col {
+    height: 50px;
+}
+
+header .menu-button {
+    height: 50px;
+}
+
+header .log-in-button {
+    background-color: rgb(64,110,183);
+    height: 50px;
+}
+
+header .logo a {
+    font-family: "Tektur", sans-serif;
+    color: rgb(227,227,227);
+    font-size: 25px;
+    font-weight: 700;
+}
+
+header .logo a:hover {
+    cursor: pointer;
+}
+
+header .menu-button:hover {
+    background-color: rgb(233,86,35);
+    cursor: pointer;
+    transition: 0.5s;
+    font-size: 19px;
+}
+
+header .menu-button a:hover {
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+header .log-in-button:hover {
+    background-color: rgb(233,86,35);
+    cursor: pointer;
+    transition: 0.5s;
+    font-size: 19px;
+}
+
+header .log-in-button a:hover {
+    transition: 0.5s;
+    cursor: pointer;
 }
 
 main {
     padding: 5px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-x: 20px;
-    background-color: rgba(255,255,255,0.5);
-    border-radius: 10px;
+    background-color: rgb(227,227,227);
 }
 
 footer {
     padding: 5px;
-    margin-bottom: 20px;
-    margin-x: 20px;
-    background-color: rgba(255,218,0,0.5);
-    border-radius: 10px;
+    background-color: rgb(13,24,70);
 }
 
 footer p {
