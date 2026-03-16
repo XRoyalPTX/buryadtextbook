@@ -1,0 +1,35 @@
+@media (min-width: 1200px) {
+    .w-xl-75 {
+        width: 75% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .w-md-50 {
+        width: 50% !important;
+    }
+}
+
+.welcome-card-head {
+    background-color: rgb(64,110,183);
+    color: rgb(227,227,227);
+}
+
+.welcome-card-text {
+    background-color: rgb(13,24,70);
+    color: rgb(227,227,227);
+}
+
+.welcome-card-text a {
+    text-decoration: none;
+    color: rgb(227,227,227);
+    transition: 0.5s;
+    background-color: rgb(64,110,183);
+}
+
+.welcome-card-text a:hover {
+    background-color: rgb(233,86,35);
+    cursor: pointer;
+    transition: 0.5s;
+    font-size: 19px;
+}

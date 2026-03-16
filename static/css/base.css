@@ -2,10 +2,16 @@ body {
     font-family: "Arsenal", sans-serif !important;
     font-weight: 400 !important;
     font-size: 17px !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex  !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;  /* вся высота окна */
 }
 
 header {
-    height: 50px;
+    height: 100px;
     line-height: 50px;
     background-color: rgb(13,24,70);
 }
@@ -15,24 +21,35 @@ header a {
     text-decoration: none;
 }
 
+header .logo {
+    height: 50px;
+}
+
+header .logo span {
+    color: rgb(227,227,227);
+    font-size: 25px;
+}
+
 header .col {
     height: 50px;
 }
 
 header .menu-button {
     height: 50px;
+    transition: 0.5s;
 }
 
 header .log-in-button {
     background-color: rgb(64,110,183);
     height: 50px;
+    transition: 0.5s;
 }
 
 header .logo a {
-    font-family: "Tektur", sans-serif;
+    font-family: "Tektur";
     color: rgb(227,227,227);
     font-size: 25px;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 header .logo a:hover {
@@ -43,7 +60,12 @@ header .menu-button:hover {
     background-color: rgb(233,86,35);
     cursor: pointer;
     transition: 0.5s;
-    font-size: 19px;
+}
+
+@media (min-width: 500px) {
+    header .menu-button:hover {
+        font-size: 19px;
+    }
 }
 
 header .menu-button a:hover {
@@ -55,7 +77,12 @@ header .log-in-button:hover {
     background-color: rgb(233,86,35);
     cursor: pointer;
     transition: 0.5s;
-    font-size: 19px;
+}
+
+@media (min-width: 500px) {
+    header .log-in-button:hover {
+        font-size: 19px;
+    }
 }
 
 header .log-in-button a:hover {
@@ -66,6 +93,7 @@ header .log-in-button a:hover {
 main {
     padding: 5px;
     background-color: rgb(227,227,227);
+    flex: 1;
 }
 
 footer {
@@ -75,4 +103,5 @@ footer {
 
 footer p {
     color: white;
+    flex-shrink: 0;
 }

@@ -2,8 +2,61 @@
 
 {% block title %}Сэсэн | Главная страница{% endblock %}
 
-{% block body %}
+{% load static %}
 
-    Привет из homepage.html!
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'home/homepage.css' %}">
+{% endblock %}
+
+{% block main %}
+<br>
+<div class="container text-center my-2">
+
+    <div class="container welcome-card w-100 w-xl-75 w-md-50">
+        <div class="container welcome-card-head py-2">
+            <h1>Сэсэн</h1>
+            <small style="color: rgb(211,211,211);">бур. мудрость</small>
+        </div>
+        <div class="container welcome-card-text py-2">
+            <p>Добро пожаловать на сайт проекта "Сэсэн" для изучающих бурятский язык.</p>
+            <p>
+                На нашем сайте Вам предоставлена возможность прохождения курсов для получения новых знаний,
+                а также решения разного рода тестов для закрепления пройденного материала.
+            </p>
+            <a href="#" class="d-block">Больше информации о нас</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+
+        <!--
+        <div class="col-md-3 home-card p-5">
+            <div class="home-card-head">
+                <h3>
+                    Для кого эти курсы?
+                </h3>
+            </div>
+        </div>
+
+        <div class="col-md-3 home-card p-5">
+            <div class="home-card-head">
+                <h3>
+                    Что у нас есть?
+                </h3>
+            </div>
+        </div>
+
+        <div class="col-md-3 home-card p-5">
+            <div class="home-card-head">
+                <h3>
+                    Другие проекты от авторов
+                </h3>
+            </div>
+        </div>
+        -->
+
+    </div>
+
+</div>
 
 {% endblock %}
