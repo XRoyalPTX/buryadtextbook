@@ -71,11 +71,6 @@
     transition: 0.5s;
 }
 
-.fact-card:hover h4 {
-    transition: 0.5s;
-    font-size: 30px;
-}
-
 @media (min-width: 600px) {
     .fact-card p {
         flex: 1;
@@ -84,22 +79,19 @@
         color: rgb(255,255,255,0.8);
         transition: 0.5s;
     }
-}
 
-@media (max-width: 599px) {
-    .fact-card p {
-        flex: 1;
-        display: flex;
-        align-items: flex-end;
-        color: rgb(255,255,255,1);
+    .fact-card:hover h4 {
+        transition: 0.5s;
+        font-size: 30px;
     }
-}
 
-.fact-card:hover p {
+    .fact-card:hover p {
     color: white;
     transition: 0.5s;
     font-size: 20px;
 }
+}
+
 
 .owl-theme .owl-nav [class*='owl-'] {
     background: rgb(64,110,183) !important;
