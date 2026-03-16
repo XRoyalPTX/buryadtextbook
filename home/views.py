@@ -5,7 +5,8 @@ from django.utils import timezone
 
 
 def home(request):
-    time = timezone.now()
-    return render(request, "home/homepage.html", context={
-        "time": time,
-    })
+    return render(request, "home/homepage.html", context=None)
+
+
+def about(request):
+    return render(request, "home/about.html", context=None)

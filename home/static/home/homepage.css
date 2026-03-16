@@ -4,20 +4,28 @@
     }
 }
 
-@media (min-width: 768px) {
-    .w-md-50 {
-        width: 50% !important;
+@media (min-width: 900px) {
+    .w-900-60 {
+        width: 60% !important;
     }
+}
+
+.welcome-card {
+    margin: 0 auto;
 }
 
 .welcome-card-head {
     background-color: rgb(64,110,183);
     color: rgb(227,227,227);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .welcome-card-text {
     background-color: rgb(13,24,70);
     color: rgb(227,227,227);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .welcome-card-text a {
@@ -25,6 +33,9 @@
     color: rgb(227,227,227);
     transition: 0.5s;
     background-color: rgb(64,110,183);
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 7px;
 }
 
 .welcome-card-text a:hover {
@@ -32,4 +43,78 @@
     cursor: pointer;
     transition: 0.5s;
     font-size: 19px;
+}
+
+.facts {
+    background-color: rgb(13,24,70);
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.facts h2 {
+    font-weight: 700;
+}
+
+.fact-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    background: linear-gradient(rgb(13,24,70), rgb(64,110,183));
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.fact-card h4 {
+    font-weight: 700;
+    transition: 0.5s;
+}
+
+.fact-card:hover h4 {
+    transition: 0.5s;
+    font-size: 30px;
+}
+
+@media (min-width: 600px) {
+    .fact-card p {
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        color: rgb(255,255,255,0.8);
+        transition: 0.5s;
+    }
+}
+
+@media (max-width: 599px) {
+    .fact-card p {
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        color: rgb(255,255,255,1);
+    }
+}
+
+.fact-card:hover p {
+    color: white;
+    transition: 0.5s;
+    font-size: 20px;
+}
+
+.owl-theme .owl-nav [class*='owl-'] {
+    background: rgb(64,110,183) !important;
+    color: white !important;
+    border-radius: 5px !important;
+    font-size: 18px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    transition: 0.5s !important;
+    padding: 5px !important;
+    width: 30px;
+}
+
+.owl-theme .owl-nav [class*='owl-']:hover {
+    background: rgb(233,86,35) !important;
+    transform: scale(1.1);
+    transition: 0.5s;
 }
