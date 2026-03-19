@@ -1,0 +1,56 @@
+.log-main {
+    display: flex;
+    align-items: center;
+    height: 70vh;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.log-form {
+    width: 100%;
+    max-width: 430px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    color: white;
+    background:
+        linear-gradient(rgba(13, 24, 70, 0.4), rgba(13, 24, 70, 0.4)),
+        url("../images/background-reg.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+.log-input input {
+    width: 90%;
+    max-width: 400px;
+    border-radius: 6px;
+    border: none;
+}
+
+.log-input input:focus {
+    outline: none;
+    border: none;
+}
+
+.log-btn {
+    background-color: rgba(64,110,183,0.9);
+    color: rgb(227,227,227);
+    border: none;
+    padding: 6px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.log-btn:hover {
+    background-color: rgb(233,86,35);
+    transition: 0.3s;
+}
+
+.to-reg-btn {
+    color: white;
+    transition: 0.3s;
+}
+
+.to-reg-btn:hover {
+    color: red;
+    transition: 0.3s;
+}

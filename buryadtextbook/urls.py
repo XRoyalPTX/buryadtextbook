@@ -20,5 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include("home.urls")),
+    path('users/', include("users.urls")),
     #path('courses/', include("courses.urls")), убрано, так как пока что не используется, из-за чего вылезает ошибка
 ]

@@ -1,7 +1,7 @@
 body {
     font-family: "Arsenal", sans-serif !important;
     font-weight: 400 !important;
-    font-size: 17px !important;
+    font-size: 18px !important;
     height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -27,11 +27,15 @@ header .logo {
 
 header .logo span {
     color: rgb(227,227,227);
-    font-size: 25px;
+    font-size: 30px;
 }
 
 header .col {
     height: 50px;
+}
+
+header .menu-buttons a {
+    font-size: 17px;
 }
 
 header .menu-button {
@@ -48,7 +52,7 @@ header .log-in-button {
 header .logo a {
     font-family: "Tektur";
     color: rgb(227,227,227);
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 600;
 }
 
@@ -92,7 +96,7 @@ header .log-in-button a:hover {
 
 main {
     padding: 5px;
-    background-color: rgb(227,227,227);
+    background-color: white;
     flex: 1;
 }
 

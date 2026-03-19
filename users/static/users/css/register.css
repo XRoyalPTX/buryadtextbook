@@ -1,0 +1,80 @@
+.reg-main {
+    display: flex;
+    align-items: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.reg-form {
+    width: 100%;
+    max-width: 430px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    color: white;
+    background:
+        linear-gradient(rgba(13, 24, 70, 0.4), rgba(13, 24, 70, 0.4)),
+        url("../images/background-reg.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+.reg-input input {
+    width: 90%;
+    max-width: 400px;
+    border-radius: 6px;
+    border: none;
+}
+
+.reg-input input:focus {
+    outline: none;
+    border: none;
+}
+
+.username_help_text {
+    display: none;
+    color: white;
+    margin-top: 3px;
+    font-size: 13px;
+}
+
+.password1_help_text {
+    display: none;
+}
+
+.password1_help_text li {
+    color: white;
+    margin-top: 3px;
+    font-size: 13px;
+    list-style-type: none;
+}
+
+.password2_help_text {
+    display: none;
+    color: white;
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+.reg-btn {
+    background-color: rgba(64,110,183,0.9);
+    color: rgb(227,227,227);
+    border: none;
+    padding: 6px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.reg-btn:hover {
+    background-color: rgb(233,86,35);
+    transition: 0.3s;
+}
+
+.to-log-btn {
+    color: white;
+    transition: 0.3s;
+}
+
+.to-log-btn:hover {
+    color: red;
+    transition: 0.3s;
+}

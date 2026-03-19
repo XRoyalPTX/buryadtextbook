@@ -1,28 +1,34 @@
-@media (min-width: 1200px) {
-    .w-xl-75 {
-        width: 75% !important;
-    }
-}
 
-@media (min-width: 900px) {
-    .w-900-60 {
-        width: 60% !important;
-    }
-}
 
 .welcome-card {
     margin: 0 auto;
+    background: url("../images/backgroundhome.jpg") no-repeat center center;
+    background-size: cover;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .welcome-card-head {
-    background-color: rgb(64,110,183);
+    /*background-color: rgba(64,110,183,0.5);*/
+    background: linear-gradient(rgba(64,110,183,0),rgba(13,24,70,0.8));
     color: rgb(227,227,227);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    min-height: 150px;
+}
+
+.welcome-card-head h1 {
+    font-size: 70px;
+    font-weight: 600;
+    color: ;
+}
+
+.welcome-card-head h1:hover {
+    cursor: pointer;
 }
 
 .welcome-card-text {
-    background-color: rgb(13,24,70);
+    background-color: rgba(13,24,70,0.8);
     color: rgb(227,227,227);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -32,9 +38,9 @@
     text-decoration: none;
     color: rgb(227,227,227);
     transition: 0.5s;
-    background-color: rgb(64,110,183);
-    padding-top: 6px;
-    padding-bottom: 6px;
+    background-color: rgba(64,110,183,0.7);
+    padding-top: 8px;
+    padding-bottom: 8px;
     border-radius: 7px;
 }
 
@@ -64,6 +70,7 @@
     background: linear-gradient(rgb(13,24,70), rgb(64,110,183));
     padding: 10px;
     border-radius: 10px;
+    position: relative;
 }
 
 .fact-card h4 {
@@ -86,23 +93,23 @@
     }
 
     .fact-card:hover p {
-    color: white;
-    transition: 0.5s;
-    font-size: 20px;
+        color: white;
+        transition: 0.5s;
+        font-size: 20px;
+    }
 }
-}
-
 
 .owl-theme .owl-nav [class*='owl-'] {
-    background: rgb(64,110,183) !important;
+    background: rgb(64, 110, 183) !important;
     color: white !important;
     border-radius: 5px !important;
-    font-size: 18px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
+    font-size: 30px !important;
     transition: 0.5s !important;
-    padding: 5px !important;
-    width: 30px;
+    width: 50px !important;
+    height: 40px !important;
+    justify-content: center !important;
+    line-height: 40px !important;
+    text-align: center !important;
 }
 
 .owl-theme .owl-nav [class*='owl-']:hover {

@@ -33,7 +33,7 @@
         <div class="col-12 logo d-block d-md-none">
             <a href="{% url 'home' %}">СЭСЭН</a>
         </div>
-        <div class="row justify-content-between">
+        <div class="row justify-content-between menu-buttons">
 
             <a class="col menu-button" href="{% url 'home' %}">Главная</a>
 
@@ -41,7 +41,7 @@
 
             <a class="col menu-button" href="{% url 'about' %}">О нас</a>
 
-            <a class="col-auto log-in-button" href="#">Войти</a>
+            <a class="col-auto log-in-button" href="{% url 'login' %}">Войти</a>
 
             <a class="col-auto menu-button dropdown-toggle d-block" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 🌐

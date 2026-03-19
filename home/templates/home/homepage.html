@@ -5,7 +5,7 @@
 {% load static %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'home/homepage.css' %}">
+<link rel="stylesheet" href="{% static 'home/css/homepage.css' %}">
 {% endblock %}
 
 {% block extrajs %}
@@ -18,7 +18,9 @@
             nav: true,
             dots: false,
             autoplay: true,
-            navText: ["←", "→"],
+            navText: [
+                "<", ">"
+            ],
             responsive: {
                 0: { items: 1 },
                 600: { items: 2 },
@@ -27,17 +29,40 @@
         });
     });
 
+    $(document).ready(function(){
+        let originalHTML = $('.welcome-card-head-text').html();
+
+        $('.welcome-card-head-text').click(function() {
+            $(this).fadeOut(300, function() {
+                let text = $(this).text();
+
+                if (text.includes('Сэсэн')) {
+                    $(this).html(
+                        '<span style="color: rgba(0,57,166,0.9);">Муд</span>' +
+                        '<span style="color: rgba(255,255,255,0.9);">рос</span>' +
+                        '<span style="color: rgba(255,217,0,0.9);">ть</span>'
+                    );
+                } else {
+                    $(this).html(originalHTML);
+                }
+
+                $(this).fadeIn(300);
+            });
+        });
+    });
+
 </script>
 {% endblock %}
 
 {% block main %}
-<br>
-<div class="text-center my-2">
+<div class="text-center">
 
-    <div class="welcome-card w-100 w-xl-75 w-900-60">
+    <div class="welcome-card w-100 mt-5">
         <div class="welcome-card-head py-2">
-            <h1>Сэсэн</h1>
-            <small style="color: rgb(211,211,211);">бур. мудрость</small>
+            <h1 class="welcome-card-head-text">
+                <span style="color: rgba(0,57,166,0.9);">Сэ</span><span style="color: rgba(255,255,255,0.9);">сэ</span><span style="color: rgba(255,217,0,0.9);">н</span>
+            </h1>
+            <small style="color: rgb(211,211,211);">кликните для перевода</small>
         </div>
         <div class="welcome-card-text py-2 px-2">
             <p>Добро пожаловать на сайт проекта "Сэсэн" для изучающих бурятский язык.</p>
@@ -55,7 +80,7 @@
         <small>Давайте познакомимся с бурятским языком!</small>
         <br>
         <br>
-        <small class="d-none d-md-block">Наведите на карточку, чтобы увеличить</small>
+        <small class="d-none d-md-block" style="color: rgb(211,211,211);">наведите на карточку, чтобы увеличить</small>
         <div class="owl-carousel owl-theme">
 
             <div class="fact-card mx-4">
