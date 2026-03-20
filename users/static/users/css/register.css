@@ -31,8 +31,9 @@
 }
 
 .reg-form label {
-    margin-bottom: 8px;
-    text-align: left !important;
+    display: block;
+    margin-bottom: 4px;
+    text-align: left;
     font-weight: 600;
 }
 
@@ -95,6 +96,14 @@
 }
 
 @media(max-width: 576px) {
+
+    .reg-main {
+        display: flex;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
     .reg-form input {
         padding: 0.5rem;
     }

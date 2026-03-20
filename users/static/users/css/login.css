@@ -31,7 +31,8 @@
 }
 
 .log-form label {
-    margin-bottom: 8px;
+    display: block;
+    margin-bottom: 4px;
     text-align: left !important;
     font-weight: 600;
 }
@@ -72,6 +73,14 @@
 }
 
 @media(max-width: 576px) {
+
+    .log-main {
+        display: flex;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
     .log-form input {
         padding: 0.5rem;
     }
