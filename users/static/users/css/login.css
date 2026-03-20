@@ -30,11 +30,16 @@
     border: solid 1px rgb(226,232,240);
 }
 
+input:focus {
+    outline-color: rgb(78,69,228);
+}
+
 .log-form label {
     display: block;
     margin-bottom: 4px;
     text-align: left !important;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .log-btn-form {
@@ -63,13 +68,15 @@
 }
 
 .to-reg-btn {
-    color: rgb(15,23,42);
+    color: rgb(106, 98, 233);
     transition: 0.3s;
+    text-decoration: none;
 }
 
 .to-reg-btn:hover {
-    color: red;
+    color: rgb(79, 70, 229);
     transition: 0.3s;
+    font-size: 15px;
 }
 
 @media(max-width: 576px) {

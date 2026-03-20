@@ -23,6 +23,10 @@
     margin-bottom: 1rem;
 }
 
+input:focus {
+    outline-color: rgb(78,69,228);
+}
+
 .reg-form input {
     width: 100%;
     padding: 1rem;
@@ -34,7 +38,8 @@
     display: block;
     margin-bottom: 4px;
     text-align: left;
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 14px;
 }
 
 .reg-btn-form {
@@ -63,13 +68,15 @@
 }
 
 .to-log-btn {
-    color: rgb(15,23,42);
+    color: rgb(106, 98, 233);
     transition: 0.3s;
+    text-decoration: none;
 }
 
 .to-log-btn:hover {
-    color: red;
+    color: rgb(79, 70, 229);
     transition: 0.3s;
+    font-size: 15px;
 }
 
 .username_help_text {
