@@ -26,31 +26,30 @@
 
 <body>
 
-    <header class="container-fluid text-center">
-        <div class="col-12 logo d-none d-md-block">
-            <a href="{% url 'home' %}">СЭСЭН</a><span class=> | Буряад хэлэнэй сахим hураха ном</span>
+    <header>
+
+        <div class="in-header-container">
+            <nav class="menu-btns d-none d-md-block">
+                <a href="{% url 'home' %}" class="logo">cэсэн</a>
+                <a href="{% url 'home' %}" class="menu-btn me-3 {% if request.path == '/home/' %}active{% endif %}">Главная</a>
+                <a href="#" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
+            </nav>
+            <nav class="menu-btns d-block d-md-none">
+                <a href="{% url 'home' %}" class="logo">cэсэн</a>
+                <a href="{% url 'home' %}" class="menu-btn me-2 {% if request.path == '/home/' %}active{% endif %}">Главная</a>
+                <a href="#" class="menu-btn mx-2 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
+            </nav>
+
+            <nav class="menu-help-btns d-none d-md-block">
+                <a href="{% url 'login' %}" class="log-btn mx-3">Войти</a>
+                <a href="#" class="ms-3"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
+            </nav>
+            <nav class="menu-help-btns d-block d-md-none">
+                <a href="{% url 'login' %}" class="log-btn mx-2">Войти</a>
+                <a href="#" class="ms-2"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
+            </nav>
         </div>
-        <div class="col-12 logo d-block d-md-none">
-            <a href="{% url 'home' %}">СЭСЭН</a>
-        </div>
-        <div class="row justify-content-between menu-buttons">
 
-            <a class="col menu-button" href="{% url 'home' %}">Главная</a>
-
-            <a class="col menu-button" href="#">Курсы</a>
-
-            <a class="col menu-button" href="{% url 'about' %}">О нас</a>
-
-            <a class="col-auto log-in-button" href="{% url 'login' %}">Войти</a>
-
-            <a class="col-auto menu-button dropdown-toggle d-block" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                🌐
-            </a>
-            <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink" style="position: absolute; width: auto; min-width: 50px;">
-                <li><a class="dropdown-item" href="#"><img src="{% static 'images/ruslang.png' %}" style="height: 17px;">&nbsp;Русский</a></li>
-                <li><a class="dropdown-item" href="#"><img src="{% static 'images/englang.png' %}" style="height: 17px;">&nbsp;English</a></li>
-            </ul>
-        </div>
     </header>
 
     <main class="container-fluid">
