@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Главная страница{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'users/js/profile.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="profile-main text-center">
+
+    <h1 style="text-align: left;"></h1>
+
+    <div class="row gx-0">
+        <div class="col-12 col-md-4">
+            <div class="profile-card">
+                <div class="profile-card-avatar">
+                    {{ user.username|slice:":1"|upper }}
+                </div>
+                <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                <p>{{ user.email }}</p>
+                <div class="{% if user.is_superuser == 'expert' %}superuser-plate{% endif %}{% if user.role == 'student' %}student-plate{% endif %}{% if user.role == 'expert' %}expert-plate{% endif %}">
+                    {{ user.get_role_display }}
+                </div>
+                <a href="#" class="profile-card-btn">Изменить данные</a>
+                <a href="{% url 'logout' %}" class="profile-card-btn profile-card-btn-logout" id="id_profile-card-btn-logout">Выйти из профиля</a>
+                <form method="post" action="{% url 'delete_user' %}">
+                    {% csrf_token %}
+                    <button class="profile-card-btn-dlt" id="id_profile-card-btn-dlt" type="submit">Удалить аккаунт</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8">
+            <div class="profile-progress-info">
+                <div class="row gx-0 justify-content-between">
+                    <div class="col-6">
+                        <div class="profile-progress-info-courses">
+                            <span class="progress-count">0</span>
+                            <span>курсов пройдено :(</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="profile-progress-info-lessons">
+                            <span class="progress-count">5 дней</span>
+                            <span>дней активности подряд!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-evenly gx-0">
+                    <div class="col-12">
+                        <div class="profile-progress-info-bar">
+                            <h2>Моё обучение</h2>
+                            <span style="display: block;">Прогресс по текущим курсам</span>
+                            <span style="font-family: Courier, monospace; display: block;">...эта часть страницы в разработке...</span>
+                            <a class="reset-progress-btn">Сбросить прогресс</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

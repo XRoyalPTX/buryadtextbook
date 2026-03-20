@@ -31,23 +31,34 @@
         <div class="in-header-container">
             <nav class="menu-btns d-none d-md-block">
                 <a href="{% url 'home' %}" class="logo">cэсэн</a>
-                <a href="{% url 'home' %}" class="menu-btn me-3 {% if request.path == '/home/' %}active{% endif %}">Главная</a>
+                <a href="{% url 'home' %}" class="menu-btn me-3 {% if request.path == '/' %}active{% endif %}">Главная</a>
                 <a href="#" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
             </nav>
             <nav class="menu-btns d-block d-md-none">
                 <a href="{% url 'home' %}" class="logo">cэсэн</a>
-                <a href="{% url 'home' %}" class="menu-btn me-2 {% if request.path == '/home/' %}active{% endif %}">Главная</a>
+                <a href="{% url 'home' %}" class="menu-btn me-2 {% if request.path == '/' %}active{% endif %}">Главная</a>
                 <a href="#" class="menu-btn mx-2 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
             </nav>
 
-            <nav class="menu-help-btns d-none d-md-block">
-                <a href="{% url 'login' %}" class="log-btn mx-3">Войти</a>
-                <a href="#" class="ms-3"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
-            </nav>
-            <nav class="menu-help-btns d-block d-md-none">
-                <a href="{% url 'login' %}" class="log-btn mx-2">Войти</a>
-                <a href="#" class="ms-2"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
-            </nav>
+            {% if user.is_authenticated %}
+                <nav class="menu-help-btns d-none d-md-block">
+                    <a href="{% url 'profile' %}" class="log-btn mx-3 {% if request.path == '/profile/' %}active{% endif %}">Профиль</a>
+                    <a href="#" class="ms-3"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
+                </nav>
+                <nav class="menu-help-btns d-block d-md-none">
+                    <a href="{% url 'profile' %}" class="log-btn mx-2 {% if request.path == '/profile/' %}active{% endif %}">Профиль</a>
+                    <a href="#" class="ms-2"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
+                </nav>
+            {% else %}
+                <nav class="menu-help-btns d-none d-md-block">
+                    <a href="{% url 'login' %}" class="log-btn mx-3">Войти</a>
+                    <a href="#" class="ms-3"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
+                </nav>
+                <nav class="menu-help-btns d-block d-md-none">
+                    <a href="{% url 'login' %}" class="log-btn mx-2">Войти</a>
+                    <a href="#" class="ms-2"><img src="{% static 'images/ruslang.png' %}" height="24px" width="24px"></a>
+                </nav>
+            {% endif %}
         </div>
 
     </header>

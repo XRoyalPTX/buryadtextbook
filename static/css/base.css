@@ -62,9 +62,9 @@ header {
     font-size: 17px;
 }
 
-.in-header-container .menu-btn.active {
-    color: rgb(79,70,229);
-    font-weight: 700;
+.in-header-container .menu-btns .active {
+    color: rgb(106,98,233) !important;
+    font-weight: 700 !important;
 }
 
 .in-header-container .log-btn {
@@ -79,11 +79,18 @@ header {
     font-size: 16px;
 }
 
+.in-header-container .log-btn.active {
+    background-color: rgb(106,98,233);
+    color: white;
+    transition: 0.3s;
+}
+
+
 .in-header-container .log-btn:hover {
     background-color: rgb(106,98,233);
     color: white;
     transition: 0.3s;
-    border: 2px solid black;
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.5);
 }
 
 .menu-help-btns {

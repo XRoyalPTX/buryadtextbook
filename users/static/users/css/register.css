@@ -42,6 +42,11 @@ input:focus {
     font-size: 14px;
 }
 
+.reg-form ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 .reg-btn-form {
     width: 100%;
     display: block;
@@ -92,7 +97,6 @@ input:focus {
 .password1_help_text li {
     margin-top: 3px;
     font-size: 12px;
-    list-style-type: none;
     padding-left: 0;
 }
 
@@ -102,7 +106,15 @@ input:focus {
     font-size: 12px;
 }
 
-@media(max-width: 576px) {
+.errorlist {
+    color: red;
+    margin-top: 3px;
+    font-size: 12px;
+    list-style-type: none !important;
+    padding-left: 0 !important;
+}
+
+@media(max-width: 575px) {
 
     .reg-main {
         display: flex;

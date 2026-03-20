@@ -42,6 +42,11 @@ input:focus {
     font-size: 14px;
 }
 
+.log-form ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 .log-btn-form {
     width: 100%;
     display: block;
@@ -79,7 +84,7 @@ input:focus {
     font-size: 15px;
 }
 
-@media(max-width: 576px) {
+@media(max-width: 575px) {
 
     .log-main {
         display: flex;

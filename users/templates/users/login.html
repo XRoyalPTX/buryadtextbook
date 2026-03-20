@@ -24,6 +24,12 @@
         <form method="post">
             {% csrf_token %}
 
+            {% if form.non_field_errors %}
+                <div class="errors global-errors" style="color: #dc3545; margin-bottom: 15px;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
             {% for field in form %}
 
             <div class="log-input">

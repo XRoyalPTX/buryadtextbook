@@ -22,4 +22,5 @@ $(document).ready(function(){
     $("#id_password2").blur(function(){
         $("#password2_help_text").stop().slideUp(300);
     });
+
 });

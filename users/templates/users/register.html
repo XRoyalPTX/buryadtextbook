@@ -21,6 +21,11 @@
         <form method="post">
             {% csrf_token %}
             <div class="reg-inputs">
+                {% if form.non_field_errors %}
+                    <div class="errors global-errors" style="color: red;">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
                 {% for field in form %}
                 <div class="reg-input">
                     <label>{{ field.label }}</label>
@@ -30,8 +35,14 @@
                         <span id="username_help_text" class="username_help_text">Обязательное поле. До 150 символов (буквы, цифры и @/./+/-/_).</span>
                     {% endif %}
 
+                    {% if field.errors %}
+                        <div class="errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
                     {% if field.name == "password1" %}
-                        <ul id="password1_help_text" class="password1_help_text list-unstyled footer-list">
+                        <ul id="password1_help_text" class="password1_help_text">
                             <li>Пароль не должен быть слишком похож на другую вашу личную информацию.</li>
                             <li>Ваш пароль должен содержать как минимум 8 символов.</li>
                             <li>Пароль не должен быть слишком простым и распространенным.</li>
@@ -41,12 +52,6 @@
 
                     {% if field.name == "password2" %}
                         <span id="password2_help_text" class="password2_help_text">Введите пароль ещё раз.</span>
-                    {% endif %}
-
-                    {% if field.errors %}
-                        <div class="errors">
-                            {{ field.errors }}
-                        </div>
                     {% endif %}
 
                 </div>

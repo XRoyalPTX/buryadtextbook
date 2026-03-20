@@ -1,0 +1,218 @@
+.profile-main {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    width: calc(100% - 2rem);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    padding: 2rem;
+}
+
+.profile-card .profile-card-avatar {
+    color: white;
+    font-size: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgb(78,69,228), rgb(129,140,248), rgb(243,61,93));
+    width: 100px;
+    height: 100px;
+    font-weight: 600;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px 5px rgba(79, 70, 229, 0.2)
+}
+
+.profile-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.profile-card .student-plate, .profile-card .expert-plate, .profile-card .superuser-plate {
+    display: inline-block;
+    padding-block: 6px;
+    padding-inline: 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.profile-card .student-plate {
+    background-color: rgb(220,252,231);
+    color: rgb(22,101,52);
+}
+
+.profile-card .expert-plate {
+    background-color: rgb(254, 226, 226);
+    color: rgb(153, 27, 27);
+}
+
+.profile-card .superuser-plate {
+    background-color: rgb(254, 243, 199);
+    color: rgb(146, 64, 14);
+}
+
+.profile-card-btn, .profile-card-btn-dlt {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.profile-card .profile-card-btn {
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-bottom: 1rem;
+}
+
+.profile-card .profile-card-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.5);
+    color: white;
+}
+
+.profile-card .profile-card-btn-dlt {
+    border: 2px solid rgb(244, 63, 94);
+    color: rgb(244, 63, 94);
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.profile-card .profile-card-btn-dlt:hover {
+    background-color: rgb(244, 63, 94);
+    box-shadow: 0 0 40px -5px rgba(244, 63, 94, 0.5);
+    color: white;
+}
+
+.profile-progress-info-courses, .profile-progress-info-lessons {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.profile-progress-info-courses span, .profile-progress-info-lessons span {
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.progress-count {
+    margin-top: 0 !important;
+    font-size: 40px !important;
+    font-weight: 700 !important;
+}
+
+.profile-progress-info-bar {
+    margin-top: 2rem;
+    margin-left: 1rem;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.profile-progress-info-bar h2 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.profile-progress-info-bar p {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.reset-progress-btn {
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    border: 2px solid rgb(244, 63, 94);
+    color: rgb(244, 63, 94);
+    margin-top: 1rem;
+}
+
+.reset-progress-btn:hover {
+    background-color: rgb(244, 63, 94);
+    box-shadow: 0 0 40px -5px rgba(244, 63, 94, 0.5);
+    color: white;
+    cursor: pointer;
+}
+
+@media(min-width: 768px) {
+    .profile-card {
+        margin-right: 1rem;
+    }
+
+    .profile-progress-info .profile-progress-info-courses {
+        margin-inline: 1rem;
+    }
+
+    .profile-progress-info .profile-progress-info-lessons {
+        margin-left: 1rem;
+    }
+}
+
+@media(max-width: 767px) {
+    .profile-card {
+        margin-bottom: 1rem;
+    }
+
+    .profile-progress-info .profile-progress-info-courses {
+        margin-right: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .profile-progress-info .profile-progress-info-lessons {
+        margin-left: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .profile-progress-info-bar {
+        margin-top: 1rem;
+        margin-left: 0;
+    }
+}
+
+@media(max-width: 575px) {
+    .profile-main {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .profile-card {
+        padding: 1rem;
+    }
+
+    .profile-progress-info-courses, .profile-progress-info-lessons {
+        padding: 1rem;
+    }
+
+    .progress-count {
+        font-size: 32px !important;
+    }
+}
