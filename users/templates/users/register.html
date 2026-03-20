@@ -17,22 +17,22 @@
 
     <div class="container reg-form">
 
-        <h3>Добро пожаловать!</h3>
+        <h3>Регистрация</h3>
         <form method="post">
             {% csrf_token %}
             <div class="reg-inputs">
                 {% for field in form %}
-                <div class="reg-input my-1">
+                <div class="reg-input">
                     <label>{{ field.label }}</label>
                     <br>
                     {{ field }}
                     <br>
                     {% if field.name == "username" %}
-                        <span id="username_help_text" class="husername_help_text">Обязательное поле. До 150 символов (буквы, цифры и @/./+/-/_).</span>
+                        <span id="username_help_text" class="username_help_text">Обязательное поле. До 150 символов (буквы, цифры и @/./+/-/_).</span>
                     {% endif %}
 
                     {% if field.name == "password1" %}
-                        <ul id="password1_help_text" class="password1_help_text">
+                        <ul id="password1_help_text" class="password1_help_text list-unstyled footer-list">
                             <li>Пароль не должен быть слишком похож на другую вашу личную информацию.</li>
                             <li>Ваш пароль должен содержать как минимум 8 символов.</li>
                             <li>Пароль не должен быть слишком простым и распространенным.</li>
@@ -53,9 +53,9 @@
                 </div>
                 {% endfor %}
             </div>
-            <button type="submit" class="mt-3 mb-1 reg-btn">Создать аккаунт</button>
+            <button type="submit" class="reg-btn-form">Создать аккаунт</button>
         </form>
-
+        <br>
         <small>Уже есть аккаунт? <a href="{% url 'login' %}" class="to-log-btn">Войти</a></small>
     </div>
 

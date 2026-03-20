@@ -52,13 +52,49 @@
 
     </header>
 
-    <main class="container-fluid">
+    <main class="text-center">
         {% block main %}Привет из base.html!{% endblock %}
     </main>
 
-    <footer class="container-fluid">
-        <p>Владислав Архинчеев</p>
-        <p>exp@student.bmstu.ru</p>
+    <footer class="text-left">
+        <div class="in-footer-container">
+
+            <div class="row gy-3 gx-0 justify-content-between">
+
+                <div class="col-12 col-md-4">
+                    <div class="footer-list">
+                        <h4 style="color: rgb(15,23,42)">Сэсэн</h4>
+                        <p>Онлайн-площадка сохранения и развития бурятского языка.<br>
+                        Давайте беречь наш язык ❤️</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-2">
+                    <div class="footer-list">
+                        <h5 style="color: rgb(15,23,42)">Ссылки</h5>
+                        <a href="{% url 'home' %}">Главная</a><br>
+                        <a href="#">Курсы</a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-2">
+                    <div class="footer-list">
+                        <h5 style="color: rgb(15,23,42)">Информация</h5>
+                        <a href="{% url 'home' %}">О проекте</a><br>
+                        <a href="#">Об авторах</a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-4 col-md-2">
+                    <div class="footer-list">
+                        <h5 style="color: rgb(15,23,42)">Помощь</h5>
+                        <a href="{% url 'home' %}">F.A.Q.</a><br>
+                        <a href="#">Написать поддержке</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </footer>
 
     <!-- ПОДКЛЮЧЕНИЕ JS-СКРИПТОВ-->

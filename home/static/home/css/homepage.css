@@ -1,119 +1,108 @@
+.homepage-container {
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+}
 
+.welcome-container {
+    padding: 4rem;
+    margin-bottom: 4rem;
+}
 
-.welcome-card {
+.welcome-container h1 {
+    font-weight: 800;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.welcome-container-h1 {
+    background: linear-gradient(135deg, rgb(78,69,228), rgb(243,61,93));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.welcome-container p {
+    max-width: 700px;
+    color: rgb(71,85,105);
+    font-size: 1rem;
     margin: 0 auto;
-    background: url("../images/backgroundhome.jpg") no-repeat center center;
-    background-size: cover;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    width: 100%;
+    margin-bottom: 3rem;
 }
 
-.welcome-card-head {
-    /*background-color: rgba(64,110,183,0.5);*/
-    background: linear-gradient(rgba(64,110,183,0),rgba(13,24,70,0.8));
-    color: rgb(227,227,227);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    min-height: 150px;
-}
-
-.welcome-card-head h1 {
-    font-size: 70px;
-    font-weight: 600;
-    color: ;
-}
-
-.welcome-card-head h1:hover {
-    cursor: pointer;
-}
-
-.welcome-card-text {
-    background-color: rgba(13,24,70,0.8);
-    color: rgb(227,227,227);
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.welcome-card-text a {
-    text-decoration: none;
-    color: rgb(227,227,227);
-    transition: 0.5s;
-    background-color: rgba(64,110,183,0.7);
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-radius: 7px;
-}
-
-.welcome-card-text a:hover {
-    background-color: rgb(233,86,35);
-    cursor: pointer;
-    transition: 0.5s;
-    font-size: 19px;
-}
-
-.facts {
-    background-color: rgb(13,24,70);
-    border-radius: 10px;
+.welcome-container-btn {
+    max-width: 201px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgb(78,69,228), rgb(129,140,248), rgb(243,61,93));
+    background-size: 150% auto;
+    background-position: left center;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: 12px;
     color: white;
-    padding: 10px;
-    margin: 0 auto;
-}
-
-.facts h2 {
+    text-decoration: none;
     font-weight: 700;
+    transition: 0.6s;
 }
 
-.fact-card {
-    display: flex !important;
-    flex-direction: column !important;
-    height: auto !important;
-    background: linear-gradient(rgb(13,24,70), rgb(64,110,183));
-    padding: 10px;
-    border-radius: 10px;
-    position: relative;
+.welcome-container-btn:hover {
+    background-position: right center;
+    background-size: 300% auto;
+    transition: 0.6s;
 }
 
-.fact-card h4 {
-    font-weight: 700;
-    transition: 0.5s;
+.features-container {
+    margin-bottom: 2rem;
 }
 
-@media (min-width: 600px) {
-    .fact-card p {
-        flex: 1;
-        display: flex;
-        align-items: flex-end;
-        color: rgb(255,255,255,0.8);
-        transition: 0.5s;
+.features-container .row {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.feature-card {
+    padding: 2rem;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    background-color: white;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: rgb(71,85,105);
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+@media(max-width: 992px) {
+    .feature-card {
+        padding: 1.5rem;
+    }
+}
+
+@media(max-width: 768px) {
+    .welcome-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
-    .fact-card:hover h4 {
-        transition: 0.5s;
-        font-size: 30px;
+    .welcome-container h1 {
+        font-size: 2rem;
     }
 
-    .fact-card:hover p {
-        color: white;
-        transition: 0.5s;
-        font-size: 20px;
+    .feature-card {
+        padding: 1rem;
     }
-}
-
-.owl-theme .owl-nav [class*='owl-'] {
-    background: rgb(64, 110, 183) !important;
-    color: white !important;
-    border-radius: 5px !important;
-    font-size: 30px !important;
-    transition: 0.5s !important;
-    width: 50px !important;
-    height: 40px !important;
-    justify-content: center !important;
-    line-height: 40px !important;
-    text-align: center !important;
-}
-
-.owl-theme .owl-nav [class*='owl-']:hover {
-    background: rgb(233,86,35) !important;
-    transform: scale(1.1);
-    transition: 0.5s;
 }
