@@ -1,0 +1,10 @@
+# Секретные файлы
+.env
+
+# База данных
+db.sqlite3
+
+# Временные файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
