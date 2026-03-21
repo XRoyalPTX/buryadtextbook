@@ -1,0 +1,29 @@
+.under-construction-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.welcome-container-btn {
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-bottom: 1rem;
+}
+
+.welcome-container-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+}

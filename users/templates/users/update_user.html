@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Главная страница{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'users/css/update_user.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'users/js/register.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="upd-user-main text-center">
+
+    <div class="container upd-user-form">
+
+        <h3>Изменение данных</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="upd-user-inputs">
+                {% if form.non_field_errors %}
+                    <div class="errors global-errors" style="color: red;">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+                {% for field in form %}
+                <div class="upd-user-input">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                    <br>
+                    {% if field.name == "username" %}
+                        <span id="username_help_text" class="username_help_text">До 150 символов (буквы, цифры и @/./+/-/_).</span>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <div class="errors">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="upd-user-btn-form">Изменить данные</button>
+            <a href="{% url 'profile' %}" class="to-profile-btn">Отмена</a>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

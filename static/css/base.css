@@ -136,3 +136,30 @@ footer {
 footer p {
     margin-bottom: 0;
 }
+
+.messages-container {
+    position: fixed;
+    top: 87px;
+    right: 16px;
+    z-index: 9999;
+    max-width: 300px;
+    margin-left: 16px;
+}
+
+.alert {
+    position: relative;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 12px;
+    opacity: 0.9;
+}
+
+.alert:hover {
+    cursor: pointer;
+}
+
+@media(max-width: 575px) {
+    .messages-container {
+        top: 74px;
+    }
+}

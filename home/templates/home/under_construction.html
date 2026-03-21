@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Главная страница{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'home/css/under_construction.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script>
+
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="under-construction-main">
+
+    <h4>Данная страница находится в разработке.<br>Приносим прощения за доставленные неудобства</h4>
+
+    <a href="{{ previous_url }}" class="welcome-container-btn">
+        Вернуться назад
+    </a>
+
+</div>
+
+{% endblock %}

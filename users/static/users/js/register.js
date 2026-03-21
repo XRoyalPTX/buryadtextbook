@@ -23,4 +23,20 @@ $(document).ready(function(){
         $("#password2_help_text").stop().slideUp(300);
     });
 
+    $("#id_new_password1").focus(function(){
+        $("#password1_help_text").stop().slideDown(300);
+    });
+
+    $("#id_new_password1").blur(function(){
+        $("#password1_help_text").stop().slideUp(300);
+    });
+
+    $("#id_new_password2").focus(function(){
+        $("#password2_help_text").stop().slideDown(300);
+    });
+
+    $("#id_new_password2").blur(function(){
+        $("#password2_help_text").stop().slideUp(300);
+    });
+
 });
