@@ -104,6 +104,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
 }
 
 .profile-progress-info-courses span, .profile-progress-info-lessons span {
@@ -112,6 +113,24 @@
     text-align: left;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.russian-translations {
+    display: none;
+    position: absolute;
+    text-align: left;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    top: calc(100% - 1.5rem);
+    width: 100%;
+    padding: 1.5rem;
+    margin-left: -1.5rem;
+    background-color: white;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+.random-buryad-word:hover {
+    cursor: pointer;
 }
 
 .progress-count {
@@ -214,5 +233,10 @@
 
     .progress-count {
         font-size: 32px !important;
+    }
+
+    .russian-translations {
+        margin-left: -1rem;
+        padding: 1rem;
     }
 }

@@ -8,4 +8,20 @@ $(document).ready(function() {
             console.log('Аккаунт удалён пользователем.');
         }
     });
+
+    $("#id_random-buryad-word").click(function() {
+        let currentText = $("#id_random-buryad-word-tip").text();
+        if (currentText.includes('открыть')) {
+            $("#id_random-buryad-word-tip").stop().fadeOut(500, function(){
+                $("#id_random-buryad-word-tip").text('Нажмите снова, чтобы закрыть перевод');
+                $("#id_random-buryad-word-tip").stop().fadeIn(500);
+            });
+        } else {
+            $("#id_random-buryad-word-tip").stop().fadeOut(500, function(){
+                $("#id_random-buryad-word-tip").text('Нажмите на слово, чтобы открыть перевод');
+                $("#id_random-buryad-word-tip").stop().fadeIn(500);
+            });
+        }
+        $("#id_russian-translations").stop().slideToggle(500);
+    });
 });

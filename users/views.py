@@ -1,8 +1,15 @@
+import random
+import requests
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+
+
+# База бурятских слов
+BURYAD_WORDS = ['сайн', 'эжы', 'аба', 'баярлаха']
+
 
 # Create your views here.
 
@@ -60,5 +67,25 @@ def delete_user(request):
 
 @login_required
 def profile(request):
+    russian_translations = []
+    random_buryad_word = random.choice(BURYAD_WORDS)
 
-    return render(request, "users/profile.html", context=None)
+    url = f"https://burlang.ru/api/v1/buryat-word/translate?q={random_buryad_word}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        print(data)
+        translations_list = data.get('translations')
+        if translations_list:
+            for russian_translation in translations_list:
+                russian_translations.append(russian_translation.get('value'))
+        else:
+            russian_translations = 'Перевод этого слова ещё не добавлен.'
+    else:
+        russian_translations = 'Сервер не отвечает.'
+    print(russian_translations)
+
+    return render(request, "users/profile.html", context={
+        'random_buryad_word': random_buryad_word,
+        'russian_translations': russian_translations,
+    })

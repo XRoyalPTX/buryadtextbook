@@ -41,16 +41,21 @@
             <div class="profile-progress-info">
                 <div class="row gx-0 justify-content-between">
                     <div class="col-6">
-                        <div class="profile-progress-info-courses">
-                            <span>Слово дня</span>
-                            <span class="progress-count">{{ word }}</span>
-                            <span>нажмите для перевода</span>
+                        <div class="profile-progress-info-courses" id="id_random-buryad-word-card">
+                            <span>Случайное слово</span>
+                            <span class="progress-count random-buryad-word" id="id_random-buryad-word">{{ random_buryad_word }}</span>
+                            <span id="id_random-buryad-word-tip">Нажмите на слово, чтобы открыть перевод</span>
+                            <div class="russian-translations" id="id_russian-translations">
+                                {% for translate in russian_translations %}
+                                <span style="display: block;">{{ translate }}</span>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="profile-progress-info-lessons">
                             <span>Ударная серия</span>
-                            <span class="progress-count">5 дней</span>
+                            <span class="progress-count">0 дней</span>
                             <span>дней активности подряд!</span>
                         </div>
                     </div>
