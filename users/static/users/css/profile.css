@@ -140,6 +140,10 @@
     font-weight: 700 !important;
 }
 
+.random-buryad-word {
+    word-wrap: break-word;
+}
+
 .profile-progress-info-bar {
     margin-top: 2rem;
     margin-left: 1rem;

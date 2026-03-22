@@ -9,19 +9,55 @@ $(document).ready(function() {
         }
     });
 
+    async function getRussianTranslate() {
+        let $container = $("#id_russian-translations");
+        $container.empty();
+        try {
+            let wordToTranslate = $("#id_random-buryad-word").data("word");
+            let url = `https://burlang.ru/api/v1/buryat-word/translate?q=${wordToTranslate}`;
+            let response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            let data = await response.json();
+            let translations = data.translations;
+
+            if (translations && translations.length > 0) {
+                translations.forEach(function(elem) {
+                    console.log(elem.value);
+                    $container.append(`<span style="display: block;">${elem.value}</span>`);
+                });
+            } else {
+                $container.text("Перевод не найден");
+            }
+
+        } catch (error) {
+            console.log(`There's Error: ${error.message}`);
+            $container.append(`<span style="display: block;">Не удалось загрузить перевод (слово не найдено)</span>`);
+        }
+    }
+
+    getRussianTranslate();
+
     $("#id_random-buryad-word").click(function() {
-        let currentText = $("#id_random-buryad-word-tip").text();
-        if (currentText.includes('открыть')) {
-            $("#id_random-buryad-word-tip").stop().fadeOut(500, function(){
-                $("#id_random-buryad-word-tip").text('Нажмите снова, чтобы закрыть перевод');
-                $("#id_random-buryad-word-tip").stop().fadeIn(500);
+        let $tip = $("#id_random-buryad-word-tip");
+        let $translations = $("#id_russian-translations");
+
+        $tip.stop(true, true);
+        $translations.stop(true, true);
+
+        if ($translations.is(':visible')) {
+            $tip.fadeOut(300, function() {
+                $(this).text('Нажмите на слово, чтобы открыть перевод').fadeIn(300);
             });
         } else {
-            $("#id_random-buryad-word-tip").stop().fadeOut(500, function(){
-                $("#id_random-buryad-word-tip").text('Нажмите на слово, чтобы открыть перевод');
-                $("#id_random-buryad-word-tip").stop().fadeIn(500);
+            $tip.fadeOut(300, function() {
+                $(this).text('Нажмите снова, чтобы закрыть перевод').fadeIn(300);
             });
         }
-        $("#id_russian-translations").stop().slideToggle(500);
+
+        $translations.slideToggle(300);
     });
 });

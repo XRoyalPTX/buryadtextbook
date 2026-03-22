@@ -13,6 +13,7 @@ header {
     position: sticky;
     top: 0;
     padding: 1rem;
+    z-index: 9998;
 }
 
 .in-header-container {
