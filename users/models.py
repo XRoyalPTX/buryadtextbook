@@ -22,4 +22,4 @@ class MyUser(AbstractUser):
     )
 
     def __str__(self):
-        return f"{self.username} ({self.get_role_display()})"
+        return f"Логин: {self.username}\nРоль: {self.get_role_display()}\nИмя: {self.first_name}\nФамилия: {self.last_name}\nЭлектронная почта: {self.email}"
