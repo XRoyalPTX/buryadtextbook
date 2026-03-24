@@ -6,17 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Сэсэн{% endblock %}</title>
 
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
     <!-- ПОДКЛЮЧЕНИЕ BOOTSTRAP -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- ПОДКЛЮЧЕНИЕ OWL CAROUSEL -->
-    <link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/owl.theme.default.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/vendor/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- ШРИФТЫ ARSENAL, TEKTUR, NUNITO -->
-    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/vendor/fonts.css' %}">
 
     <!-- ПОДКЛЮЧЕНИЕ МОИХ СТИЛЕЙ -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
@@ -119,9 +113,8 @@
     </footer>
 
     <!-- ПОДКЛЮЧЕНИЕ JS-СКРИПТОВ-->
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
     {% block extrajs %}{% endblock %}
 
