@@ -8,7 +8,6 @@ class HomeViewTest(TestCase):
         response = self.client.get('/')
         checkStatus = str(response.status_code)
         self.assertEqual(checkStatus, '200')
-        pass
 
     def test_home_view_template(self):
         response = self.client.get('/')
@@ -19,7 +18,11 @@ class UnderConstructionTest(TestCase):
     def test_under_construction_previous_url(self):
         response = self.client.get('/under_construction/', HTTP_REFERER='/about/')
         a = str(response.status_code)
-        print(f"Ответ сервера: {a}")
         checkUrl = response.context['previous_url']
         self.assertEqual(checkUrl, '/about/')
-        pass
+
+
+class about_view_test(TestCase):
+    def test_about_view_template(self):
+        response = self.client.get('/about/')
+        self.assertTemplateUsed(response, 'home/about.html')

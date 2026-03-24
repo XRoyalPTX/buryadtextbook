@@ -1,0 +1,12 @@
+[run]
+
+omit =
+    manage.py
+    */migrations/*
+    */__init__.py
+    */apps.py
+    */admin.py
+    */tests.py
+    buryadtextbook/settings.py
+    buryadtextbook/urls.py
+    .venv/*

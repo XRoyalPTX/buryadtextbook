@@ -75,9 +75,8 @@ def delete_user(request):
     return redirect('profile')
 
 
+@login_required
 def profile(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
     random_buryad_word = random.choice(BURYAD_WORDS)
 
     return render(request, "users/profile.html", context={
