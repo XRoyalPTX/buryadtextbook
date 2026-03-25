@@ -33,6 +33,7 @@
 
 .course-card .course-author {
     margin-bottom: 1rem;
+    color: rgb(71, 85, 105);
 }
 
 .course-card p {
@@ -91,3 +92,14 @@
     color: white;
     cursor: pointer;
 }   
+
+@media(max-width: 575px) {
+    .courses-main {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .course-card {
+        padding: 1rem;
+    }
+}

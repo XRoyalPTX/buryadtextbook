@@ -17,9 +17,40 @@
 {% endblock %}
 
 {% block main %}
-<div class="course-main text-center">
+<div class="course-main">
 
-    Норм
+    <a href="{% url 'courses' %}" class="to-courses-btn">К списку курсов</a>
+
+    <div class="course-description">
+        <h1>{{ current_course.title }}</h1>
+        <p>{{ current_course.description }}</p>
+    </div>
+
+    <div class="lessons-list">
+        <h2>Перечень уроков курса</h2>
+
+        {% for card in lessons %}
+            <div class="lesson-card">
+                <div class="lesson-card-name">
+                    <h3>{{ card.title }}</h3>
+                    <p>Вопросов в тесте: 0</p>
+                </div>
+                <a href="{% url 'under_construction' %}" class="to-lesson-btn">Перейти к уроку</a>
+            </div>
+            {% if user == current_course.author or user.is_superuser %}
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <a href="{% url 'under_construction' %}" class="edit-lesson-btn">Редактировать урок {{ card.order_num }}</a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a href="{% url 'under_construction' %}" class="delete-lesson-btn">Удалить урок {{ card.order_num }}</a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
 
 </div>
 

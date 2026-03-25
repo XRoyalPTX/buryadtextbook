@@ -25,7 +25,7 @@
             Платформа для сохранения и популяризации языка. Проходите структурированные курсы, сдавайте тесты и отслеживайте свой прогресс в личном кабинете.
         </p>
 
-        <a href="{% if user.is_authenticated %}{% url 'under_construction' %}{% endif %}{% if not user.is_authenticated %}{% url 'login' %}{% endif %}" class="welcome-container-btn">
+        <a href="{% if user.is_authenticated %}{% url 'courses' %}{% endif %}{% if not user.is_authenticated %}{% url 'login' %}{% endif %}" class="welcome-container-btn">
             Начать обучение
         </a>
 
