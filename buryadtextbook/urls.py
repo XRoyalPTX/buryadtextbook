@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("home.urls")),
     path('', include("users.urls")),
-    #path('courses/', include("courses.urls")), убрано, так как пока что не используется, из-за чего вылезает ошибка
+    path('courses/', include("courses.urls"))
 ]

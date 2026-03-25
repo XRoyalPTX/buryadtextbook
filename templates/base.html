@@ -26,12 +26,12 @@
             <nav class="menu-btns d-none d-md-block">
                 <a href="{% url 'home' %}" class="logo">cэсэн</a>
                 <a href="{% url 'home' %}" class="menu-btn me-3 {% if request.path == '/' %}active{% endif %}">Главная</a>
-                <a href="{% url 'under_construction' %}" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
+                <a href="{% url 'courses' %}" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
             </nav>
             <nav class="menu-btns d-block d-md-none">
                 <a href="{% url 'home' %}" class="logo">cэсэн</a>
                 <a href="{% url 'home' %}" class="menu-btn me-2 {% if request.path == '/' %}active{% endif %}">Главная</a>
-                <a href="{% url 'under_construction' %}" class="menu-btn mx-2 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
+                <a href="{% url 'courses' %}" class="menu-btn mx-2 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
             </nav>
 
             {% if user.is_authenticated %}
@@ -88,7 +88,7 @@
                     <div class="footer-list">
                         <h5 style="color: rgb(15,23,42)">Ссылки</h5>
                         <a href="{% url 'home' %}">Главная</a><br>
-                        <a href="{% url 'under_construction' %}">Курсы</a>
+                        <a href="{% url 'courses' %}">Курсы</a>
                     </div>
                 </div>
 

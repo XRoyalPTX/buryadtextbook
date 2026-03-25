@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Курсы{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'courses/css/courses.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script>
+
+
+
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="courses-main text-center">
+
+    <h1 style="font-weight: 600; text-align: left; font-size: 2.5rem;">Доступные курсы</h1>
+    <p style="text-align: left; color: rgb(71, 85, 105); margin-bottom: 2rem;">Выберите курс для просмотра описания и перечня уроков.</p>
+    <div class="row g-3">
+
+        {% for card in courses %}
+        <div class="col-12 col-sm-6 col-md-4">
+            <div class="course-card">
+                <h2>{{ card.title }}</h2>
+                <span class="course-author"><small>Автор: {{ card.author.last_name }} {{ card.author.first_name }}</small></span>
+                <p>{{ card.description }}</p>
+                <a href="{% url 'course' card.id %}" class="course-btn open-btn">Открыть курс</a>
+                {% if card.author == user or user.is_superuser %}
+                    <a href="{% url 'under_construction' %}" class="course-btn edit-btn">Редактировать курс</a>
+                    <a href="{% url 'under_construction' %}" class="course-btn delete-btn">Удалить курс</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

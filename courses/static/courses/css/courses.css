@@ -1,0 +1,93 @@
+.courses-main {
+    padding-top: 90px;
+    padding-bottom: 120px;
+    width: calc(100% - 2rem);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.course-card {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    padding: 2rem;
+    text-align: left;
+    border: solid 1px rgb(226,232,240);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+.course-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    margin-top: 0;
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.course-card .course-author {
+    margin-bottom: 1rem;
+}
+
+.course-card p {
+    color: rgb(71, 85, 105);
+    margin-bottom: 0;
+    margin-top: auto;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.course-card .course-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+}
+
+.course-card .open-btn {
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-top: 1.5rem;
+}
+
+.course-card .edit-btn {
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.course-card .open-btn:hover, .course-card .edit-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.course-card .delete-btn {
+    border: 2px solid rgb(244, 63, 94);
+    color: rgb(244, 63, 94);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.course-card .delete-btn:hover {
+    background-color: rgb(244, 63, 94);
+    box-shadow: 0 0 40px -5px rgba(244, 63, 94, 0.3);
+    color: white;
+    cursor: pointer;
+}   
