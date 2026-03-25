@@ -24,5 +24,8 @@ class Lesson(models.Model):
     order_num = models.IntegerField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = [['course', 'order_num']]
+
     def __str__(self):
         return f"Урок №{self.order_num} из курса «{self.course.title}»"
