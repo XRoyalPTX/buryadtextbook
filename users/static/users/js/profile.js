@@ -3,7 +3,7 @@ $(document).ready(function() {
         let result = confirm('Вы точно хотите удалить аккаунт?\nЭто повлечет за собой удаление всех данных!');
         if (!result) {
             event.preventDefault();
-            console.log('Удаление аккаунт прервано.')
+            console.log('Удаление аккаунта прервано.')
         } else {
             console.log('Аккаунт удалён пользователем.');
         }

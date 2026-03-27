@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Создание курса{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'courses/css/update_course.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script>
+
+
+
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="update-course-main text-center">
+
+    <div class="container update-course-form text-left">
+    <h3>Редактирование курса</h3>
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="errors global-errors" style="color: #dc3545; margin-bottom: 15px;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+
+            <div class="update-course-input">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                <br>
+
+
+                {% if field.errors %}
+                    <div class="errors">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+            <button type="submit" class="update-course-btn-form">Изменить курс</button>
+            <a href="{% url 'courses' %}" class="to-courses-btn">Отмена</a>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -6,6 +6,29 @@
     margin: 0 auto;
 }
 
+.create-course-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-bottom: 2rem;
+    width: fit-content;
+}
+
+.create-course-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
 .course-card {
     box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
     border-radius: 24px;

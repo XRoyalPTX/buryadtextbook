@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import MyUser
-from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -9,9 +9,20 @@ class Course(models.Model):
     picture = models.ImageField(upload_to='static/courses/images/courses_imgs', null=True, blank=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    author = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        MyUser,
+        on_delete=models.CASCADE, 
+        limit_choices_to={"role": "expert"}
+    )
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateField(auto_now=True)
+
+    def clean(self):
+        if not hasattr(self, 'author') or self.author is None:
+            return 
+        
+        if self.author.role != "expert" and not self.author.is_superuser:
+            raise ValidationError('Автором курса может быть только пользователь с ролью "Эксперт"')
 
     def __str__(self):
         return f"Курс: {self.title};\nАвтор: {self.author.last_name} {self.author.first_name}"
@@ -26,6 +37,7 @@ class Lesson(models.Model):
 
     class Meta:
         unique_together = [['course', 'order_num']]
+
 
     def __str__(self):
         return f"Урок №{self.order_num} из курса «{self.course.title}»"

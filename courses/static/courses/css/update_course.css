@@ -1,0 +1,122 @@
+.update-course-main {
+    display: flex;
+    align-items: center;
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+
+.update-course-form {
+    margin: 0 auto;
+    max-width: 450px;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    border: solid 1px rgb(226,232,240);
+}
+
+.update-course-form h3 {
+    margin-bottom: 2.5rem;
+}
+
+.update-course-input {
+    margin-bottom: 1rem;
+}
+
+.update-course-form input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: solid 1px rgb(226,232,240);
+}
+
+input:focus {
+    outline-color: rgb(78,69,228);
+}
+
+.update-course-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: solid 1px rgb(226,232,240);
+}
+
+.update-course-form textarea:focus {
+    outline-color: rgb(78,69,228);
+}
+
+.update-course-form label {
+    display: block;
+    margin-bottom: 4px;
+    text-align: left !important;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.update-course-form ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.update-course-btn-form {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.update-course-btn-form:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+}
+
+.to-courses-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    border: 2px solid rgb(244, 63, 94);
+    color: rgb(244, 63, 94);
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.to-courses-btn:hover {
+    background-color: rgb(244, 63, 94);
+    box-shadow: 0 0 40px -5px rgba(244, 63, 94, 0.3);
+    color: white;
+}
+
+@media(max-width: 575px) {
+
+    .update-course-main {
+        display: flex;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .update-course-form input {
+        padding: 0.5rem;
+    }
+
+    .update-course-form {
+        width: calc(100% - 1rem);
+        padding: 1.5rem;
+    }
+}
