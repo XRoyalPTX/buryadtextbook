@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Сэсэн | Курс | норм{% endblock %}
+{% block title %}Сэсэн | Курс | {{ current_course.title }}{% endblock %}
 
 {% load static %}
 
@@ -28,6 +28,10 @@
 
     <div class="lessons-list">
         <h2>Перечень уроков курса</h2>
+
+        {% if user == current_course.author or user.is_superuser%}
+        <a class="create-lesson-btn" href="{% url 'under_construction' %}">Создать новый урок</a>
+        {% endif %}
 
         {% for card in lessons %}
             <div class="lesson-card">

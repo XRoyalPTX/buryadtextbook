@@ -115,7 +115,7 @@
     transition: 0.6s;
 }
 
-.edit-lesson-btn, .delete-lesson-btn {
+.edit-lesson-btn, .delete-lesson-btn, .create-lesson-btn {
     display: block;
     background-color: transparent;
     border-radius: 12px;
@@ -126,12 +126,17 @@
     font-size: 16px;
 }
 
-.edit-lesson-btn {
+.edit-lesson-btn, .create-lesson-btn {
     border: 2px solid rgb(106,98,233);
     color: rgb(106,98,233);
 }
 
-.edit-lesson-btn:hover {
+.create-lesson-btn {
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+.edit-lesson-btn:hover, .create-lesson-btn:hover {
     background-color: rgb(106,98,233);
     box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
     color: white;
