@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block extrajs %}
+<script src="{% static 'courses/js/create_course.js' %}"></script>
 <script>
 
 
@@ -35,7 +36,11 @@
             <div class="update-course-input">
                 <label>{{ field.label }}</label>
                 {{ field }}
-                <br>
+                <span class="help-text" id="{{ field.id_for_label }}-help">
+                    {% if field.name == 'title' %}
+                        В названии можно ввести максимум 255 символов.
+                    {% endif %}
+                </span>
 
 
                 {% if field.errors %}

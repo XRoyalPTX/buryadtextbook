@@ -19,6 +19,12 @@
     margin-bottom: 2.5rem;
 }
 
+.help-text {
+    display: none;
+    margin-top: 3px;
+    font-size: 12px;
+}
+
 .update-course-input {
     margin-bottom: 1rem;
 }

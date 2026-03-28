@@ -33,7 +33,7 @@
                 <h2>{{ card.title }}</h2>
                 <span class="course-author"><small>Автор: {{ card.author.last_name }} {{ card.author.first_name }}</small></span>
                 <p>{{ card.description }}</p>
-                <a href="{% url 'course' card.id %}" class="course-btn open-btn">Открыть курс</a>
+                <a href="{% url 'open_course' card.id %}" class="course-btn open-btn">Открыть курс</a>
                 {% if card.author == user or user.is_superuser %}
                     <a href="{% url 'update_course' card.id %}" class="course-btn edit-btn">Редактировать курс</a>
                     <form 

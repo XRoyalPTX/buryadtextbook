@@ -30,16 +30,16 @@
         <h2>Перечень уроков курса</h2>
 
         {% if user == current_course.author or user.is_superuser%}
-        <a class="create-lesson-btn" href="{% url 'under_construction' %}">Создать новый урок</a>
+        <a class="create-lesson-btn" href="{% url 'create_lesson' current_course.id %}">Создать новый урок</a>
         {% endif %}
 
         {% for card in lessons %}
             <div class="lesson-card">
                 <div class="lesson-card-name">
-                    <h3>{{ card.title }}</h3>
-                    <p>Вопросов в тесте: 0</p>
+                    <h3>Урок {{ card.order_num }}. {{ card.title }}</h3>
+                    <p>Лайков: 0. Комментариев: 0</p>
                 </div>
-                <a href="{% url 'under_construction' %}" class="to-lesson-btn">Перейти к уроку</a>
+                <a href="{% url 'open_lesson' current_course.id card.order_num %}" class="to-lesson-btn">Перейти к уроку</a>
             </div>
             {% if user == current_course.author or user.is_superuser %}
             <div class="row g-3">

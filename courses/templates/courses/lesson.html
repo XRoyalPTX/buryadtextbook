@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Урок | {{ current_lesson.title }}{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'courses/css/lesson.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script>
+
+
+
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="lesson-main">
+
+    <a href="{% url 'open_course' current_course.id %}" class="to-lessons-btn">К списку уроков</a>
+
+    <div class="lesson-content">
+        <div class="lesson-content-header">
+            <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0;">Урок {{ current_lesson.order_num }}. {{ current_lesson.title }}</h2>
+        </div>
+
+        <div class="lesson-content-text" id="lesson-content-text">
+            {{ current_lesson.content|safe }}
+        </div>
+
+        <div class="lesson-buttons">
+            <div class="row g-3">
+                <div class="col-12 col-sm-4">
+                    {% if prev_lesson %}
+                    <a href="{% url 'open_lesson' current_course.id prev_lesson.order_num %}" class="lesson-btn lesson-btn-prev-next">Предыдущий урок</a>
+                    {% else %}
+                    <a href="{% url 'open_course' current_course.id %}"  class="lesson-btn lesson-btn-prev-next">Вернуться к курсу</a>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-sm-4">
+                    <a href="{% url 'under_construction' %}"  class="lesson-btn-tests">Пройти тесты по уроку</a>
+                </div>
+                <div class="col-12 col-sm-4">
+                    {% if next_lesson %}
+                    <a href="{% url 'open_lesson' current_course.id next_lesson.order_num %}"  class="lesson-btn lesson-btn-prev-next">Следующий урок</a>
+                    {% else %}
+                    <a href="{% url 'open_course' current_course.id %}"  class="lesson-btn lesson-btn-prev-next">Вернуться к курсу</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="lesson-comments-section">
+            <h3>Комментарии (0)</h3>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

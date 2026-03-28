@@ -5,7 +5,7 @@ from .models import Course, Lesson
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
-from .forms import CreateCourseForm, UpdateCourseForm
+from .forms import CreateCourseForm, UpdateCourseForm, CreateLessonForm
 from django.core.exceptions import ValidationError, PermissionDenied
 
 # Create your views here.
@@ -101,3 +101,81 @@ def delete_course(request, course_id):
         return HttpResponse(success_message)
     
     return HttpResponse()
+
+
+@login_required
+def open_lesson(request, course_id, lesson_order_num):
+    current_course = get_object_or_404(Course, pk=course_id)
+    current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    number = current_course.lessons.count()
+
+    prev_lesson = Lesson.objects.filter(
+        course=current_course, 
+        order_num__lt=current_lesson.order_num
+    ).order_by('-order_num').first()
+    
+    next_lesson = Lesson.objects.filter(
+        course=current_course, 
+        order_num__gt=current_lesson.order_num
+    ).order_by('order_num').first()
+
+    return render(request, 'courses/lesson.html', {
+        'current_course': current_course,
+        'current_lesson': current_lesson,
+        'num_of_lessons': number,
+        'prev_lesson': prev_lesson,
+        'next_lesson': next_lesson,
+    })
+
+
+def get_next_order_num(current_course):
+    used_numbers = list(current_course.lessons.values_list('order_num', flat=True).order_by('order_num'))
+    missed_numbers = []
+
+    if not used_numbers:
+        return [1]
+    
+    if used_numbers[0] != 1:
+        gap = range(1, used_numbers[0])
+        missed_numbers.extend(gap)
+
+    for i in range(len(used_numbers) - 1):
+        if used_numbers[i] + 1 != used_numbers[i+1]:
+            gap = range(used_numbers[i] + 1, used_numbers[i+1])
+            missed_numbers.extend(gap)
+    
+    if missed_numbers:
+        return missed_numbers
+            
+    return [len(used_numbers) + 1]
+
+
+@user_passes_test(is_expert)
+def create_lesson(request, course_id):
+    current_course = get_object_or_404(Course, pk=course_id)
+    
+    if request.user != current_course.author and not request.user.is_superuser:
+        raise PermissionDenied()
+    
+    free_numbers = get_next_order_num(current_course)
+    auto_order_num = free_numbers[0]
+
+    if request.method == 'POST':
+        form = CreateLessonForm(data=request.POST)
+        if form.is_valid():
+            lesson = form.save(commit=False)
+            lesson.course = current_course
+            
+            lesson.order_num = free_numbers[0] 
+            
+            lesson.save()
+            messages.success(request, f'Урок №{lesson.order_num} успешно создан')
+            return redirect('open_course', course_id=current_course.id) 
+    else:
+        form = CreateLessonForm()
+    
+    return render(request, 'courses/create_lesson.html', {
+        'form': form,
+        'current_course': current_course,
+        'auto_order_num': auto_order_num,
+    })

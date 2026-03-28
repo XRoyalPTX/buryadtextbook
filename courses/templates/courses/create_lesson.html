@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Сэсэн | Создание курса{% endblock %}
+{% block title %}Сэсэн | Создание урока{% endblock %}
 
 {% load static %}
 
 {% block extrahead %}
-<link rel="stylesheet" href="{% static 'courses/css/create_course.css' %}">
+<link rel="stylesheet" href="{% static 'courses/css/create_lesson.css' %}">
 {% endblock %}
 
 {% block extrajs %}
-<script src="{% static 'courses/js/create_course.js' %}"></script>
+<script src="{% static 'courses/js/create_lesson.js' %}"></script>
+{{ form.media }}
 {% endblock %}
 
 {% block main %}
-<div class="create-course-main text-center">
+<div class="create-lesson-main text-center">
 
-    <div class="container create-course-form text-left">
-    <h3>Создание курса</h3>
+    <div class="container create-lesson-form text-left">
+    <h3>Создание урока №{{ auto_order_num }}</h3>
         <form method="post">
             {% csrf_token %}
 
@@ -28,12 +29,13 @@
 
             {% for field in form %}
 
-            <div class="create-course-input">
+            <div class="create-lesson-input">
                 <label>{{ field.label }}</label>
                 {{ field }}
                 <span class="help-text" id="{{ field.id_for_label }}-help">
                     {% if field.name == 'title' %}
-                        В названии можно ввести максимум 255 символов.
+                        В названии можно ввести максимум 255 символов.<br>
+                        Не пишите "Урок N", так как этот текст будет вставлен автоматически.
                     {% endif %}
                 </span>
 
@@ -48,7 +50,7 @@
 
             {% endfor %}
 
-            <button type="submit" class="create-course-btn-form">Создать курс</button>
+            <button type="submit" class="create-lesson-btn-form">Создать урок</button>
         </form>
     </div>
 

@@ -1,5 +1,5 @@
 .courses-main {
-    padding-top: 90px;
+    padding-top: 80px;
     padding-bottom: 120px;
     width: calc(100% - 2rem);
     max-width: 1200px;
@@ -118,7 +118,7 @@
 
 @media(max-width: 575px) {
     .courses-main {
-        padding-top: 60px;
+        padding-top: 40px;
         padding-bottom: 60px;
     }
 

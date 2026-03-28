@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'home',
     'users',
     'courses',
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,6 +133,31 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',  # или os.path.join(BASE_DIR, 'static')
 ]
 
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
+
 AUTH_USER_MODEL = 'users.MyUser'
 
 LOGIN_URL = 'login'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            # Базовое форматирование и цвета (важно для выделения правил)
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'TextColor', 'BGColor'],
+            # Списки и выравнивание
+            ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight'],
+            # Ссылки
+            ['Link', 'Unlink'],
+            # Заголовки (H2, H3) и размер шрифта для структуры урока
+            ['Format', 'FontSize'],
+            # Вставка таблиц (для спряжений), линий и спецсимволов
+            ['Table', 'HorizontalRule', 'SpecialChar'],
+        ],
+        'height': 500, 
+        'language': 'ru', 
+        'removePlugins': 'elementspath',
+        'resize_enabled': False,
+    }
+}
