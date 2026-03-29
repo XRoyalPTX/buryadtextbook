@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Создание урока{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'courses/css/update_lesson.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'courses/js/create_lesson.js' %}"></script>
+{{ form.media }}
+{% endblock %}
+
+{% block main %}
+<div class="update-lesson-main text-center">
+
+    <div class="container update-lesson-form text-left">
+    <h3>Редактирование урока №{{ order_num }}</h3>
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="errors global-errors" style="color: #dc3545; margin-bottom: 15px;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+
+            <div class="update-lesson-input">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                <span class="help-text" id="{{ field.id_for_label }}-help">
+                    {% if field.name == 'title' %}
+                        В названии можно ввести максимум 255 символов.<br>
+                        Не пишите "Урок N", так как этот текст будет вставлен автоматически.
+                    {% endif %}
+                </span>
+
+
+                {% if field.errors %}
+                    <div class="errors">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+            <button type="submit" class="update-lesson-btn-form">Изменить урок</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

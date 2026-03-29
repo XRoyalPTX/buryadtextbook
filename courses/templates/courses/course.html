@@ -34,6 +34,7 @@
         {% endif %}
 
         {% for card in lessons %}
+        <div id="lesson-{{ card.id }}">
             <div class="lesson-card">
                 <div class="lesson-card-name">
                     <h3>Урок {{ card.order_num }}. {{ card.title }}</h3>
@@ -44,13 +45,23 @@
             {% if user == current_course.author or user.is_superuser %}
             <div class="row g-3">
                 <div class="col-12 col-md-6">
-                    <a href="{% url 'under_construction' %}" class="edit-lesson-btn">Редактировать урок {{ card.order_num }}</a>
+                    <a href="{% url 'update_lesson' current_course.id card.id %}" class="edit-lesson-btn">Редактировать урок {{ card.order_num }}</a>
                 </div>
                 <div class="col-12 col-md-6">
-                    <a href="{% url 'under_construction' %}" class="delete-lesson-btn">Удалить урок {{ card.order_num }}</a>
+                    <form 
+                        hx-post="{% url 'delete_lesson' current_course.id card.id %}"
+                        hx-target="#lesson-{{ card.id }}" 
+                        hx-swap="outerHTML"
+                        hx-confirm="Вы действительно хотите удалить урок «{{ card.title }}»">
+                        {% csrf_token %}
+                        <button class="delete-lesson-btn" type="submit" style="width: 100%;">
+                            Удалить урок {{ card.order_num }}
+                        </button>
+                    </form>
                 </div>
             </div>
             {% endif %}
+        </div>
         {% endfor %}
 
     </div>

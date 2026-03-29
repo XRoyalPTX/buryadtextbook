@@ -5,7 +5,7 @@ from .models import Course, Lesson
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
-from .forms import CreateCourseForm, UpdateCourseForm, CreateLessonForm
+from .forms import CreateCourseForm, UpdateCourseForm, CreateLessonForm, UpdateLessonForm
 from django.core.exceptions import ValidationError, PermissionDenied
 
 # Create your views here.
@@ -169,7 +169,7 @@ def create_lesson(request, course_id):
             lesson.order_num = free_numbers[0] 
             
             lesson.save()
-            messages.success(request, f'Урок №{lesson.order_num} успешно создан')
+            messages.success(request, f'Урок №{lesson.order_num} успешно создан.')
             return redirect('open_course', course_id=current_course.id) 
     else:
         form = CreateLessonForm()
@@ -179,3 +179,62 @@ def create_lesson(request, course_id):
         'current_course': current_course,
         'auto_order_num': auto_order_num,
     })
+
+
+@user_passes_test(is_expert)
+def update_lesson(request, course_id, lesson_id):
+    current_course = get_object_or_404(Course, pk=course_id)
+    current_lesson = get_object_or_404(Lesson, course=current_course, pk=lesson_id)
+    lesson_order_num = current_lesson.order_num
+
+    if request.user != current_course.author and not request.user.is_superuser:
+        raise PermissionDenied()
+
+    if request.method == 'POST':
+        form = UpdateLessonForm(data=request.POST, instance=current_lesson)
+        if form.is_valid():
+            if form.has_changed():
+                current_lesson = form.save()
+                messages.success(request, f'Урок №{current_lesson.order_num} успешно изменен.')
+                return redirect('open_course', course_id=current_course.id) 
+            else:
+                form.add_error(None, 'Вы не ввели никаких изменений')
+
+    else:
+        form = UpdateLessonForm(instance=current_lesson)
+    
+    return render(request, 'courses/update_lesson.html', {
+        'form': form,
+        'current_course': current_course,
+        'order_num': lesson_order_num,
+    })
+
+
+@user_passes_test(is_expert)
+def delete_lesson(request, course_id, lesson_id):
+    current_course = get_object_or_404(Course, pk=course_id)
+    current_lesson = get_object_or_404(Lesson, pk=lesson_id)
+
+    success_message = '''
+        <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
+            <div class="alert alert-success">Урок успешно удален.</div>
+        </div>
+    '''
+    error_message = '''
+        <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
+            <div class="alert alert-error">У вас нет прав для удаления этого урока.</div>
+        </div>
+    '''
+
+    if request.user != current_course.author and not request.user.is_superuser:
+        response = HttpResponse(error_message)
+        response['HX-Reswap'] = 'none'
+        return response
+    
+    if request.method == 'POST':
+        if current_lesson.course == current_course:
+            response = HttpResponse(success_message)
+            current_lesson.delete()
+            return response
+        
+    return HttpResponse(status=204) 

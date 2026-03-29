@@ -47,3 +47,15 @@ class CreateLessonForm(forms.ModelForm):
             'content': 'Теоретическая часть урока',
             'order_num': 'Порядковый номер урока',
         }
+
+
+class UpdateLessonForm(forms.ModelForm):
+    class Meta:
+        model = Lesson
+        fields = ('title', 'content')
+
+        labels = {
+            'title': 'Название урока',
+            'content': 'Теоретическая часть урока',
+            'order_num': 'Порядковый номер урока',
+        }

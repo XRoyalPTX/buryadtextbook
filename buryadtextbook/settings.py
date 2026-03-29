@@ -155,7 +155,7 @@ CKEDITOR_CONFIGS = {
             # Вставка таблиц (для спряжений), линий и спецсимволов
             ['Table', 'HorizontalRule', 'SpecialChar'],
         ],
-        'height': 500, 
+        'height': 350, 
         'language': 'ru', 
         'removePlugins': 'elementspath',
         'resize_enabled': False,

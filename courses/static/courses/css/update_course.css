@@ -108,6 +108,14 @@ input:focus {
     color: white;
 }
 
+.errorlist {
+    color: red;
+    margin-top: 3px;
+    font-size: 12px;
+    list-style-type: none !important;
+    padding-left: 0 !important;
+}
+
 @media(max-width: 575px) {
 
     .update-course-main {
