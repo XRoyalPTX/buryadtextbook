@@ -1,0 +1,155 @@
+* {
+    box-sizing: border-box;
+}
+
+.dictionary-main {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    width: calc(100% - 2rem);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dictionary-form {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.dictionary-form h2 {
+    margin-bottom: 1rem;
+} 
+
+.dictionary-form input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: solid 1px rgb(226,232,240);
+}
+
+.change-lang .button {
+    background-color: transparent;
+    border: 2px solid rgb(106,98,233);
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    color: rgb(106,98,233);
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.change-lang .button.active {
+    background-color: rgb(106,98,233);
+    color: white;
+    transition: 0.3s;
+}
+
+.change-lang .button:hover {
+    background-color: rgb(106,98,233);
+    color: white;
+    transition: 0.3s;
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.5);
+}
+
+form {
+    margin-bottom: 1rem;
+}
+
+.dictionary-form input:focus {
+    outline-color: rgb(78,69,228);
+}
+
+.buryad-letters {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1rem;
+}
+
+.buryad-letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: transparent;
+    border: 2px solid rgb(106,98,233);
+    border-radius: 12px;
+    text-decoration: none;
+    color: rgb(106,98,233);
+    font-weight: 700;
+    transition: 0.3s;
+    cursor: pointer;
+    padding: 0.4rem 1.2rem;
+    margin-right: 1rem;
+}
+
+.buryad-letter:hover {
+    background-color: rgb(106,98,233);
+    color: white;
+    transition: 0.3s;
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.5);
+}
+
+.dictionary-form .find-translate {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgb(78,69,228), rgb(129,140,248), rgb(243,61,93));
+    background-size: 150% auto;
+    background-position: left center;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.6s;
+    border: none;
+}
+
+.dictionary-form .find-translate:hover {
+    background-position: right center;
+    background-size: 300% auto;
+    transition: 0.6s;
+}
+
+.translations {
+    margin-bottom: 1rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid rgb(226, 232, 240);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+.based-on-burlang-api {
+    font-size: 14px;
+    color: rgb(71,85,105);
+}
+
+.based-on-burlang-api a {
+    color: rgb(106, 98, 233);
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.based-on-burlang-api a:hover {
+    color: rgb(79, 70, 229);
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+@media(max-width: 575px) {
+    .dictionary-main {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .dictionary-form {
+        padding: 1rem;
+    }
+}

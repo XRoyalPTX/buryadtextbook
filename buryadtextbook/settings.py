@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'home',
     'users',
     'courses',
+    'features',
     'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',

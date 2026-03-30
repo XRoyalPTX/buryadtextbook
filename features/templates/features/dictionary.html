@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Словарь{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'features/css/dictionary.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'features/js/dictionary.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="dictionary-main" text-center">
+
+    <div class="dictionary-form">
+
+        <h2>Словарь</h2>
+        <div class="row g-3 change-lang" style="margin-bottom: 1rem;">
+            <div class="col-6">
+                <button id="from-bur-to-rus" class="button active">бурятско-русский</button>
+            </div>
+            <div class="col-6"><button id="from-rus-to-bur" class="button">русско-бурятский</button></div>
+        </div>
+        <form method="get" id="form-input">
+            <div class="row g-3">
+                <div class="col-12 col-md-9" id="word-input-container">
+                    <input type="text" id="word-input" name="input_word" placeholder="Введите слово на бурятском" required></input>
+                    <div id="buryad-letters-wrapper">
+                        <div class="buryad-letters">
+                            <div class="buryad-letter">ү</div>
+                            <div class="buryad-letter">һ</div>
+                            <div class="buryad-letter">ө</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <button type="submit" class="find-translate">Найти</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="translations" id="id_translations" style="text-align: left;">
+            Тут появится найденный перевод слова.
+        </div>
+
+        <div class="" style="text-align: left; font-size: 14px; margin-bottom: 1rem;">
+            Для начала рекомендуем ознакомиться со следующими пунктами:
+            <br>1. Словарь - это база переводов слов, а не полноценный переводчик. Невозможно будет перевести целое предложение.
+            <br>2. Чтобы найти слово, убедитесь, что оно правильно написано. Например, "үбдэхэ", а не "убдэхэ".
+            <br>3. Словарь не может перевести слова, написанные не в начальной форме. К сожалению, невозможно будет перевести "вечерами", но можно "вечер".
+        </div>
+
+        <span class="based-on-burlang-api">Реализовано на базе бесплатного <a href="https://burlang.ru/api/v1">API burlang</a></apsn>
+    </div>
+
+</div>
+
+{% endblock %}
