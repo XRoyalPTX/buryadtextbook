@@ -21,4 +21,17 @@ $(document).ready(function(){
             }, 5000);
         }
     });
+
+    $("#burger-toggle").on('click', function(){
+        $(this).toggleClass('open');
+        $('.mobile-menu').stop(true, true).slideToggle(300);
+    });
+
+    $(document).on('click', function(e){
+        if (($(e.target).closest('.mobile-menu').length === 0) && ($(e.target).closest('#burger-toggle').length === 0)) {
+            $('.mobile-menu').slideUp(300);
+            $('#burger-toggle').removeClass('open');
+        };
+    });
+
 });

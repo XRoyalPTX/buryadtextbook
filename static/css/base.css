@@ -16,7 +16,7 @@ header {
     z-index: 9998;
 }
 
-.in-header-container {
+.in-header-container-big {
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
@@ -35,7 +35,7 @@ header {
     font-weight: 700;
     font-style: italic;
     transition: 0.6s;
-    margin-right: 5rem;
+    margin-right: 4rem;
 }
 
 .logo:hover {
@@ -44,31 +44,29 @@ header {
     cursor: pointer;
 }
 
-@media(max-width: 576px) {
-    .logo {
-        display: none;
-    }
+.burger-btn {
+    display: none;
 }
 
-.in-header-container .menu-btn {
+.in-header-container-big .menu-btn, .mobile-menu .menu-btn {
     color: rgb(71,85,105);
     font-weight: 600;
     text-decoration: none;
     transition: 0.3s;
 }
 
-.in-header-container .menu-btn:hover {
+.in-header-container-big .menu-btn:hover, .mobile-menu .menu-btn:hover {
     color: rgb(79,70,229);
     transition: 0.3s;
     font-size: 17px;
 }
 
-.in-header-container .menu-btns .active {
+.in-header-container-big .menu-btns.active, .mobile-menu .menu-btn.active {
     color: rgb(106,98,233) !important;
     font-weight: 700 !important;
 }
 
-.in-header-container .log-btn {
+.in-header-container-big .log-btn, .mobile-menu .log-btn {
     background-color: transparent;
     border: 2px solid rgb(106,98,233);
     border-radius: 12px;
@@ -80,14 +78,14 @@ header {
     font-size: 16px;
 }
 
-.in-header-container .log-btn.active {
+.in-header-container-big .log-btn.active, .mobile-menu .log-btn.active {
     background-color: rgb(106,98,233);
     color: white;
     transition: 0.3s;
 }
 
 
-.in-header-container .log-btn:hover {
+.in-header-container-big .log-btn:hover, .mobile-menu .log-btn:hover {
     background-color: rgb(106,98,233);
     color: white;
     transition: 0.3s;
@@ -108,6 +106,93 @@ header {
 .menu-help-btns img:hover {
     border: 1px solid rgb(79,70,229);
     transition: 0.3s;
+}
+
+.in-header-container-small {
+    display: none;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.burger-btn {
+    display: flex;
+    position: relative;
+    width: 34px;
+    height: 34px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: 0.6s;
+    border-radius: 6px;
+}
+
+.burger-btn span {
+    display: block;
+    position: absolute;
+    right: 5px; 
+    top: 50%; 
+    margin-top: -1.5px; 
+    height: 3px;
+    width: 24px;
+    background-color: rgb(78, 69, 228) !important;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.burger-btn:hover {
+    background-color: rgb(78, 69, 228);
+    transition: 0.6s;
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.5);
+}
+
+.burger-btn:hover span {
+    background-color: white !important;
+    transition: 0.4s;
+}
+
+.burger-btn span:nth-child(1) {
+    transform: translateY(-8px); 
+}
+
+.burger-btn span:nth-child(2) {
+    transform: translateY(0);
+}
+
+.burger-btn span:nth-child(3) {
+    transform: translateY(8px); 
+}
+
+.burger-btn.open span:nth-child(1) {
+    transform: translateY(0) rotate(45deg);
+}
+
+.burger-btn.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-btn.open span:nth-child(3) {
+    transform: translateY(0) rotate(-45deg);
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+    padding: 0 1rem 0 1rem;
+}
+
+.mobile-menu a {
+    display: block;
+    text-align: center;
+    margin-bottom: 16px;
 }
 
 main {
@@ -157,6 +242,16 @@ footer p {
 
 .alert:hover {
     cursor: pointer;
+}
+
+@media(max-width: 767px) {
+    .in-header-container-big {
+        display: none;
+    }
+
+    .in-header-container-small {
+        display: flex;
+    }
 }
 
 @media(max-width: 575px) {

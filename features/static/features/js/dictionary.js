@@ -3,6 +3,7 @@ $(document).ready(function(){
     let $isBuryadToRussian = true;
     let $fromToText = $("#from-to");
     let $input = $("#word-input");
+    let $container = $("#id_translations");
 
     $("#from-bur-to-rus").on('click', function(){
         $(this).addClass('active');
@@ -12,6 +13,12 @@ $(document).ready(function(){
         $input.val('');
         $input.attr('placeholder', 'Введите слово на бурятском');
         $("#buryad-letters-wrapper").stop().slideDown(300);
+        if (!($container.text().includes('перевод слова.'))) {
+            $container.stop().slideUp(300, function(){
+                $container.text('Тут появится найденный перевод слова.');
+                $container.stop().slideDown(300);
+            });
+        };
     });
 
     $("#from-rus-to-bur").on('click', function(){
@@ -22,6 +29,12 @@ $(document).ready(function(){
         $input.val('');
         $input.attr('placeholder', 'Введите слово на русском');
         $("#buryad-letters-wrapper").stop().slideUp(300);
+        if (!($container.text().includes('перевод слова.'))) {
+            $container.stop().slideUp(300, function(){
+                $container.text('Тут появится найденный перевод слова.');
+                $container.stop().slideDown(300);
+            });
+        };
     });
 
     $(".buryad-letter").on('click', function(){
@@ -32,10 +45,9 @@ $(document).ready(function(){
 
     $("#form-input").on('submit', async function(event){
         event.preventDefault();
-        let $container = $("#id_translations");
 
         try {
-            let input_word = $("#word-input").val();
+            let input_word = $input.val();
             let language = $isBuryadToRussian ? 'buryat-word' : 'russian-word';
             let response = await fetch(`https://burlang.ru/api/v1/${language}/translate?q=${input_word}`);
 
