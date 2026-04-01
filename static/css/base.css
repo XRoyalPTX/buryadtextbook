@@ -44,6 +44,25 @@ header {
     cursor: pointer;
 }
 
+.studio-btn {
+    color: white;
+    background-color: rgb(15, 23, 42);
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid rgb(15, 23, 42);
+    cursor: pointer;
+}
+
+.studio-btn:hover {
+    background-color: rgb(30, 41, 59); 
+    border-color: rgb(30, 41, 59);
+    box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.4); 
+}
 .burger-btn {
     display: none;
 }
@@ -61,7 +80,7 @@ header {
     font-size: 17px;
 }
 
-.in-header-container-big .menu-btns.active, .mobile-menu .menu-btn.active {
+.in-header-container-big .menu-btn.active, .mobile-menu .menu-btn.active {
     color: rgb(106,98,233) !important;
     font-weight: 700 !important;
 }
@@ -244,7 +263,7 @@ footer p {
     cursor: pointer;
 }
 
-@media(max-width: 767px) {
+@media(max-width: 800px) {
     .in-header-container-big {
         display: none;
     }

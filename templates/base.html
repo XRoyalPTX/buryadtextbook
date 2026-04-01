@@ -28,7 +28,9 @@
                 <a href="{% url 'home' %}" class="menu-btn mx-3 {% if request.path == '/' %}active{% endif %}">Главная</a>
                 <a href="{% url 'courses' %}" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
                 <a href="{% url 'dictionary' %}" class="menu-btn mx-3 {% if request.path == '/features/dictionary/' %}active{% endif %}">Словарь</a>
-                <a href="{% url 'studio_courses' user.username %}" class="menu-btn mx-3">Студия</a>
+                {% if user.role == 'expert' or user.is_superuser %}
+                    <a href="{% url 'studio_courses' user.username %}" class="studio-btn mx-3">Студия</a>
+                {% endif %}
             </nav>
 
             {% if user.is_authenticated %}
@@ -60,7 +62,9 @@
                 <a href="{% url 'home' %}" class="menu-btn {% if request.path == '/' %}active{% endif %}">Главная</a>
                 <a href="{% url 'courses' %}" class="menu-btn {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
                 <a href="{% url 'dictionary' %}" class="menu-btn {% if request.path == '/features/dictionary/' %}active{% endif %}">Словарь</a>
-                <a href="#" class="menu-btn">Студия</a>
+                {% if user.role == 'expert' or user.is_superuser %}
+                    <a href="{% url 'studio_courses' user.username %}" class="studio-btn {% if request.path == '/courses/studio/' %}active{% endif %}">Студия</a>
+                {% endif %}
                 <a href="#" class="menu-btn">Switch to English</a>
             </div>
         </div>

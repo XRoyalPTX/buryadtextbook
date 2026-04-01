@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from .forms import CreateCourseForm, UpdateCourseForm, CreateLessonForm, UpdateLessonForm
 from django.core.exceptions import ValidationError, PermissionDenied
+from django.db.models import Count, Max
 
 # Create your views here.
 
@@ -243,7 +244,10 @@ def delete_lesson(request, course_id, lesson_id):
 @user_passes_test(is_expert)
 def studio_courses(request, username):
     needed_user = get_object_or_404(MyUser, username=username)
-    courses = Course.objects.filter(author=needed_user)
+    courses = Course.objects.filter(author=needed_user).annotate(
+        lessons_count=Count('lessons'),
+        max_lesson=Max('lessons__order_num')
+    )
     return render(request, 'courses/studio_courses.html', context={
         'courses': courses,
         'author_user': needed_user,
