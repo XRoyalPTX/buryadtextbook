@@ -1,0 +1,154 @@
+.studio-courses-main {
+    padding-top: 80px;
+    padding-bottom: 120px;
+    width: calc(100% - 2rem);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.welcome-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    text-align: left;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+    background-color: rgb(15, 23, 42);
+    padding: 2rem;
+    border: solid 1px rgb(226,232,240);
+    border-radius: 24px;
+}
+
+.welcome-container h1 {
+    margin-bottom: 1rem;
+}
+
+.welcome-container p {
+    margin-bottom: 0;
+}
+
+.welcome-container a {
+    display: block;
+    background: linear-gradient(135deg, rgb(78,69,228), rgb(129,140,248), rgb(243,61,93));
+    background-size: 150% auto;
+    background-position: left center;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.6s;
+    text-align: center;
+    width: fit-content;
+    margin-left: 1rem;
+}
+
+.welcome-container a:hover {
+    background-position: right center;
+    background-size: 300% auto;
+    transition: 0.6s;
+    cursor: pointer;
+}
+
+.statistics-container {
+    margin-top: 1rem;
+}
+
+.statistics-container .stat-card {
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    padding: 2rem;
+    text-align: left;
+    border: solid 1px rgb(226,232,240);
+    display: flex;
+    height: 100%;
+    position: relative;
+}
+
+.statistics-container .stat-card span {
+    color: rgb(71, 85, 105);
+}
+
+.statistics-container .stat-card-icon {
+    padding: 0.5rem;
+    background-color: rgb(248, 250, 252);
+    border-radius: 12px;
+    border: solid 1px rgb(226,232,240);
+    margin-right: 1rem;
+}
+
+.statistics-container .stat-card-icon.stat-card-icon-like {
+    background-color: rgba(254,226,226,0.5) !important;
+}
+
+.statistics-container .stat-card-icon img {
+    height: 100%;
+}
+
+.statistics-container .stat-card-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.statistics-container .stat-card-text h3 {
+    font-size: 2rem;
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+.studio-courses {
+    margin-top: 2rem;
+}
+
+.studio-courses h1 {
+    text-align: left;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.studio-courses .course-card {
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    padding: 2rem;
+    text-align: left;
+    border: solid 1px rgb(226,232,240);
+    display: flex;
+    height: 100%;
+    position: relative;
+}
+
+@media(max-width: 600px) {
+    .welcome-container {
+        padding: 1rem;
+    }
+
+    .statistics-container .stat-card {
+        padding: 1rem;
+    }
+    
+    .studio-courses .course-card {
+        padding: 1rem;
+    }
+}
+
+@media(max-width: 575px) {
+    .studio-courses-main {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .welcome-container {
+        display: block;
+    }
+
+    .welcome-container a {
+        width: 100%;
+        margin-top: 1rem;
+        margin-left: 0;
+    }
+}

@@ -28,7 +28,7 @@
                 <a href="{% url 'home' %}" class="menu-btn mx-3 {% if request.path == '/' %}active{% endif %}">Главная</a>
                 <a href="{% url 'courses' %}" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">Курсы</a>
                 <a href="{% url 'dictionary' %}" class="menu-btn mx-3 {% if request.path == '/features/dictionary/' %}active{% endif %}">Словарь</a>
-                <a href="#" class="menu-btn mx-3">Студия</a>
+                <a href="{% url 'studio_courses' user.username %}" class="menu-btn mx-3">Студия</a>
             </nav>
 
             {% if user.is_authenticated %}

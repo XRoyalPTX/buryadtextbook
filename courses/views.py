@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Course, Lesson
+from .models import Course, Lesson, MyUser
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
@@ -238,3 +238,13 @@ def delete_lesson(request, course_id, lesson_id):
             return response
         
     return HttpResponse(status=204) 
+
+
+@user_passes_test(is_expert)
+def studio_courses(request, username):
+    needed_user = get_object_or_404(MyUser, username=username)
+    courses = Course.objects.filter(author=needed_user)
+    return render(request, 'courses/studio_courses.html', context={
+        'courses': courses,
+        'author_user': needed_user,
+    })

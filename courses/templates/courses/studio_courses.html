@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Студия{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'courses/css/studio_courses.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script>
+
+
+
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="studio-courses-main text-center">
+    
+    <div class="welcome-container">
+        {% if user == author_user %}
+        <div>
+            <h1>Ваша студия эксперта</h1>
+            <p>Добро пожаловать в студию, {{ author_user.username }}. Время творить!</p>
+        </div>
+        <a href="#">Создать новый курс</a>
+        {% else %}
+        <div>
+            <h1>Студия пользователя {{ author_user.username }}</h1>
+            <p>Добро пожаловать в студию {{ author_user.username }}. Посмотрим, что же создал данный эксперт?</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="statistics-container">
+        <div class="row g-3">
+            <div class="col-12 col-sm-4">
+                <div class="stat-card">
+                    <div class="stat-card-icon"><img src="{% static 'courses/images/studio_imgs/courses-card-icon.svg' %}"></div>
+                    <div class="stat-card-text">
+                        <span>Курсов</span>
+                        <h3>{{ courses.count }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="stat-card">
+                    <div class="stat-card-icon"><img src="{% static 'courses/images/studio_imgs/tests-card-icon.svg' %}"></div>
+                    <div class="stat-card-text">
+                        <span>Тестов</span>
+                        <h3>0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="stat-card">
+                    <div class="stat-card-icon stat-card-icon-like"><img src="{% static 'courses/images/studio_imgs/heart-card-icon.svg' %}"></div>
+                    <div class="stat-card-text">
+                        <span>Лайков</span>
+                        <h3>0</h3>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+
+    <div class="studio-courses">
+        <h1>Управление курсами</h1>
+        {% for card in courses %}
+        <div class="course-card">
+            rere
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

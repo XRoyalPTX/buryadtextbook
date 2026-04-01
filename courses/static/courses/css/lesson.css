@@ -134,6 +134,11 @@
 }
 
 @media(max-width: 575px) {
+    .lesson-main {
+        padding-top: 40px;
+        padding-bottom: 60px;
+    }
+
     .lesson-btn-tests, .lesson-btn-prev-next {
         width: 100%;
     }

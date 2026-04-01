@@ -15,4 +15,6 @@ urlpatterns = [
     path('<int:course_id>/lesson/<int:lesson_order_num>', views.open_lesson, name='open_lesson'),
     path('<int:course_id>/update_lesson/<int:lesson_id>', views.update_lesson, name='update_lesson'),
     path('<int:course_id>/delete_lesson/<int:lesson_id>', views.delete_lesson, name='delete_lesson'),
+
+    path('studio/<str:username>', views.studio_courses, name='studio_courses'),
 ]
