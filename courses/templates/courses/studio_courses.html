@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Сэсэн | Студия{% endblock %}
+{% block title %}Сэсэн | Студия | Курсы{% endblock %}
 
 {% load static %}
 
@@ -25,7 +25,7 @@
             <h1>Ваша студия эксперта</h1>
             <p>Добро пожаловать в студию, {{ author_user.username }}. Время творить!</p>
         </div>
-        <a href="#">Создать новый курс</a>
+        <a href="{% url 'create_course' %}">Создать новый курс</a>
         {% else %}
         <div>
             <h1>Студия пользователя {{ author_user.username }}</h1>
@@ -71,48 +71,7 @@
 
             <h1>Управление курсами</h1>
             {% for card in courses %}
-            <div class="course-card">
-                <div class="course-card-text">
-                    {% if card.max_lesson == card.lessons_count %}
-                    <div class="status true">
-                        Опубликован
-                    </div>
-                    {% else %}
-                    <div class="status false">
-                        Не опубликован
-                    </div>
-                    {% endif %}
-                    <div>
-                        <h3>{{ card.title }}</h3>
-                    </div>
-                    <div>
-                        <span style="margin-right: 1rem;">Уроков: {{ card.lessons_count }}</span>
-                        <span>Студентов: 0</span>
-                    </div>
-                </div>
-                <div class="course-card-publish-card">
-                    {% if card.max_lesson == card.lessons_count %}
-                    <span style="color: rgb(16, 185, 129); font-weight: 700;">Структура исправна</span>
-                    <form method="post" action="#">
-                        {% csrf_token %}
-                        <button type="submit" class="publish-btn">Опубликовать</button>
-                    </form>
-                    {% else %}
-                    <div style="text-align: center;">
-                        <span style="color: rgb(245, 158, 11); font-weight: 700;">Нельзя опубликовать</span>
-                        <p style="color: rgb(245, 158, 11); font-size: 14px; margin-bottom: 0; margin-top: 0.5rem;">Есть пропуски в нумерации уроков (дырки)</p>
-                    </div>
-                    {% endif %}
-                </div>
-                <div class="course-card-buttons">
-                    <a href="#" class="simple-btn">Редактировать</a>
-                    <a href="#" class="simple-btn">Уроки</a>
-                    <form method="post" action="#">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-btn">Удалить</button>
-                    </form>
-                </div>
-            </div>
+                {% include 'courses/course_card.html' with card=card %}
             {% endfor %}
 
         {% else %}

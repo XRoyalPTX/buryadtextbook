@@ -40,6 +40,9 @@
                     {% if field.name == 'title' %}
                         В названии можно ввести максимум 255 символов.
                     {% endif %}
+                    {% if field.name == 'description' %}
+                        Опишите, что будет пройдено в курсе.
+                    {% endif %}
                 </span>
 
 
@@ -54,7 +57,7 @@
             {% endfor %}
 
             <button type="submit" class="update-course-btn-form">Изменить курс</button>
-            <a href="{% url 'courses' %}" class="to-courses-btn">Отмена</a>
+            <a href="{% url 'studio_courses' user.username %}" class="to-courses-btn">Обратно в студию</a>
         </form>
 
     </div>

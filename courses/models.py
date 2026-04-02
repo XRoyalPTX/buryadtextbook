@@ -3,40 +3,76 @@ from users.models import MyUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from ckeditor.fields import RichTextField
+from django.db.models import Max
 
 # Create your models here.
 
 
 class Course(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+    title = models.CharField("Название курса", max_length=255)
+    description = models.TextField("Описание курса")
     author = models.ForeignKey(
         MyUser,
         on_delete=models.CASCADE, 
+        verbose_name="Автор",
         limit_choices_to={"role": "expert"}
     )
-    date_created = models.DateField(auto_now_add=True)
-    date_updated = models.DateField(auto_now=True)
+    is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
+    date_created = models.DateField("Дата создания", auto_now_add=True)
+    date_updated = models.DateField("Последнее изменение",auto_now=True)
+
 
     def clean(self):
+        if self.pk and self.is_published and self.lessons.filter(is_published=True).count() == 0:
+            raise ValidationError('Нельзя опубликовать курс, у которого нет опубликованных уроков. Опубликуйте хотя бы один урок из этого курса для публикации самого курса.')
+
+
         if not hasattr(self, 'author') or self.author is None:
             return 
         
         if self.author.role != "expert" and not self.author.is_superuser:
             raise ValidationError('Автором курса может быть только пользователь с ролью "Эксперт"')
 
+
     def __str__(self):
         return f"Курс: {self.title};\nАвтор: {self.author.last_name} {self.author.first_name}"
+    
+
+    def get_next_lesson_number(self):
+        stats = self.lessons.aggregate(
+            maximum=Max('order_num', default=0)
+        )
+        return stats['maximum'] + 1
+    
+    def save(self, *args, **kwargs):
+        if self.is_published and self.pk and self.lessons.filter(is_published=True).count() == 0:
+            self.is_published = False
+        
+        super().save(*args, **kwargs)
 
 
 class Lesson(models.Model):
-    title = models.CharField(max_length=255)
-    content = RichTextField()
-    order_num = models.PositiveIntegerField(validators=[MinValueValidator(1)])
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    title = models.CharField("Название урока", max_length=255)
+    content = RichTextField("Контент урока")
+    order_num = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)], verbose_name="Порядковый номер урока")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons', verbose_name="Курс")
+    is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
+
 
     class Meta:
         unique_together = [['course', 'order_num']]
 
+
     def __str__(self):
         return f"Урок №{self.order_num} из курса «{self.course.title}»"
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.order_num = self.course.get_next_lesson_number()
+
+        super().save(*args, **kwargs)
+
+        if self.course.lessons.filter(is_published=True).count() == 0:
+            self.course.is_published = False
+            self.course.save()

@@ -21,32 +21,20 @@
 
     <h1 style="font-weight: 600; text-align: left; font-size: 2.5rem;">Доступные курсы</h1>
     <p style="text-align: left; color: rgb(71, 85, 105); margin-bottom: 2rem;">Откройте курс для просмотра описания и перечня уроков.</p>
-    {% if user.role == "expert" or user.is_superuser %}
-    <a class="create-course-btn" href="{% url 'create_course' %}">Создать свой курс</a>
-    {% endif %}
 
     <div class="row g-3">
 
         {% for card in courses %}
-        <div class="col-12 col-sm-6 col-md-4" id="course-{{ card.id }}">
-            <div class="course-card">
-                <h2>{{ card.title }}</h2>
-                <span class="course-author"><small>Автор: {{ card.author.last_name }} {{ card.author.first_name }}</small></span>
-                <p>{{ card.description }}</p>
-                <a href="{% url 'open_course' card.id %}" class="course-btn open-btn">Открыть курс</a>
-                {% if card.author == user or user.is_superuser %}
-                    <a href="{% url 'update_course' card.id %}" class="course-btn edit-btn">Редактировать курс</a>
-                    <form 
-                        hx-post="{% url 'delete_course' card.id %}"
-                        hx-target="#course-{{ card.id }}"
-                        hx-confirm="Вы действительно хотите удалить курс «{{ card.title }}»"
-                        hx-swap="outerHTML">
-                        {% csrf_token %}
-                        <button class="course-btn delete-btn" type="submit">Удалить курс</button>
-                    </form>
-                {% endif %}
+            {% if card.is_published %}
+            <div class="col-12 col-sm-6 col-md-4" id="course-{{ card.id }}">
+                <div class="course-card">
+                    <h2>{{ card.title }}</h2>
+                    <span class="course-author"><small>Автор: {{ card.author.last_name }} {{ card.author.first_name }}</small></span>
+                    <p>{{ card.description }}</p>
+                    <a href="{% url 'open_course' card.id %}" class="course-btn open-btn">Открыть курс</a>
+                </div>
             </div>
-        </div>
+            {% endif %}
         {% endfor %}
 
     </div>

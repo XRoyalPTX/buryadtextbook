@@ -17,4 +17,10 @@ urlpatterns = [
     path('<int:course_id>/delete_lesson/<int:lesson_id>', views.delete_lesson, name='delete_lesson'),
 
     path('studio/<str:username>', views.studio_courses, name='studio_courses'),
+    path('studio/<str:username>/course/<int:course_id>', views.studio_lessons, name='studio_lessons'),
+    path('studio/<str:username>/course/<int:course_id>/change_order_number', views.change_order_number, name='change_order_number'),
+    path('studio/<str:username>/course/<int:course_id>/publish', views.publish_course, name='publish_course'),
+    path('studio/<str:username>/course/<int:course_id>/unpublish', views.unpublish_course, name='unpublish_course'),
+    path('studio/<str:username>/course/<int:course_id>/lesson/<int:lesson_id>/publish', views.publish_lesson, name='publish_lesson'),
+    path('studio/<str:username>/course/<int:course_id>/lesson/<int:lesson_id>/unpublish', views.unpublish_lesson, name='unpublish_lesson'),
 ]

@@ -17,7 +17,7 @@
 <div class="create-lesson-main text-center">
 
     <div class="container create-lesson-form text-left">
-    <h3>Создание урока №{{ auto_order_num }}</h3>
+    <h3>Создание нового урока №{{ auto_order_num }}</h3>
         <form method="post">
             {% csrf_token %}
 
@@ -34,8 +34,7 @@
                 {{ field }}
                 <span class="help-text" id="{{ field.id_for_label }}-help">
                     {% if field.name == 'title' %}
-                        В названии можно ввести максимум 255 символов.<br>
-                        Не пишите "Урок N", так как этот текст будет вставлен автоматически.
+                        В названии можно ввести максимум 255 символов.
                     {% endif %}
                 </span>
 

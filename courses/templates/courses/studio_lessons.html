@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Студия | Уроки курса {{ current_course.title }}{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'courses/css/studio_lessons.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="{% static 'courses/js/studio_lessons.js' %}"></script>
+{% endblock %}
+
+{% block main %}
+<div class="studio-lessons-main text-center">
+
+    <a href="{% url 'studio_courses' current_course.author.username %}" class="to-courses-btn">На страницу курсов</a>
+    
+    <div class="welcome-container">
+        <div style="max-width: 574px;">
+            <h1>Список уроков курса</h1>
+            <p>{{ current_course.title }}</p>
+        </div>
+        <a href="{% url 'create_lesson' current_course.id %}">Создать новый урок</a>
+    </div>
+
+    <div class="studio-lessons" id="lesson-sortable-container" data-url="{% url 'change_order_number' user.username current_course.id %}">
+        {% if lessons.count != 0 %}
+            {% for card in lessons %}
+                {% include 'courses/lesson_card.html' with card=card %}
+            {% endfor %}
+
+        {% else %}
+
+        <h1>Вы еще не создали ни один урок. Давайте начнем?</h1>
+
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

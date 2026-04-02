@@ -1,0 +1,55 @@
+<div class="course-card" id="course-{{ card.id }}">
+    <div class="course-card-text">
+        {% if card.is_published %}
+        <div class="status true">
+            Опубликован
+        </div>
+        {% else %}
+        <div class="status false">
+            Черновик
+        </div>
+        {% endif %}
+        <div>
+            <h3>{{ card.title }}</h3>
+        </div>
+        <div>
+            <span style="margin-right: 1rem;">Уроков: {{ card.lessons_count }}</span>
+            <span>Студентов: 0</span>
+        </div>
+    </div>
+    <div class="course-card-publish-card">
+
+        {% if card.is_published %}
+        <form 
+            hx-post="{% url 'unpublish_course' card.author.username card.id %}"
+            hx-target="#course-{{ card.id }}"
+            hx-confirm="Вы действительно хотите добавить курс {{ card.title }} в черновик?"
+            hx-swap="outerHTML">
+            {% csrf_token %}
+            <button type="submit" class="unpublish-btn">В черновик</button>
+        </form>
+        {% else %}
+        <form 
+            hx-post="{% url 'publish_course' card.author.username card.id %}"
+            hx-target="#course-{{ card.id }}"
+            hx-confirm="Вы действительно хотите опубликовать курс {{ card.title }}?"
+            hx-swap="outerHTML">
+            {% csrf_token %}
+            <button type="submit" class="publish-btn">Опубликовать</button>
+        </form>
+        {% endif %}
+
+    </div>
+    <div class="course-card-buttons">
+        <a href="{% url 'update_course' card.id %}" class="simple-btn">Редактировать курс</a>
+        <a href="{% url 'studio_lessons' card.author.username card.id %}" class="simple-btn">Редактировать уроки</a>
+        <form 
+            hx-post="{% url 'delete_course' card.id %}"
+            hx-target="#course-{{ card.id }}"
+            hx-confirm="Вы действительно хотите удалить курс «{{ card.title }}»? Удаление приведет к полной потере данных, включая уроки и тесты."
+            hx-swap="outerHTML">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Удалить курс</button>
+        </form>
+    </div>
+</div>

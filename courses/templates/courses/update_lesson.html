@@ -33,9 +33,11 @@
                 <label>{{ field.label }}</label>
                 {{ field }}
                 <span class="help-text" id="{{ field.id_for_label }}-help">
+                    {% if field.name == 'order_num' %}
+                        Не используйте занятые номера уроков.
+                    {% endif %}
                     {% if field.name == 'title' %}
-                        В названии можно ввести максимум 255 символов.<br>
-                        Не пишите "Урок N", так как этот текст будет вставлен автоматически.
+                        В названии можно ввести максимум 255 символов.
                     {% endif %}
                 </span>
 

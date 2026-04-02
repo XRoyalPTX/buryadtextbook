@@ -29,39 +29,18 @@
     <div class="lessons-list">
         <h2>Перечень уроков курса</h2>
 
-        {% if user == current_course.author or user.is_superuser%}
-        <a class="create-lesson-btn" href="{% url 'create_lesson' current_course.id %}">Создать новый урок</a>
-        {% endif %}
-
         {% for card in lessons %}
-        <div id="lesson-{{ card.id }}">
-            <div class="lesson-card">
-                <div class="lesson-card-name">
-                    <h3>Урок {{ card.order_num }}. {{ card.title }}</h3>
-                    <p>Лайков: 0. Комментариев: 0</p>
-                </div>
-                <a href="{% url 'open_lesson' current_course.id card.order_num %}" class="to-lesson-btn">Перейти к уроку</a>
-            </div>
-            {% if user == current_course.author or user.is_superuser %}
-            <div class="row g-3">
-                <div class="col-12 col-md-6">
-                    <a href="{% url 'update_lesson' current_course.id card.id %}" class="edit-lesson-btn">Редактировать урок {{ card.order_num }}</a>
-                </div>
-                <div class="col-12 col-md-6">
-                    <form 
-                        hx-post="{% url 'delete_lesson' current_course.id card.id %}"
-                        hx-target="#lesson-{{ card.id }}" 
-                        hx-swap="outerHTML"
-                        hx-confirm="Вы действительно хотите удалить урок «{{ card.title }}»">
-                        {% csrf_token %}
-                        <button class="delete-lesson-btn" type="submit" style="width: 100%;">
-                            Удалить урок {{ card.order_num }}
-                        </button>
-                    </form>
+            {% if card.is_published %}
+            <div id="lesson-{{ card.id }}">
+                <div class="lesson-card">
+                    <div class="lesson-card-name">
+                        <h3>{{ card.title }}</h3>
+                        <p>Лайков: 0. Комментариев: 0</p>
+                    </div>
+                    <a href="{% url 'open_lesson' current_course.id card.order_num %}" class="to-lesson-btn">Перейти к уроку</a>
                 </div>
             </div>
             {% endif %}
-        </div>
         {% endfor %}
 
     </div>

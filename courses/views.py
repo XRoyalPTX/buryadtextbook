@@ -7,7 +7,8 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from .forms import CreateCourseForm, UpdateCourseForm, CreateLessonForm, UpdateLessonForm
 from django.core.exceptions import ValidationError, PermissionDenied
-from django.db.models import Count, Max
+from django.db.models import F, Case, When, Value, BooleanField, Count, Max
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -47,7 +48,7 @@ def create_course(request):
                 course.full_clean()
                 course.save()
                 messages.success(request, 'Курс успешно создан.')
-                return redirect('courses')
+                return redirect('studio_courses', username=course.author.username)
             except ValidationError as e:
                 form.add_error(None, e)
     else:
@@ -59,6 +60,7 @@ def create_course(request):
 @user_passes_test(is_expert)
 def update_course(request, course_id):
     current_course = get_object_or_404(Course, pk=course_id)
+    author_username = current_course.author.username
     if request.user == current_course.author or request.user.is_superuser:
         if request.method == 'POST':
             form = UpdateCourseForm(data=request.POST, instance=current_course)
@@ -66,7 +68,7 @@ def update_course(request, course_id):
                 if form.has_changed():
                     current_course = form.save()
                     messages.success(request, 'Курс успешно отредактирован')
-                    return redirect('courses')
+                    return redirect('studio_courses', username=author_username)
                 else:
                     form.add_error(None, 'Вы не ввели никаких изменений')
         else:
@@ -129,56 +131,28 @@ def open_lesson(request, course_id, lesson_order_num):
     })
 
 
-def get_next_order_num(current_course):
-    used_numbers = list(current_course.lessons.values_list('order_num', flat=True).order_by('order_num'))
-    missed_numbers = []
-
-    if not used_numbers:
-        return [1]
-    
-    if used_numbers[0] != 1:
-        gap = range(1, used_numbers[0])
-        missed_numbers.extend(gap)
-
-    for i in range(len(used_numbers) - 1):
-        if used_numbers[i] + 1 != used_numbers[i+1]:
-            gap = range(used_numbers[i] + 1, used_numbers[i+1])
-            missed_numbers.extend(gap)
-    
-    if missed_numbers:
-        return missed_numbers
-            
-    return [len(used_numbers) + 1]
-
-
-@user_passes_test(is_expert)
+@login_required
 def create_lesson(request, course_id):
     current_course = get_object_or_404(Course, pk=course_id)
     
     if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
-    
-    free_numbers = get_next_order_num(current_course)
-    auto_order_num = free_numbers[0]
 
     if request.method == 'POST':
         form = CreateLessonForm(data=request.POST)
         if form.is_valid():
             lesson = form.save(commit=False)
-            lesson.course = current_course
-            
-            lesson.order_num = free_numbers[0] 
-            
+            lesson.course = current_course        
             lesson.save()
             messages.success(request, f'Урок №{lesson.order_num} успешно создан.')
-            return redirect('open_course', course_id=current_course.id) 
+            return redirect('studio_lessons', username=current_course.author.username, course_id=current_course.id) 
     else:
         form = CreateLessonForm()
     
     return render(request, 'courses/create_lesson.html', {
         'form': form,
         'current_course': current_course,
-        'auto_order_num': auto_order_num,
+        'auto_order_num': current_course.get_next_lesson_number(),
     })
 
 
@@ -197,7 +171,7 @@ def update_lesson(request, course_id, lesson_id):
             if form.has_changed():
                 current_lesson = form.save()
                 messages.success(request, f'Урок №{current_lesson.order_num} успешно изменен.')
-                return redirect('open_course', course_id=current_course.id) 
+                return redirect('studio_lessons', username=current_course.author.username, course_id=current_course.id) 
             else:
                 form.add_error(None, 'Вы не ввели никаких изменений')
 
@@ -215,6 +189,7 @@ def update_lesson(request, course_id, lesson_id):
 def delete_lesson(request, course_id, lesson_id):
     current_course = get_object_or_404(Course, pk=course_id)
     current_lesson = get_object_or_404(Lesson, pk=lesson_id)
+    deleted_order_num = current_lesson.order_num
 
     success_message = '''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
@@ -236,6 +211,9 @@ def delete_lesson(request, course_id, lesson_id):
         if current_lesson.course == current_course:
             response = HttpResponse(success_message)
             current_lesson.delete()
+            current_course.lessons.filter(
+                order_num__gt=deleted_order_num
+            ).update(order_num=F('order_num') - 1)
             return response
         
     return HttpResponse(status=204) 
@@ -246,9 +224,135 @@ def studio_courses(request, username):
     needed_user = get_object_or_404(MyUser, username=username)
     courses = Course.objects.filter(author=needed_user).annotate(
         lessons_count=Count('lessons'),
-        max_lesson=Max('lessons__order_num')
-    )
+    ).order_by('id')
+
     return render(request, 'courses/studio_courses.html', context={
         'courses': courses,
         'author_user': needed_user,
     })
+
+@user_passes_test(is_expert)
+def studio_lessons(request, username, course_id):
+    needed_user = get_object_or_404(MyUser, username=username)
+    current_course = get_object_or_404(Course, pk=course_id, author=needed_user)
+    lessons = current_course.lessons.all().order_by('order_num')
+
+    return render(request, 'courses/studio_lessons.html', context={
+        'current_course': current_course,
+        'lessons': lessons,
+    })
+
+
+@user_passes_test(is_expert)
+def change_order_number(request, username, course_id):
+    current_course = get_object_or_404(Course, pk=course_id)
+    lessons = current_course.lessons
+
+    if request.user == current_course.author or request.user.is_superuser:
+        list_id = request.POST.getlist('order[]')
+
+        for lesson_id in list_id:
+            lessons.filter(pk=lesson_id).update(order_num=F('order_num') + 1000)
+
+        for new_order_num, lesson_id in enumerate(list_id, start=1):
+            lessons.filter(pk=lesson_id).update(order_num=new_order_num)
+
+        return HttpResponse(status=204)
+    else:
+        raise PermissionDenied()
+
+
+@user_passes_test(is_expert)
+def publish_course(request, username, course_id):
+    current_author = get_object_or_404(MyUser, username=username)
+    current_course = get_object_or_404(Course, pk=course_id, author=current_author)
+    current_course.lessons_count = current_course.lessons.count()
+
+    success_message = '''
+        <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
+            <div class="alert alert-success">Курс успешно опубликован.</div>
+        </div>
+    '''
+    error_message = '''
+        <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
+            <div class="alert alert-danger">Курс не может быть опубликован, так как он не содержит ни одного опубликованного урока.</div>
+        </div>
+    '''
+
+    if request.user != current_author and not request.user.is_superuser:
+        raise PermissionDenied()
+
+    if request.method == 'POST':
+        current_course.is_published = True
+        current_course.save()
+
+        if not current_course.is_published:
+            card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
+            return HttpResponse(card_html + error_message)
+        else:
+            card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
+            return HttpResponse(card_html + success_message)
+        
+
+@user_passes_test(is_expert)
+def unpublish_course(request, username, course_id):
+    current_author = get_object_or_404(MyUser, username=username)
+    current_course = get_object_or_404(Course, pk=course_id, author=current_author)
+    current_course.lessons_count = current_course.lessons.count()
+
+    if request.user != current_author and not request.user.is_superuser:
+        raise PermissionDenied()
+    
+    success_message = '''
+        <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
+            <div class="alert alert-success">Курс успешно добавлен в черновик.</div>
+        </div>
+    '''
+
+    if request.method == 'POST':
+        current_course.is_published = False
+        current_course.save()
+        card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
+        return HttpResponse(card_html + success_message)
+
+
+def publish_lesson(request, username, course_id, lesson_id):
+    current_author = get_object_or_404(MyUser, username=username)
+    current_course = get_object_or_404(Course, pk=course_id, author=current_author)
+    current_lesson = get_object_or_404(Lesson, pk=lesson_id, course=current_course)
+
+    if request.user != current_author and not request.user.is_superuser:
+        raise PermissionDenied()
+    
+    success_message = '''
+        <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
+            <div class="alert alert-success">Урок успешно опубликован.</div>
+        </div>
+    '''
+    
+    if request.method == 'POST':
+        current_lesson.is_published = True
+        current_lesson.save()
+        card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
+        return HttpResponse(card_html + success_message)
+    
+
+def unpublish_lesson(request, username, course_id, lesson_id):
+    current_author = get_object_or_404(MyUser, username=username)
+    current_course = get_object_or_404(Course, pk=course_id, author=current_author)
+    current_lesson = get_object_or_404(Lesson, pk=lesson_id, course=current_course)
+
+    if request.user != current_author and not request.user.is_superuser:
+        raise PermissionDenied()
+    
+    success_message = '''
+        <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
+            <div class="alert alert-success">Урок успешно добавлен в черновик.</div>
+        </div>
+    '''
+    
+    if request.method == 'POST':
+        current_lesson.is_published = False
+        current_lesson.save()
+        card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
+        return HttpResponse(card_html + success_message)

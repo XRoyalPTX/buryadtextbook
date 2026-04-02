@@ -54,7 +54,7 @@ input:focus {
     border-radius: 12px 12px 0 0 !important;
 }
 
-.cke_bottom {
+.cke_bottom, .cke_reset {
     border-radius: 0 0 12px 12px !important;
 }
 
