@@ -22,8 +22,20 @@
     <a href="{% url 'courses' %}" class="to-courses-btn">К списку курсов</a>
 
     <div class="course-description">
+        {% if current_course.status == 'not_begun' %}
+            <span class="plate not-begun">Не начат</span>
+        {% elif current_course.status == 'completed' %}
+            <span class="plate completed">Пройден</span>
+        {% elif current_course.status == 'begun' %}
+            <span class="plate begun">Начат</span>
+        {% endif %}
         <h1>{{ current_course.title }}</h1>
         <p>{{ current_course.description }}</p>
+        {% if not is_course_begun and user.is_authenticated %}
+        <a href="{% url 'create_course_progress' current_course.id %}" class="create-course-progress-btn">Записаться</a>
+        {% else %}
+        <span style="font-size: 14px; margin-top: 1rem; display: block; color: #475569">Авторизуйтесь для прохождения курса</span>
+        {% endif %}
     </div>
 
     <div class="lessons-list">
@@ -35,9 +47,22 @@
                 <div class="lesson-card">
                     <div class="lesson-card-name">
                         <h3>{{ card.title }}</h3>
-                        <p>Лайков: 0. Комментариев: 0</p>
+                        {% if card.status == 'not_begun' %}
+                        <span class="plate not-begun">Не начат</span>
+                        {% elif card.status == 'completed' %}
+                        <span class="plate completed">Пройден</span>
+                        {% elif card.status == 'begun' %}
+                        <span class="plate begun">Начат</span>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
+                        <span style="font-size: 14px; color: #475569">Авторизуйтесь для прохождения урока</span>
+                        {% endif %}
                     </div>
+                    {% if user.is_authenticated %}
                     <a href="{% url 'open_lesson' current_course.id card.order_num %}" class="to-lesson-btn">Перейти к уроку</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="to-lesson-btn inactive">Перейти к уроку</a>
+                    {% endif %}
                 </div>
             </div>
             {% endif %}

@@ -58,14 +58,11 @@ class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons', verbose_name="Курс")
     is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
 
-
     class Meta:
         unique_together = [['course', 'order_num']]
 
-
     def __str__(self):
         return f"Урок №{self.order_num} из курса «{self.course.title}»"
-
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -76,3 +73,28 @@ class Lesson(models.Model):
         if self.course.lessons.filter(is_published=True).count() == 0:
             self.course.is_published = False
             self.course.save()
+
+class CourseProgress(models.Model):
+    start_date = models.DateTimeField("Дата начала прохождения курса", auto_now_add=True)
+    complete_date = models.DateTimeField("Дата завершения курса", null=True, blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='progresses', verbose_name="Курс")
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='course_progresses', verbose_name="Студент")
+
+    class Meta:
+        unique_together = [['course', 'user']]
+
+    def __str__(self):
+        return f"Прохождение курса {self.course.title} пользователем {self.user.username}»"
+    
+
+class LessonProgress(models.Model):
+    start_date = models.DateTimeField("Дата начала прохождения урока", auto_now_add=True)
+    complete_date = models.DateTimeField("Дата завершения урока", null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='progresses', verbose_name="Урок")
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='lesson_progresses', verbose_name="Студент")
+
+    class Meta:
+        unique_together = [['lesson', 'user']]
+
+    def __str__(self):
+        return f"Прохождение урока {self.lesson.title} пользователем {self.user.username}»"

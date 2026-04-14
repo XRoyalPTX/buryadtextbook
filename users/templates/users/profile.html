@@ -55,14 +55,14 @@
                     <div class="col-6">
                         <div class="profile-progress-info-courses random-buryad-word-card" id="id_random-buryad-word-card">
                             <span>Пройдено уроков</span>
-                            <span class="progress-count">0</span>
+                            <span class="progress-count">{{ num_of_lessons }}</span>
                             <span id="id_random-buryad-word-tip">за все время обучения</span>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="profile-progress-info-lessons">
                             <span>Ударная серия</span>
-                            <span class="progress-count">0 дней</span>
+                            <span class="progress-count">{{ user.streak_count }} дней</span>
                             <span>дней активности подряд!</span>
                         </div>
                     </div>
@@ -71,9 +71,22 @@
                     <div class="col-12">
                         <div class="profile-progress-info-bar">
                             <h2>Моё обучение</h2>
-                            <span style="display: block;">Прогресс по текущим курсам</span>
-                            <span style="font-family: Courier, monospace; display: block;">...эта часть страницы в разработке...</span>
-                            <a class="reset-progress-btn">Сбросить прогресс</a>
+                            <span style="display: block; margin-bottom: 0;">Прогресс по текущим курсам</span>
+                            {% if not user_course_progresses %}
+                            <p style="display: block; margin-bottom: 0; margin-top: 1rem; font-size: 1rem;">
+                                Ой, тут ничего нет. Видимо, Вы еще не начали прохождение курсов.
+                            </p>
+                            {% endif %}
+                            {% for user_course_progress in user_course_progresses %}
+                                <div class="user-progress-card">
+                                    <h3>{{ user_course_progress.course.title }}</h3>
+                                    <div class="user-progress-card-nums">
+                                        <span>{{ user_course_progress.completed_lessons }} из {{ user_course_progress.total_lessons }}</span>
+                                        <span>{{ user_course_progress.percent }}%</span>
+                                    </div>
+                                    <progress id="progress" value="{{ user_course_progress.percent }}" max="100"></progress>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

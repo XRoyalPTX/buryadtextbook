@@ -23,7 +23,12 @@
 
     <div class="lesson-content">
         <div class="lesson-content-header">
-            <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0;">Урок {{ current_lesson.order_num }}. {{ current_lesson.title }}</h2>
+            {% if is_lesson_completed %}
+            <span class="plate completed">Пройден</span>
+            {% else %}
+            <span class="plate begun">Начат</span>
+            {% endif %}
+            <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0;">Урок: {{ current_lesson.title }}</h2>
         </div>
 
         <div class="lesson-content-text" id="lesson-content-text">
@@ -40,7 +45,12 @@
                     {% endif %}
                 </div>
                 <div class="col-12 col-sm-4">
-                    <a href="{% url 'under_construction' %}"  class="lesson-btn-tests">Пройти тесты по уроку</a>
+                    {% if not is_lesson_completed %}
+                    <form method="post" action="{% url 'complete_lesson' current_course.id current_lesson.order_num %}">
+                        {% csrf_token %}
+                        <button class="lesson-btn-complete" type="submit">Отметить пройденным</button>
+                    </form>
+                    {% endif %}
                 </div>
                 <div class="col-12 col-sm-4">
                     {% if next_lesson %}

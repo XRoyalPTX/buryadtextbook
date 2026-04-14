@@ -166,6 +166,40 @@
     font-weight: 400;
 }
 
+.profile-progress-info-bar .user-progress-card {
+    margin-top: 1rem;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+    border-radius: 12px;
+    border: 1px solid #475569;
+}
+
+.profile-progress-info-bar .user-progress-card:hover {
+    border: 1px solid rgb(106,98,233);
+}
+
+.profile-progress-info-bar .user-progress-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.profile-progress-info-bar .user-progress-card-nums {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-progress-info-bar progress {
+    display: block;
+    width: 100%;
+    accent-color: rgb(106,98,233); 
+    transition: 0.6s;
+}
+
+.profile-progress-info-bar progress:hover {
+    transition: 0.6s;
+}
+
 .reset-progress-btn {
     display: inline-block;
     background-color: transparent;

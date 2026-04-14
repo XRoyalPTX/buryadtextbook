@@ -23,4 +23,7 @@ urlpatterns = [
     path('studio/<str:username>/course/<int:course_id>/unpublish', views.unpublish_course, name='unpublish_course'),
     path('studio/<str:username>/course/<int:course_id>/lesson/<int:lesson_id>/publish', views.publish_lesson, name='publish_lesson'),
     path('studio/<str:username>/course/<int:course_id>/lesson/<int:lesson_id>/unpublish', views.unpublish_lesson, name='unpublish_lesson'),
+
+    path('<int:course_id>/start', views.create_course_progress, name='create_course_progress'),
+    path('<int:course_id>/lesson/<int:lesson_order_num>/complete', views.complete_lesson, name='complete_lesson'),
 ]

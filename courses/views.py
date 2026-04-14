@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Course, Lesson, MyUser
+from .models import Course, Lesson, MyUser, CourseProgress, LessonProgress
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
@@ -9,6 +9,8 @@ from .forms import CreateCourseForm, UpdateCourseForm, CreateLessonForm, UpdateL
 from django.core.exceptions import ValidationError, PermissionDenied
 from django.db.models import F, Case, When, Value, BooleanField, Count, Max
 from django.template.loader import render_to_string
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your views here.
 
@@ -19,21 +21,69 @@ def is_expert(user):
 
 
 def courses(request):
-    user = request.user
+    current_user = request.user
     courses = Course.objects.all()
+
+    if not request.user.is_authenticated:
+        return render(request, 'courses/courses.html', {'courses': courses})
+
+    user_progress = CourseProgress.objects.filter(user=current_user)
+    progress_dict = {p.course_id: p for p in user_progress}
+
+    for course in courses:
+        progress = progress_dict.get(course.id)
+        
+        if not progress:
+            course.status = 'not_begun'
+        elif progress.complete_date: 
+            course.status = 'completed'
+        else:
+            course.status = 'begun'
+
     return render(request, 'courses/courses.html', context={
         'courses': courses,
     })
 
 
-@login_required
 def open_course(request, course_id):
     current_course = get_object_or_404(Course, pk=course_id)
-    lessons = Lesson.objects.filter(course=current_course).order_by('order_num')
+    lessons = Lesson.objects.filter(course=current_course, is_published=True).order_by('order_num')
+
+    if not request.user.is_authenticated:
+        return render(request, 'courses/course.html', context={
+            'current_course': current_course,
+            'lessons': lessons
+        })
+
+    is_course_begun = CourseProgress.objects.filter(course=current_course, user=request.user).exists()
+
+    user_progress = LessonProgress.objects.filter(lesson__course=current_course, user=request.user)
+
+    progress_dict = {lp.lesson_id: lp for lp in user_progress}
+
+    for lesson in lessons:
+        progress = progress_dict.get(lesson.id)
+        if not progress:
+            lesson.status = 'not_begun'
+        elif progress.complete_date:
+            lesson.status = 'completed'
+        else:
+            lesson.status = 'begun'
+
+    course_progress = CourseProgress.objects.filter(course = current_course, user = request.user).first()
+
+    if not course_progress:
+        current_course.status = 'not_begun'
+    elif course_progress.complete_date: 
+        current_course.status = 'completed'
+    else:
+        current_course.status = 'begun'
+        
 
     return render(request, 'courses/course.html', context={
         'current_course': current_course,
         'lessons': lessons,
+        'is_course_begun': is_course_begun,
     })
 
 
@@ -110,24 +160,36 @@ def delete_course(request, course_id):
 def open_lesson(request, course_id, lesson_order_num):
     current_course = get_object_or_404(Course, pk=course_id)
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
-    number = current_course.lessons.count()
+
+    if not CourseProgress.objects.filter(course=current_course, user=request.user).exists():
+        messages.warning(request, "Для просмотра уроков необходимо начать прохождение курса.")
+        return redirect('open_course', course_id=course_id)
+
+    progress, created = LessonProgress.objects.get_or_create(
+        user=request.user, 
+        lesson=current_lesson
+    )
+
+    is_lesson_completed = bool(progress.complete_date)
 
     prev_lesson = Lesson.objects.filter(
-        course=current_course, 
-        order_num__lt=current_lesson.order_num
+        course = current_course, 
+        order_num__lt = current_lesson.order_num,
+        is_published = True
     ).order_by('-order_num').first()
     
     next_lesson = Lesson.objects.filter(
-        course=current_course, 
-        order_num__gt=current_lesson.order_num
+        course = current_course, 
+        order_num__gt = current_lesson.order_num,
+        is_published = True
     ).order_by('order_num').first()
 
     return render(request, 'courses/lesson.html', {
         'current_course': current_course,
         'current_lesson': current_lesson,
-        'num_of_lessons': number,
         'prev_lesson': prev_lesson,
         'next_lesson': next_lesson,
+        'is_lesson_completed': is_lesson_completed,
     })
 
 
@@ -333,6 +395,10 @@ def publish_lesson(request, username, course_id, lesson_id):
     if request.method == 'POST':
         current_lesson.is_published = True
         current_lesson.save()
+        CourseProgress.objects.filter(
+            course=current_course, 
+            complete_date__isnull=False
+        ).update(complete_date=None)
         card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
         return HttpResponse(card_html + success_message)
     
@@ -356,3 +422,74 @@ def unpublish_lesson(request, username, course_id, lesson_id):
         current_lesson.save()
         card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
         return HttpResponse(card_html + success_message)
+    
+
+
+@login_required
+def create_course_progress(request, course_id):
+    current_course = get_object_or_404(Course, pk=course_id)
+    current_user = request.user
+    first_lesson = current_course.lessons.filter(
+        course = current_course,
+        is_published = True,
+    ).order_by('order_num').first()
+
+    progress, created = CourseProgress.objects.get_or_create(course=current_course, user=current_user)
+
+    messages.success(request, 'Вы успешно записались на курс! Добро пожаловать на первый урок текущего курса.')
+
+    return redirect('open_lesson', course_id, first_lesson.order_num)
+
+
+@login_required
+def complete_lesson(request, course_id, lesson_order_num):
+    current_course = get_object_or_404(Course, pk=course_id)
+    current_user = request.user
+    current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    current_lesson_progress = LessonProgress.objects.filter(
+        user=current_user, 
+        lesson=current_lesson
+    ).first()
+
+    today = timezone.now().date()
+
+    last_lesson = Lesson.objects.filter(
+        course = current_course,
+        is_published = True,
+    ).order_by('-order_num').first()
+
+    if request.method == 'POST':
+        if not current_lesson_progress.complete_date:
+            current_lesson_progress.complete_date = timezone.now()
+            current_lesson_progress.save()
+
+            if current_lesson == last_lesson:
+                current_course_progress = CourseProgress.objects.filter(
+                    user = current_user,
+                    course = current_course
+                ).first()
+
+                if current_course_progress:
+                    current_course_progress.complete_date = timezone.now()
+                    current_course_progress.save()
+
+            if current_user.streak_count == 0:
+                current_user.last_activity_date = timezone.now().date()
+                current_user.streak_count = 1
+                current_user.save()
+
+            elif current_user.streak_count > 0 and current_user.last_activity_date == today - timedelta(days=1):
+                current_user.last_activity_date = timezone.now().date()
+                current_user.streak_count += 1
+                current_user.save()
+
+            elif current_user.streak_count > 0 and current_user.last_activity_date < today - timedelta(days=1):
+                current_user.last_activity_date = timezone.now().date()
+                current_user.streak_count = 1
+                current_user.save()
+
+            messages.success(request, 'Урок отмечен пройденным.')
+        else:
+            messages.info(request, 'Вы уже проходили этот урок ранее.')
+
+        return redirect('open_lesson', course_id, lesson_order_num)

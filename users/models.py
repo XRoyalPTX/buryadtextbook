@@ -15,6 +15,9 @@ class MyUser(AbstractUser):
         (EXPERT, 'Эксперт'),
     ]
 
+    streak_count = models.PositiveIntegerField("Ударная серия", default=0)
+    last_activity_date = models.DateField("Дата последней активности", default='1900-1-1')
+
     role = models.CharField(
         max_length=20,
         choices=ROLE_CHOICES,

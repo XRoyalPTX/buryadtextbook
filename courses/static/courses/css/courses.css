@@ -42,6 +42,33 @@
     position: relative;
 }
 
+.course-card .plate {
+    display: inline-block;
+    padding-block: 6px;
+    padding-inline: 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    width: fit-content;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.course-card .plate.completed {
+    background-color: rgb(220,252,231);
+    color: rgb(22,101,52);
+}
+
+.course-card .plate.begun {
+    background-color: rgb(254, 243, 199);
+    color: rgb(146, 64, 14);
+}
+
+.course-card .plate.not-begun {
+    background-color: rgb(254, 226, 226);
+    color: rgb(153, 27, 27);
+}
+
 .course-card h2 {
     font-size: 1.5rem;
     font-weight: 600;

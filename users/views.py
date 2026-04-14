@@ -1,5 +1,3 @@
-import random
-import requests
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
@@ -8,10 +6,9 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
-
-
-# База бурятских слов
-BURYAD_WORDS = ['сайн', 'эжы', 'аба', 'баярлаха']
+from courses.models import LessonProgress, CourseProgress, Lesson
+from django.utils import timezone
+from datetime import timedelta
 
 
 # Модель User (которая на самом деле MyUser)
@@ -77,10 +74,45 @@ def delete_user(request):
 
 @login_required
 def profile(request):
-    random_buryad_word = random.choice(BURYAD_WORDS)
+    num_of_lessons = LessonProgress.objects.filter(
+        user = request.user,
+        complete_date__isnull=False,
+    ).count()
+
+    user_course_progresses = CourseProgress.objects.filter(
+        user = request.user,
+    )
+
+    today = timezone.now().date()
+
+    if request.user.last_activity_date < today - timedelta(days=1):
+        request.user.streak_count = 0
+
+    for progress in user_course_progresses:
+        course = progress.course
+        total_lessons = Lesson.objects.filter(course=course, is_published=True).count()
+        progress.total_lessons = Lesson.objects.filter(course=course, is_published=True).count()
+        
+        completed_lessons = LessonProgress.objects.filter(
+            user=request.user, 
+            lesson__course=course, 
+            complete_date__isnull=False
+        ).count()
+
+        progress.completed_lessons = LessonProgress.objects.filter(
+            user=request.user, 
+            lesson__course=course, 
+            complete_date__isnull=False
+        ).count()
+
+        if total_lessons > 0:
+            progress.percent = int((completed_lessons / total_lessons) * 100)
+        else:
+            progress.percent = 0
 
     return render(request, "users/profile.html", context={
-        'random_buryad_word': random_buryad_word,
+        'num_of_lessons': num_of_lessons,
+        'user_course_progresses': user_course_progresses,
     })
 
 

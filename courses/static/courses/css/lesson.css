@@ -44,6 +44,26 @@
     position: relative;
 }
 
+.lesson-content .plate {
+    display: inline-block;
+    padding-block: 6px;
+    padding-inline: 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.lesson-content .plate.completed {
+    background-color: rgb(220,252,231);
+    color: rgb(22,101,52);
+}
+
+.lesson-content .plate.begun {
+    background-color: rgb(254, 243, 199);
+    color: rgb(146, 64, 14);
+}
+
 .lesson-content-header {
     border-bottom: 1px solid rgb(226,232,240);
     padding: 2rem;
@@ -100,7 +120,7 @@
     color: white;
 }
 
-.lesson-btn-tests {
+.lesson-btn-complete {
     display: block;
     background: linear-gradient(135deg, rgb(78,69,228), rgb(129,140,248), rgb(243,61,93));
     background-size: 150% auto;
@@ -116,9 +136,15 @@
     text-align: center;
     width: fit-content;
     margin: 0 auto;
+    outline: none;
+    border: 0;
 }
 
-.lesson-btn-tests:hover {
+.lesson-btn-complete:focus {
+    outline: none;
+}
+
+.lesson-btn-complete:hover {
     background-position: right center;
     background-size: 300% auto;
     transition: 0.6s;

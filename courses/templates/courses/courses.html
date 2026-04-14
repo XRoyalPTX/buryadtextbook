@@ -28,6 +28,13 @@
             {% if card.is_published %}
             <div class="col-12 col-sm-6 col-md-4" id="course-{{ card.id }}">
                 <div class="course-card">
+                    {% if card.status == 'not_begun' %}
+                        <span class="plate not-begun">Не начат</span>
+                    {% elif card.status == 'completed' %}
+                        <span class="plate completed">Пройден</span>
+                    {% elif card.status == 'begun' %}
+                        <span class="plate begun">Начат</span>
+                    {% endif %}
                     <h2>{{ card.title }}</h2>
                     <span class="course-author"><small>Автор: {{ card.author.last_name }} {{ card.author.first_name }}</small></span>
                     <p>{{ card.description }}</p>

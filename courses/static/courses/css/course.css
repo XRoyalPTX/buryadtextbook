@@ -41,6 +41,33 @@
     margin-bottom: 2rem;
 }
 
+.course-description .plate {
+    display: inline-block;
+    padding-block: 6px;
+    padding-inline: 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    width: fit-content;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.course-description .plate.completed {
+    background-color: rgb(220,252,231);
+    color: rgb(22,101,52);
+}
+
+.course-description .plate.begun {
+    background-color: rgb(254, 243, 199);
+    color: rgb(146, 64, 14);
+}
+
+.course-description .plate.not-begun {
+    background-color: rgb(254, 226, 226);
+    color: rgb(153, 27, 27);
+}
+
 .course-description h1 {
     font-size: 2.5rem;
     font-weight: bold;
@@ -50,6 +77,29 @@
 .course-description p {
     color: rgb(71, 85, 105);
     margin-bottom: 0;
+}
+
+.create-course-progress-btn {
+    display: block;
+    width: fit-content;
+    color: rgb(16, 185, 129);
+    font-weight: 700;
+    padding: 0.4rem 1.2rem;
+    background-color: rgb(248, 250, 252);
+    border-radius: 12px;
+    border: solid 2px rgb(16, 185, 129);
+    transition: 0.3s;
+    text-decoration: none;
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+
+.create-course-progress-btn:hover {
+    cursor: pointer;
+    background-color: rgb(16, 185, 129); 
+    border-color: rgb(16, 185, 129);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); 
 }
 
 .lessons-list h2 {
@@ -93,6 +143,33 @@
     margin: 0;
 }
 
+.lesson-card-name .plate {
+    display: inline-block;
+    padding-block: 6px;
+    padding-inline: 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    width: fit-content;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.lesson-card-name .plate.completed {
+    background-color: rgb(220,252,231);
+    color: rgb(22,101,52);
+}
+
+.lesson-card-name .plate.begun {
+    background-color: rgb(254, 243, 199);
+    color: rgb(146, 64, 14);
+}
+
+.lesson-card-name .plate.not-begun {
+    background-color: rgb(254, 226, 226);
+    color: rgb(153, 27, 27);
+}
+
 .to-lesson-btn {
     display: flex;
     justify-content: center;
@@ -109,6 +186,17 @@
     font-weight: 700;
     transition: 0.6s;
     text-align: center;
+}
+
+.to-lesson-btn.inactive {
+    background: linear-gradient(135deg, rgb(30, 41, 59), rgb(71, 85, 105), rgb(148, 163, 184));
+    box-shadow: 0 4px 15px rgb(30, 41, 59, 0.5);
+    background-size: 150% auto;
+    transition: 0.6s;
+}
+
+.to-lesson-btn.inactive:hover {
+    transition: 0.6s;
 }
 
 .to-lesson-btn:hover {
