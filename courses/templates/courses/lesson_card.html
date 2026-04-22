@@ -20,31 +20,42 @@
             <span>Комментариев: 0</span>
         </div>
     </div>
-    <div class="lesson-card-buttons">
-        <a href="{% url 'update_lesson' current_course.id card.id %}" class="simple-btn">Редактировать</a>
+
+    <div class="publish-btn-container">
 
         {% if card.is_published %}
-        <form 
-            hx-post="{% url 'unpublish_lesson' current_course.author.username current_course.id card.id %}"
-            hx-target="#lesson-{{ card.id }}"
-            hx-swap="outerHTML"
-            hx-confirm="Вы действительно хотите добавить урок {{ card.title }} в черновик?">
-            {% csrf_token %}
-            <button type="submit" class="unpublish-btn">В черновик</button>
-        </form>
+            <form 
+                hx-post="{% url 'unpublish_lesson' current_course.author.username current_course.id card.id %}"
+                hx-target="#lesson-{{ card.id }}"
+                hx-swap="outerHTML"
+                hx-confirm="Вы действительно хотите добавить урок {{ card.title }} в черновик?">
+                {% csrf_token %}
+                <button type="submit" class="unpublish-btn">В черновик</button>
+            </form>
+            {% else %}
+            <form 
+                hx-post="{% url 'publish_lesson' current_course.author.username current_course.id card.id %}"
+                hx-target="#lesson-{{ card.id }}"
+                hx-swap="outerHTML"
+                hx-confirm="Вы действительно хотите опубликовать урок {{ card.title }}?">
+                {% csrf_token %}
+                <button type="submit" class="publish-btn">Опубликовать</button>
+            </form>
+        {% endif %}
+
+    </div>
+
+    <div class="lesson-card-buttons">
+        <a href="{% url 'update_lesson' current_course.author.username current_course.id card.id %}" class="simple-btn">Редактировать</a>
+
+        {% if card.quiz %}
+        <a href="{% url 'open_quiz_builder' current_course.author.username current_course.id card.order_num card.quiz.id %}" class="simple-btn">Редактировать тест</a>
         {% else %}
-        <form 
-            hx-post="{% url 'publish_lesson' current_course.author.username current_course.id card.id %}"
-            hx-target="#lesson-{{ card.id }}"
-            hx-swap="outerHTML"
-            hx-confirm="Вы действительно хотите опубликовать урок {{ card.title }}?">
-            {% csrf_token %}
-            <button type="submit" class="publish-btn">Опубликовать</button>
-        </form>
+        <a href="{% url 'create_quiz' current_course.author.username current_course.id card.order_num %}" class="simple-btn">Добавить тест</a>
         {% endif %}
 
         <form 
-            hx-post="{% url 'delete_lesson' current_course.id card.id %}"
+            hx-post="{% url 'delete_lesson' current_course.author.username current_course.id card.id %}"
             hx-target="#lesson-{{ card.id }}"
             hx-confirm="Вы действительно хотите удалить урок «{{ card.title }}»? Удаление приведет к полной потере данных, включая тесты."
             hx-swap="outerHTML">

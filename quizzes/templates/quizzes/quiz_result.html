@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Сэсэн | Результат теста | {{ progress.quiz.title }}{% endblock %}
+
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'quizzes/css/quiz.css' %}">
+<style>
+    .result-container { text-align: center; padding: 3rem; background: white; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+    .score-circle { width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; color: white; }
+    .pass { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .fail { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .btn-action { display: inline-block; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; margin: 0.5rem; }
+    .btn-primary { background: #6a62e9; color: white; }
+    .btn-outline { border: 2px solid #6a62e9; color: #6a62e9; }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="quiz-main">
+    <div class="result-container">
+        <div class="score-circle {% if progress.is_passed %}pass{% else %}fail{% endif %}">
+            {{ percent }}%
+        </div>
+
+        <h2 class="mb-3">
+            {% if progress.is_passed %}
+                Поздравляем! Вы прошли тест.
+            {% else %}
+                К сожалению, тест не пройден.
+            {% endif %}
+        </h2>
+        
+        <p class="mb-4 text-muted">
+            Вы ответили правильно на <b>{{ progress.score }}</b> из <b>{{ total }}</b> вопросов.<br>
+            Для успешного прохождения необходимо набрать минимум 60%.
+        </p>
+
+        <div class="actions mt-5">
+            {% if progress.is_passed %}
+                <a href="{% url 'open_lesson' current_course.id current_lesson.order_num %}" class="btn-action btn-primary">
+                    Вернуться к уроку
+                </a>
+            {% else %}
+                <a href="{% url 'open_quiz' current_course.id current_lesson.order_num progress.quiz.id %}" class="btn-action btn-primary">
+                    Попробовать еще раз
+                </a>
+                <a href="{% url 'open_lesson' current_course.id current_lesson.order_num %}" class="btn-action btn-outline">
+                    Вернуться к материалам
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

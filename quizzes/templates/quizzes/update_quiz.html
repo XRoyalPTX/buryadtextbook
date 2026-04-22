@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Редактирование теста{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'quizzes/css/create_quiz.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script></script>
+{% endblock %}
+
+{% block main %}
+<div class="create-quiz-main text-center">
+
+    <div class="create-quiz-form text-left">
+        <a href="{% url 'studio_lessons' current_lesson.course.author.username current_lesson.course.id %}" class="back-link">
+            &larr; Вернуться к курсу
+        </a>
+
+        <h3>Редактирование теста</h3>
+        <p class="subtitle">К уроку: <strong>{{ current_lesson.title }}</strong></p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="errors global-errors" style="color: #dc3545; margin-bottom: 15px;">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="create-quiz-input">
+                <label>{{ field.label }}</label>
+                {{ field }}
+                
+                <span class="help-text" id="{{ field.id_for_label }}-help">
+                    {% if field.name == 'title' %}
+                        Введите понятное название для теста.
+                    {% endif %}
+                    {% if field.name == 'description' %}
+                        Инструкция для студентов перед началом прохождения.
+                    {% endif %}
+                </span>
+
+                {% if field.errors %}
+                    <div class="errors">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="create-quiz-btn-form">Сохранить изменения</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

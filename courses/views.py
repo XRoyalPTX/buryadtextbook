@@ -88,7 +88,10 @@ def open_course(request, course_id):
 
 
 @user_passes_test(is_expert)
-def create_course(request):
+def create_course(request, username):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     if request.method == 'POST':
         form = CreateCourseForm(request.POST)
         if form.is_valid():
@@ -98,7 +101,7 @@ def create_course(request):
                 course.full_clean()
                 course.save()
                 messages.success(request, 'Курс успешно создан.')
-                return redirect('studio_courses', username=course.author.username)
+                return redirect('studio_lessons', username=course.author.username, course_id=course.id)
             except ValidationError as e:
                 form.add_error(None, e)
     else:
@@ -108,7 +111,10 @@ def create_course(request):
 
 
 @user_passes_test(is_expert)
-def update_course(request, course_id):
+def update_course(request, username, course_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_course = get_object_or_404(Course, pk=course_id)
     author_username = current_course.author.username
     if request.user == current_course.author or request.user.is_superuser:
@@ -131,7 +137,10 @@ def update_course(request, course_id):
 
 
 @user_passes_test(is_expert)
-def delete_course(request, course_id):
+def delete_course(request, username, course_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_course = get_object_or_404(Course, pk=course_id)
     success_message = '''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
@@ -194,7 +203,10 @@ def open_lesson(request, course_id, lesson_order_num):
 
 
 @login_required
-def create_lesson(request, course_id):
+def create_lesson(request, username, course_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_course = get_object_or_404(Course, pk=course_id)
     
     if request.user != current_course.author and not request.user.is_superuser:
@@ -219,7 +231,10 @@ def create_lesson(request, course_id):
 
 
 @user_passes_test(is_expert)
-def update_lesson(request, course_id, lesson_id):
+def update_lesson(request, username, course_id, lesson_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_course = get_object_or_404(Course, pk=course_id)
     current_lesson = get_object_or_404(Lesson, course=current_course, pk=lesson_id)
     lesson_order_num = current_lesson.order_num
@@ -248,7 +263,10 @@ def update_lesson(request, course_id, lesson_id):
 
 
 @user_passes_test(is_expert)
-def delete_lesson(request, course_id, lesson_id):
+def delete_lesson(request, username, course_id, lesson_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_course = get_object_or_404(Course, pk=course_id)
     current_lesson = get_object_or_404(Lesson, pk=lesson_id)
     deleted_order_num = current_lesson.order_num
@@ -283,6 +301,9 @@ def delete_lesson(request, course_id, lesson_id):
 
 @user_passes_test(is_expert)
 def studio_courses(request, username):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     needed_user = get_object_or_404(MyUser, username=username)
     courses = Course.objects.filter(author=needed_user).annotate(
         lessons_count=Count('lessons'),
@@ -295,6 +316,9 @@ def studio_courses(request, username):
 
 @user_passes_test(is_expert)
 def studio_lessons(request, username, course_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     needed_user = get_object_or_404(MyUser, username=username)
     current_course = get_object_or_404(Course, pk=course_id, author=needed_user)
     lessons = current_course.lessons.all().order_by('order_num')
@@ -307,6 +331,9 @@ def studio_lessons(request, username, course_id):
 
 @user_passes_test(is_expert)
 def change_order_number(request, username, course_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_course = get_object_or_404(Course, pk=course_id)
     lessons = current_course.lessons
 
@@ -326,6 +353,9 @@ def change_order_number(request, username, course_id):
 
 @user_passes_test(is_expert)
 def publish_course(request, username, course_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_author = get_object_or_404(MyUser, username=username)
     current_course = get_object_or_404(Course, pk=course_id, author=current_author)
     current_course.lessons_count = current_course.lessons.count()
@@ -358,6 +388,9 @@ def publish_course(request, username, course_id):
 
 @user_passes_test(is_expert)
 def unpublish_course(request, username, course_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_author = get_object_or_404(MyUser, username=username)
     current_course = get_object_or_404(Course, pk=course_id, author=current_author)
     current_course.lessons_count = current_course.lessons.count()
@@ -378,7 +411,11 @@ def unpublish_course(request, username, course_id):
         return HttpResponse(card_html + success_message)
 
 
+@user_passes_test(is_expert)
 def publish_lesson(request, username, course_id, lesson_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_author = get_object_or_404(MyUser, username=username)
     current_course = get_object_or_404(Course, pk=course_id, author=current_author)
     current_lesson = get_object_or_404(Lesson, pk=lesson_id, course=current_course)
@@ -403,7 +440,11 @@ def publish_lesson(request, username, course_id, lesson_id):
         return HttpResponse(card_html + success_message)
     
 
+@user_passes_test(is_expert)
 def unpublish_lesson(request, username, course_id, lesson_id):
+    if request.user.username != username and not request.user.is_superuser:
+        raise PermissionDenied()
+    
     current_author = get_object_or_404(MyUser, username=username)
     current_course = get_object_or_404(Course, pk=course_id, author=current_author)
     current_lesson = get_object_or_404(Lesson, pk=lesson_id, course=current_course)
@@ -446,6 +487,8 @@ def complete_lesson(request, course_id, lesson_order_num):
     current_course = get_object_or_404(Course, pk=course_id)
     current_user = request.user
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    
+    # Получаем прогресс текущего урока
     current_lesson_progress = LessonProgress.objects.filter(
         user=current_user, 
         lesson=current_lesson
@@ -453,38 +496,41 @@ def complete_lesson(request, course_id, lesson_order_num):
 
     today = timezone.now().date()
 
-    last_lesson = Lesson.objects.filter(
-        course = current_course,
-        is_published = True,
-    ).order_by('-order_num').first()
-
     if request.method == 'POST':
         if not current_lesson_progress.complete_date:
             current_lesson_progress.complete_date = timezone.now()
             current_lesson_progress.save()
 
-            if current_lesson == last_lesson:
+            published_lessons_count = current_course.lessons.filter(is_published=True).count()
+            
+            completed_lessons_count = LessonProgress.objects.filter(
+                user=current_user,
+                lesson__course=current_course,
+                lesson__is_published=True,
+                complete_date__isnull=False
+            ).count()
+
+            if published_lessons_count == completed_lessons_count:
                 current_course_progress = CourseProgress.objects.filter(
-                    user = current_user,
-                    course = current_course
+                    user=current_user,
+                    course=current_course
                 ).first()
 
-                if current_course_progress:
+                if current_course_progress and not current_course_progress.complete_date:
                     current_course_progress.complete_date = timezone.now()
                     current_course_progress.save()
+                    messages.success(request, 'Поздравляем! Вы полностью прошли курс!')
 
             if current_user.streak_count == 0:
-                current_user.last_activity_date = timezone.now().date()
+                current_user.last_activity_date = today
                 current_user.streak_count = 1
                 current_user.save()
-
             elif current_user.streak_count > 0 and current_user.last_activity_date == today - timedelta(days=1):
-                current_user.last_activity_date = timezone.now().date()
+                current_user.last_activity_date = today
                 current_user.streak_count += 1
                 current_user.save()
-
             elif current_user.streak_count > 0 and current_user.last_activity_date < today - timedelta(days=1):
-                current_user.last_activity_date = timezone.now().date()
+                current_user.last_activity_date = today
                 current_user.streak_count = 1
                 current_user.save()
 

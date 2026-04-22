@@ -1,0 +1,257 @@
+.quiz-builder-main {
+    padding-top: 64px;
+    padding-bottom: 120px;
+    width: calc(100% - 2rem);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.to-lessons-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-right: auto;
+    margin-left: 0;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+.to-lessons-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.welcome-container {
+    text-align: left;
+    padding: 2rem;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    margin-bottom: 1rem;
+    color: white;
+    background-color: rgb(15, 23, 42);
+}
+
+.welcome-container-buttons {
+    display: flex;
+    justify-content: flex-start;
+    width: fit-content;
+}
+
+.welcome-container-buttons .edit-quiz-btn, .delete-quiz-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: 0;
+    width: fit-content;
+}
+
+.welcome-container-buttons .edit-quiz-btn {
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-right: 1rem;
+}
+
+.add-question-btn:hover, .welcome-container-buttons .edit-quiz-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.welcome-container-buttons .delete-quiz-btn {
+    border: 2px solid rgb(244, 63, 94);
+    color: rgb(244, 63, 94)
+}
+
+.welcome-container-buttons .delete-quiz-btn:hover {
+    background-color: rgb(244, 63, 94);
+    box-shadow: 0 0 40px -5px rgba(244, 63, 94, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.question-info-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.question-info-container h3 {
+    margin-bottom: 0;
+}
+
+.add-question-btn {
+    display: block;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    width: fit-content;
+}
+
+.question-card {
+    text-align: left;
+    background-color: white;
+    padding: 2rem;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.question-card-info {
+    margin-right: 1rem;
+    width: 60%;
+}
+
+.question-card-info h6 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.question-card-info .question-type {
+    font-size: 14px;
+    color: rgba(71, 85, 105, 1);
+}
+
+.question-card-info ul {
+    list-style: none; 
+    padding-left: 0;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+.question-card-buttons {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.question-card-buttons form {
+    width: fit-content;
+}
+
+.edit-question-btn, .delete-question-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    margin-right: 0;
+    margin-left: auto;
+    width: 100%;
+}
+
+.edit-question-btn {
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-bottom: 1rem;
+}
+
+.edit-question-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.delete-question-btn {
+    border: 2px solid rgb(244, 63, 94);
+    color: rgb(244, 63, 94);
+    width: fit-content;
+}
+
+.delete-question-btn:hover {
+    background-color: rgb(244, 63, 94);
+    box-shadow: 0 0 40px -5px rgba(244, 63, 94, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.empty-question-card {
+    border-radius: 12px;
+    border: 2px dashed rgba(71, 85, 105, 0.5);
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    justify-content: center;
+}
+
+.empty-question-card p {
+    margin-bottom: 0;
+    color: #475569;
+}
+
+@media(max-width: 575px) {
+    .quiz-builder-main {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .welcome-container {
+        padding: 1rem;
+    }
+
+    .welcome-container-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .edit-quiz-btn {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+
+    .question-card-buttons form, .delete-question-btn {
+        width: 100%;
+    }
+
+    .welcome-container-buttons .edit-quiz-btn, .delete-quiz-btn {
+        width: 100%;
+    }
+
+    .question-card {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .question-card-info {
+        margin-right: 0;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    
+}

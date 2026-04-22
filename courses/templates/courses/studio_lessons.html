@@ -23,7 +23,7 @@
             <h1>Список уроков курса</h1>
             <p>{{ current_course.title }}</p>
         </div>
-        <a href="{% url 'create_lesson' current_course.id %}">Создать новый урок</a>
+        <a href="{% url 'create_lesson' current_course.author.username current_course.id %}">Создать новый урок</a>
     </div>
 
     <div class="studio-lessons" id="lesson-sortable-container" data-url="{% url 'change_order_number' user.username current_course.id %}">

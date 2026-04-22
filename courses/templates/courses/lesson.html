@@ -46,10 +46,16 @@
                 </div>
                 <div class="col-12 col-sm-4">
                     {% if not is_lesson_completed %}
-                    <form method="post" action="{% url 'complete_lesson' current_course.id current_lesson.order_num %}">
-                        {% csrf_token %}
-                        <button class="lesson-btn-complete" type="submit">Отметить пройденным</button>
-                    </form>
+                        {% if current_lesson.quiz and current_lesson.quiz.questions.all %}
+                        <a class="lesson-btn-complete" href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}">Перейти к тестированию.</a>
+                        {% else %}
+                        <form method="post" action="{% url 'complete_lesson' current_course.id current_lesson.order_num %}">
+                            {% csrf_token %}
+                            <button class="lesson-btn-complete" type="submit">Отметить пройденным</button>
+                        </form>
+                        {% endif %}
+                    {% else %}
+                    <div class="lesson-btn-complete inactive">Урок пройден!</div>
                     {% endif %}
                 </div>
                 <div class="col-12 col-sm-4">
@@ -64,6 +70,7 @@
 
         <div class="lesson-comments-section">
             <h3>Комментарии (0)</h3>
+            <small>в разработке</small>
         </div>
 
     </div>

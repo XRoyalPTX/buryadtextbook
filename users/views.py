@@ -113,6 +113,8 @@ def profile(request):
     return render(request, "users/profile.html", context={
         'num_of_lessons': num_of_lessons,
         'user_course_progresses': user_course_progresses,
+        'streak_last_digit': request.user.streak_count % 10,
+        'streak_last_two': request.user.streak_count % 100,
     })
 
 

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Сэсэн | Тест | {{ current_quiz.title }}{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'quizzes/css/quiz.css' %}">
+{% endblock %}
+
+{% block extrajs %}
+<script></script>
+{% endblock %}
+
+{% block main %}
+<div class="quiz-main">
+
+    <div class="quiz-card">
+        <h3 class="mb-2">Тест «{{ current_quiz.title }}»</h3> 
+        <p class="mb-3" style="font-size: 14px;">по уроку «{{ current_lesson.title }}»</p>
+
+        <div class="quiz-description">
+            <p class="mt-0">
+                {{ current_quiz.description }}
+            </p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for question in current_quiz.questions.all %}
+                <div class="quiz-question-card">
+                <small>Вопрос {{ forloop.counter }}</small>
+                <p class="question-text">{{ question.text }}</p>
+                <small class="question-type-tip">
+                    {% if question.type == 'single_choice' %}
+                    Выберите <b>один</b> вариант ответа.
+                    {% else %}
+                    Выберите <b>несколько</b> вариантов ответа.
+                    {% endif %}
+                </small>
+                {% for answer in question.answers.all %}
+                    <div class="quiz-answer-card">
+                        <label class="answer-option">
+                            <input 
+                                type="{% if question.type == 'single_choice' %}radio{% else %}checkbox{% endif %}" 
+                                name="question_{{ question.id }}" 
+                                value="{{ answer.id }}"
+                            >
+                            <span>{{ answer.text }}</span>
+                        </label>
+                    </div>
+                {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-send-answers">Отправить ответы</button>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

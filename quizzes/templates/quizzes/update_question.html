@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Сэсэн | Конструктор | Изменение вопроса{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'quizzes/css/create_question.css' %}">
+{% endblock %}
+
+{% block main %}
+
+<div class="create-question-main">
+
+    <a href="{% url 'open_quiz_builder' quiz.lesson.course.author.username quiz.lesson.course.id quiz.lesson.order_num quiz.id %}" class="to-quiz-btn">Назад к конструктору</a>
+
+    <div class="create-question-form">
+
+        <h4>Изменение вопроса</h4>
+        <small>к тесту «{{ quiz.title }}»</small>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="create-question-form-question">
+                <label>Текст вопроса</label>
+                {{ form.text }}
+                <label>Тип вопроса</label>
+                {{ form.type }}
+                <label>Дополнительная информация к вопросу: текст, примеры и др. (при необходимости)</label>
+                {{ form.content }}
+                {% if form.errors %}
+                    <div>{{ form.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="create-question-form-answers">
+                <h5>Варианты ответов</h5>
+                <small>Отметьте галочкой правильный ответ (или несколько, если вопрос со множественным выбором)</small>
+                {{ formset.management_form }}
+                
+                {% if formset.non_form_errors %}
+                    <div>{{ formset.non_form_errors }}</div>
+                {% endif %}
+
+                {% for answer_form in formset %}
+                    <div class="answer-form">
+                        <div class="answer-form-is-correct">
+                            {{ answer_form.is_correct }}
+                        </div>
+                        <div class="answer-form-text">
+                            {{ answer_form.text }}
+                        </div>
+                        {% for hidden in answer_form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                        {% if answer_form.errors %}
+                            <div>{{ answer_form.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div>
+                <button type="submit" class="save-btn">
+                    Сохранить
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

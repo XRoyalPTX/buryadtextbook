@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'users',
     'courses',
     'features',
+    'quizzes',
     'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',

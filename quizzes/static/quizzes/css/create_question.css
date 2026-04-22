@@ -1,0 +1,160 @@
+.create-question-main {
+    padding-top: 64px;
+    padding-bottom: 120px;
+    width: calc(100% - 2rem);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    color: rgb(244, 63, 94);
+    font-size: 14px;
+}
+
+.to-quiz-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-right: auto;
+    margin-left: 0;
+    width: fit-content;
+    margin-bottom: 1rem;
+}
+
+.to-quiz-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.create-question-form {
+    margin: 0 auto;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+}
+
+.create-question-form h4 {
+    margin-bottom: 0rem;
+}
+
+.create-question-form-question label {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 4px;
+    font-size: 14px;
+    color: #0F172A;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.create-question-form-question input, .create-question-form-question select, .create-question-form-question textarea {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: solid 1px rgb(226,232,240);
+    outline-color: transparent;
+}
+
+.create-question-form-question input:focus {
+    outline-color: rgb(78,69,228);
+}
+
+.create-question-form-question select:hover {
+    cursor: pointer;
+}
+
+.create-question-form-question select option {
+    width: 100%;
+    padding: 2rem;
+    border-radius: 12px;
+    border: solid 1px rgb(226,232,240);
+}
+
+.create-question-form-answers {
+    border-top: 1px solid rgb(190, 196, 202);
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.create-question-form-answers h5 {
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+}
+
+.create-question-form-answers small {
+    text-align: left;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.answer-form {
+    display: flex; 
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.answer-form-is-correct {
+    margin-right: 1rem;
+}
+
+.answer-form-is-correct input {
+    accent-color: rgb(106, 98, 233);
+    flex-shrink: 0;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+}
+
+.answer-form-text {
+    width: 100%;
+}
+
+.answer-form-text input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: solid 1px rgb(226,232,240);
+    outline-color: transparent;
+}
+
+.answer-form-text input:focus {
+    outline-color: rgb(78,69,228);
+}
+
+.save-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-right: auto;
+    margin-left: 0;
+    width: 100%;
+}
+
+.save-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}

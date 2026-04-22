@@ -25,7 +25,7 @@
             <h1>Ваша студия эксперта</h1>
             <p>Добро пожаловать в студию, {{ author_user.username }}. Время творить!</p>
         </div>
-        <a href="{% url 'create_course' %}">Создать новый курс</a>
+        <a href="{% url 'create_course' author_user.username %}">Создать новый курс</a>
         {% else %}
         <div>
             <h1>Студия пользователя {{ author_user.username }}</h1>

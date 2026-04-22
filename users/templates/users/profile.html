@@ -62,8 +62,19 @@
                     <div class="col-6">
                         <div class="profile-progress-info-lessons">
                             <span>Ударная серия</span>
-                            <span class="progress-count">{{ user.streak_count }} дней</span>
-                            <span>дней активности подряд!</span>
+                            <span class="progress-count">
+                                {{ user.streak_count }}
+                                {% if streak_last_digit == 1 and streak_last_two != 11 %}
+                                    день
+                                {% elif streak_last_digit >= 2 and 4 >= streak_last_digit and 10 > streak_last_two %}
+                                    дня
+                                {% elif streak_last_digit >= 2 and 4 >= streak_last_digit and streak_last_two >= 20 %}
+                                    дня
+                                {% else %}
+                                    дней
+                                {% endif %}
+                            </span>
+                            <span>активности подряд!</span>
                         </div>
                     </div>
                 </div>

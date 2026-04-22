@@ -138,6 +138,14 @@
     margin: 0 auto;
     outline: none;
     border: 0;
+    width: 100%;
+}
+
+.lesson-btn-complete.inactive {
+    background: linear-gradient(135deg, rgb(30, 41, 59), rgb(71, 85, 105), rgb(148, 163, 184));
+    box-shadow: 0 4px 15px rgb(30, 41, 59, 0.5);
+    background-size: 150% auto;
+    transition: 0.6s;
 }
 
 .lesson-btn-complete:focus {

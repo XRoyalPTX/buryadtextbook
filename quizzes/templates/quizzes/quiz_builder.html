@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Сэсэн | Конструктор | {{ quiz.title }}{% endblock %}
+
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" href="{% static 'quizzes/css/quiz_builder.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="quiz-builder-main">
+
+    <a href="{% url 'studio_lessons' quiz.lesson.course.author.username quiz.lesson.course.id %}" class="to-lessons-btn">Назад к урокам</a>
+
+    <div class="welcome-container">
+        <div>
+            <p>Конструктор теста</p>
+            <h2>{{ quiz.title }}</h2>
+            <p>{{ quiz.description }}</p>
+        </div>
+        <div class="welcome-container-buttons">
+            <a href="{% url 'update_quiz' quiz.lesson.course.author.username quiz.lesson.course.id current_lesson.order_num quiz.id %}" class="edit-quiz-btn">Редактировать название и описание теста</a>
+            <form action="{% url 'delete_quiz' quiz.lesson.course.author.username quiz.lesson.course.id current_lesson.order_num quiz.id %}" method="post" onsubmit="return confirm('Удалить весь тест со всеми вопросами?');">
+                {% csrf_token %}
+                <button type="submit" class="delete-quiz-btn">Удалить тест</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="question-info-container">
+        <h3 style="display: block;">Вопросы</h3>
+        <a href="{% url 'add_question' quiz.lesson.course.author.username quiz.lesson.course.id current_lesson.order_num quiz.id %}" class="add-question-btn">Добавить вопрос</a>
+    </div>
+    
+    {% for question in questions %}
+
+    <div class="question-card">
+        <div class="question-card-info">
+            <h6>{{ forloop.counter }}. {{ question.text }}</h6>
+            <span class="question-type">Тип: {{ question.get_type_display }}</span>
+            <ul>
+                {% for answer in question.answers.all %}
+                <li style="margin-top: 0.5rem;">
+                    <span>○</span>
+                    {% if answer.is_correct %}
+                        <span style="color: rgb(16, 185, 129);">Правильный ответ:</span>
+                    {% endif %}
+                    {{ answer.text }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div question-card-buttons>
+            <a href="{% url 'update_question' quiz.lesson.course.author.username quiz.lesson.course.id current_lesson.order_num quiz.id question.id %}" class="edit-question-btn">Редактировать вопрос</a>
+            <form method="post" action="{% url 'delete_question' quiz.lesson.course.author.username quiz.lesson.course.id current_lesson.order_num quiz.id question.id %}"
+                onsubmit="return confirm('Вы действительно хотите удалить вопрос?');">
+                {% csrf_token %}
+                <button type="submit" class="delete-question-btn">Удалить вопрос</button>
+            </form>
+        </div>
+    </div>
+
+    {% empty %}
+    <div class="empty-question-card">
+        <p>В этом тесте пока нет вопросов. Самое время добавить первый!</p>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

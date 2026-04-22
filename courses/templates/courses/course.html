@@ -33,7 +33,7 @@
         <p>{{ current_course.description }}</p>
         {% if not is_course_begun and user.is_authenticated %}
         <a href="{% url 'create_course_progress' current_course.id %}" class="create-course-progress-btn">Записаться</a>
-        {% else %}
+        {% elif not user.is_authenticated %}
         <span style="font-size: 14px; margin-top: 1rem; display: block; color: #475569">Авторизуйтесь для прохождения курса</span>
         {% endif %}
     </div>

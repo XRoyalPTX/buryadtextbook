@@ -41,10 +41,10 @@
 
     </div>
     <div class="course-card-buttons">
-        <a href="{% url 'update_course' card.id %}" class="simple-btn">Редактировать курс</a>
+        <a href="{% url 'update_course' card.author.username card.id %}" class="simple-btn">Редактировать курс</a>
         <a href="{% url 'studio_lessons' card.author.username card.id %}" class="simple-btn">Редактировать уроки</a>
         <form 
-            hx-post="{% url 'delete_course' card.id %}"
+            hx-post="{% url 'delete_course' card.author.username card.id %}"
             hx-target="#course-{{ card.id }}"
             hx-confirm="Вы действительно хотите удалить курс «{{ card.title }}»? Удаление приведет к полной потере данных, включая уроки и тесты."
             hx-swap="outerHTML">

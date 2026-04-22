@@ -189,6 +189,7 @@
     border-radius: 12px;
     border: solid 2px rgb(16, 185, 129);
     transition: 0.3s;
+    width: 100%;
 }
 
 .publish-btn:hover {
@@ -207,6 +208,7 @@
     border-radius: 12px;
     border: solid 2px rgb(245, 158, 11);
     transition: 0.3s;
+    width: 100%;
 }
 
 .unpublish-btn:hover {
@@ -280,6 +282,10 @@
         flex-direction: row;
         justify-content: center;
         gap: 1rem;
+        width: 100%;
+    }
+
+    .course-card-publish-card form {
         width: 100%;
     }
 
