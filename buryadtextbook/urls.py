@@ -25,4 +25,5 @@ urlpatterns = [
     path('features/', include("features.urls")),
     path('', include("quizzes.urls")),
     path('', include("social.urls")),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]

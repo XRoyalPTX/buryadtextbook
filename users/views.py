@@ -9,6 +9,7 @@ from django.contrib import messages
 from courses.models import LessonProgress, CourseProgress, Lesson
 from django.utils import timezone
 from datetime import timedelta
+from django.utils.translation import gettext_lazy as _
 
 
 # Модель User (которая на самом деле MyUser)
@@ -28,7 +29,7 @@ def register(request):
             user.first_name = form.cleaned_data['first_name'].capitalize()
             user.last_name = form.cleaned_data['last_name'].capitalize()
             user.save()
-            messages.success(request, 'Аккаунт успешно создан.')
+            messages.success(request, _('Аккаунт успешно создан.'))
             return redirect('login')
     else:
         form = RegisterForm()
@@ -46,10 +47,10 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 auth_login(request, user)
-                messages.success(request, 'Вы успешно вошли в аккаунт.')
+                messages.success(request, _('Вы успешно вошли в аккаунт.'))
                 return redirect('profile')
             else:
-                form.add_error(None, 'Неверный логин или пароль')
+                form.add_error(None, _('Неверный логин или пароль'))
     else:
         form = LoginForm()
     return render(request, "users/login.html", {'form': form})
@@ -67,7 +68,7 @@ def delete_user(request):
         user = request.user
         auth_logout(request)
         user.delete()
-        messages.success(request, 'Аккаунт успешно удален.')
+        messages.success(request, _('Аккаунт успешно удален.'))
         return redirect('home')
     return redirect('profile')
 
@@ -128,10 +129,10 @@ def update_user(request):
                 user.first_name = form.cleaned_data['first_name'].capitalize()
                 user.last_name = form.cleaned_data['last_name'].capitalize()
                 user.save()
-                messages.success(request, 'Данные успешно изменены.')
+                messages.success(request, _('Данные успешно изменены.'))
                 return redirect('profile')
             else:
-                form.add_error(None, 'Вы не ввели никаких изменений.')
+                form.add_error(None, _('Вы не ввели никаких изменений.'))
     else:
         form = UpdateUserForm(instance=request.user)
 
@@ -145,7 +146,7 @@ def update_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Пароль успешно изменен.')
+            messages.success(request, _('Пароль успешно изменен.'))
             return redirect('profile')
     else:
         form = PasswordChangeForm(request.user)

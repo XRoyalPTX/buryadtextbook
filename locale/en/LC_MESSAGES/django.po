@@ -1,0 +1,191 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-27 20:41+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\buryadtextbook\settings.py:130
+msgid "Russian"
+msgstr "Русский"
+
+#: .\buryadtextbook\settings.py:131
+msgid "English"
+msgstr "Английский"
+
+#: .\home\templates\home\homepage.html:4
+#, fuzzy
+#| msgid "Главная"
+msgid "Главная страница"
+msgstr "Main page"
+
+#: .\home\templates\home\homepage.html:21
+msgid "Интерактивное изучение"
+msgstr "Interactive learning of"
+
+#: .\home\templates\home\homepage.html:21
+msgid "бурятского языка"
+msgstr "the Buryad language"
+
+#: .\home\templates\home\homepage.html:24
+msgid ""
+"Платформа для сохранения и популяризации языка. Проходите структурированные "
+"курсы, сдавайте тесты и отслеживайте свой прогресс в личном кабинете."
+msgstr ""
+"A platform for the preservation and popularization of the language. Take "
+"structured courses, take tests, and track your progress in your personal "
+"account."
+
+#: .\home\templates\home\homepage.html:28
+msgid "Начать обучение"
+msgstr "Start learning"
+
+#: .\home\templates\home\homepage.html:38 .\templates\base.html:30
+#: .\templates\base.html:105 .\templates\base.html:160
+msgid "Курсы"
+msgstr "Courses"
+
+#: .\home\templates\home\homepage.html:39
+msgid ""
+"Просмотр списка доступных курсов и описаний. Изучение теоретической части и "
+"закрепление материала."
+msgstr ""
+"View the list of available courses and descriptions. Studying the "
+"theoretical part and consolidating the material."
+
+#: .\home\templates\home\homepage.html:45
+msgid "Тесты"
+msgstr "Tests"
+
+#: .\home\templates\home\homepage.html:46
+msgid ""
+"Прохождение тестов по отдельным урокам и итоговых тестов по курсам. Оценка "
+"знаний в реальном времени."
+msgstr ""
+"Passing tests for individual lessons and final tests for courses. Real-time "
+"knowledge assessment."
+
+#: .\home\templates\home\homepage.html:52
+msgid "Прогресс"
+msgstr "Progress"
+
+#: .\home\templates\home\homepage.html:53
+msgid ""
+"Сохранение результатов пройденных тестов и отслеживание прогресса обучения в "
+"личном кабинете."
+msgstr ""
+"Save the results of the completed tests and track the progress of training "
+"in your personal account."
+
+#: .\templates\base.html:29 .\templates\base.html:104 .\templates\base.html:159
+msgid "Главная"
+msgstr "Main page"
+
+#: .\templates\base.html:31 .\templates\base.html:106
+msgid "Словарь"
+msgstr "Dictionary"
+
+#: .\templates\base.html:33 .\templates\base.html:108
+msgid "Студия"
+msgstr "Studio"
+
+#: .\templates\base.html:39 .\templates\base.html:100
+msgid "Профиль"
+msgstr "Profile"
+
+#: .\templates\base.html:102
+msgid "Войти"
+msgstr "Log in"
+
+#: .\templates\base.html:119
+msgid "Switch to English"
+msgstr "Сменить на русский язык"
+
+#: .\templates\base.html:121
+msgid "Перейти на русский"
+msgstr ""
+
+#: .\templates\base.html:151
+msgid "Онлайн-площадка сохранения и развития бурятского языка."
+msgstr ""
+"An online platform for the preservation and development of the Buryat "
+"language."
+
+#: .\templates\base.html:152
+msgid "Давайте беречь наш язык"
+msgstr "Let's take care of the Buryad language."
+
+#: .\templates\base.html:158
+msgid "Ссылки"
+msgstr "Links"
+
+#: .\templates\base.html:166
+msgid "Информация"
+msgstr "Information"
+
+#: .\templates\base.html:167
+msgid "О проекте"
+msgstr "About the project"
+
+#: .\templates\base.html:168
+msgid "Об авторах"
+msgstr "About the authors"
+
+#: .\templates\base.html:174
+msgid "Помощь"
+msgstr "Help"
+
+#: .\templates\base.html:176
+msgid "Написать поддержке"
+msgstr "Write to support"
+
+#: .\users\templates\users\login.html:3
+msgid "Вход в аккаунт"
+msgstr "Log in"
+
+#: .\users\views.py:32
+msgid "Аккаунт успешно создан."
+msgstr "Account has been created successfully"
+
+#: .\users\views.py:50
+msgid "Вы успешно вошли в аккаунт."
+msgstr "You have successfully logged in to your account."
+
+#: .\users\views.py:53
+msgid "Неверный логин или пароль"
+msgstr "Invalid username or password"
+
+#: .\users\views.py:71
+#, fuzzy
+#| msgid "Аккаунт успешно создан."
+msgid "Аккаунт успешно удален."
+msgstr "Account has been deleted successfully"
+
+#: .\users\views.py:132
+#, fuzzy
+#| msgid "Аккаунт успешно создан."
+msgid "Данные успешно изменены."
+msgstr "Account data has been created successfully"
+
+#: .\users\views.py:135
+msgid "Вы не ввели никаких изменений."
+msgstr "You haven't made any changes."
+
+#: .\users\views.py:149
+#, fuzzy
+#| msgid "Аккаунт успешно создан."
+msgid "Пароль успешно изменен."
+msgstr "Account has been created successfully"

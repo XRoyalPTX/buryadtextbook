@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-
-{% block title %}Сэсэн | Главная страница{% endblock %}
-
+{% load i18n %}
 {% load static %}
+{% block title %}Сэсэн | {% trans "Главная страница" %}{% endblock %}
 
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'home/css/homepage.css' %}">
@@ -19,14 +18,14 @@
 
     <div class="welcome-container">
 
-        <h1>Интерактивное изучение <br><span class="welcome-container-h1">бурятского языка</span></h1>
+        <h1>{% trans "Интерактивное изучение" %} <br><span class="welcome-container-h1">{% trans "бурятского языка" %}</span></h1>
 
         <p>
-            Платформа для сохранения и популяризации языка. Проходите структурированные курсы, сдавайте тесты и отслеживайте свой прогресс в личном кабинете.
+            {% trans "Платформа для сохранения и популяризации языка. Проходите структурированные курсы, сдавайте тесты и отслеживайте свой прогресс в личном кабинете." %}
         </p>
 
         <a href="{% if user.is_authenticated %}{% url 'courses' %}{% endif %}{% if not user.is_authenticated %}{% url 'login' %}{% endif %}" class="welcome-container-btn">
-            Начать обучение
+            {% trans "Начать обучение" %}
         </a>
 
     </div>
@@ -36,22 +35,22 @@
             <div class="col-md-3" style="margin-top: 16px;">
                 <div class="feature-card h-100">
                     <img src="{% static 'home/images/school.svg' %}" style="margin-bottom: 8px;" width="24px">
-                    <h3 style="margin-bottom: 1rem;">Курсы</h3>
-                    <p>Просмотр списка доступных курсов и описаний. Изучение теоретической части и закрепление материала.</p>
+                    <h3 style="margin-bottom: 1rem;">{% trans "Курсы" %}</h3>
+                    <p>{% trans "Просмотр списка доступных курсов и описаний. Изучение теоретической части и закрепление материала." %}</p>
                 </div>
             </div>
             <div class="col-md-3" style="margin-top: 16px;">
                 <div class="feature-card h-100">
                     <img src="{% static 'home/images/quiz.svg' %}" style="margin-bottom: 8px;" width="24px">
-                    <h3 style="margin-bottom: 1rem;">Тесты</h3>
-                    <p>Прохождение тестов по отдельным урокам и итоговых тестов по курсам. Оценка знаний в реальном времени.</p>
+                    <h3 style="margin-bottom: 1rem;">{% trans "Тесты" %}</h3>
+                    <p>{% trans "Прохождение тестов по отдельным урокам и итоговых тестов по курсам. Оценка знаний в реальном времени." %}</p>
                 </div>
             </div>
             <div class="col-md-3" style="margin-top: 16px;">
                 <div class="feature-card h-100">
                     <img src="{% static 'home/images/progress.svg' %}" style="margin-bottom: 8px;" width="24px">
-                    <h3 style="margin-bottom: 1rem;">Прогресс</h3>
-                    <p>Сохранение результатов пройденных тестов и отслеживание прогресса обучения в личном кабинете.</p>
+                    <h3 style="margin-bottom: 1rem;">{% trans "Прогресс" %}</h3>
+                    <p>{% trans "Сохранение результатов пройденных тестов и отслеживание прогресса обучения в личном кабинете." %}</p>
                 </div>
             </div>
         </div>
