@@ -2,6 +2,8 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Course, Lesson, MyUser, CourseProgress, LessonProgress
+from quizzes.models import Quiz
+from social.models import Like
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
@@ -173,6 +175,13 @@ def open_lesson(request, course_id, lesson_order_num):
     if not CourseProgress.objects.filter(course=current_course, user=request.user).exists():
         messages.warning(request, "Для просмотра уроков необходимо начать прохождение курса.")
         return redirect('open_course', course_id=course_id)
+    
+    from social.models import Like, Comment
+    user_liked = Like.objects.filter(user=request.user, lesson=current_lesson).exists()
+    likes_cnt = Like.objects.filter(lesson=current_lesson).count()
+
+    comments = Comment.objects.filter(lesson=current_lesson)
+    comments_cnt = Comment.objects.filter(lesson=current_lesson).count()
 
     progress, created = LessonProgress.objects.get_or_create(
         user=request.user, 
@@ -199,6 +208,10 @@ def open_lesson(request, course_id, lesson_order_num):
         'prev_lesson': prev_lesson,
         'next_lesson': next_lesson,
         'is_lesson_completed': is_lesson_completed,
+        'user_liked': user_liked,
+        'likes_cnt': likes_cnt,
+        'comments': comments,
+        'comments_cnt': comments_cnt,
     })
 
 
@@ -309,9 +322,14 @@ def studio_courses(request, username):
         lessons_count=Count('lessons'),
     ).order_by('id')
 
+    total_quizzes_count = Quiz.objects.filter(lesson__course__author=needed_user).count()
+    total_like_count = Like.objects.filter(lesson__course__author=needed_user).count()
+
     return render(request, 'courses/studio_courses.html', context={
         'courses': courses,
         'author_user': needed_user,
+        'total_quizzes_count': total_quizzes_count,
+        'total_like_count': total_like_count
     })
 
 @user_passes_test(is_expert)
@@ -321,7 +339,10 @@ def studio_lessons(request, username, course_id):
     
     needed_user = get_object_or_404(MyUser, username=username)
     current_course = get_object_or_404(Course, pk=course_id, author=needed_user)
-    lessons = current_course.lessons.all().order_by('order_num')
+    lessons = current_course.lessons.all().annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comments', distinct=True),
+    ).order_by('order_num')
 
     return render(request, 'courses/studio_lessons.html', context={
         'current_course': current_course,

@@ -1,0 +1,36 @@
+{% load static %}
+
+<style>
+
+    button {
+        background-color: rgb(248, 250, 252);
+        border: solid 1px rgb(226,232,240);
+        width: 48px; 
+        height: 48px;
+        border-radius: 12px;
+        transition: 0.5s;
+    }
+
+    button:hover {
+        background-color: rgba(254,226,226,0.5);
+        transition: 0.5s;
+    }
+
+    button.liked {
+        background-color: rgba(254,226,226,0.5) !important
+    }
+
+</style>
+
+<div id="like-section-{{ current_lesson.id }}">
+    <span style="margin-right: 0.5rem;">{{ likes_cnt }}</span>
+    <button 
+        hx-post="{% url 'press_like' current_course.id current_lesson.order_num %}" 
+        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+        hx-target="#like-section-{{ current_lesson.id }}" 
+        hx-swap="outerHTML"
+        class="icon-like {% if user_liked %}liked{% endif %}"
+    >
+        <img src="{% static 'courses/images/studio_imgs/heart-card-icon.svg' %}">
+    </button>
+</div>

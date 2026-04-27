@@ -158,3 +158,9 @@ ul {
     color: white;
     cursor: pointer;
 }
+
+@media(max-width: 575px) {
+    .create-question-form {
+        padding: 1rem;
+    }
+}

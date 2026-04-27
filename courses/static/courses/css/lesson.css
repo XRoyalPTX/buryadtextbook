@@ -159,12 +159,11 @@
     cursor: pointer;
 }
 
-.lesson-comments-section {
-    padding: 2rem;
-}
-
-.lesson-comments-section h3 {
-    margin-bottom: 0;
+.like-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 @media(max-width: 575px) {

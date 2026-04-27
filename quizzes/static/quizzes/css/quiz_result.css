@@ -1,0 +1,90 @@
+.quiz-main {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    width: calc(100% - 2rem);
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.result-container {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    background-color: white;
+    padding: 2rem;
+    text-align: left;
+    border: solid 1px rgb(226,232,240);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.score-circle { 
+    width: 120px; 
+    height: 120px; 
+    border-radius: 50%; 
+    margin: 0 auto 2rem; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 2rem; 
+    font-weight: 800; 
+    color: white; 
+}
+.pass { 
+    background: linear-gradient(135deg, #22c55e, #16a34a); 
+}
+.fail { 
+    background: linear-gradient(135deg, #ef4444, #dc2626); 
+}
+
+.result-btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.to-lesson-btn, .try-again-btn {
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: 0;
+    width: 100%;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    margin-right: 1rem;
+}
+
+.to-lesson-btn:hover, .try-again-btn:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+.to-lesson-btn.inactive, .try-again-btn.inactive {
+    border: 2px solid #475569;
+    color: #475569;
+}
+
+.to-lesson-btn.inactive:hover, .try-again-btn.inactive:hover {
+    background-color: #475569;
+    box-shadow: 0 0 40px -5px rgba(71,85,105, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+@media(max-width: 575px) {
+    .quiz-main {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .result-container {
+        padding: 1rem;
+    }
+}

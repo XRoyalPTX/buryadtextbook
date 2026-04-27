@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include("courses.urls")),
     path('features/', include("features.urls")),
     path('', include("quizzes.urls")),
+    path('', include("social.urls")),
 ]

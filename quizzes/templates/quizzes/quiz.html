@@ -36,7 +36,7 @@
                     {% if question.type == 'single_choice' %}
                     Выберите <b>один</b> вариант ответа.
                     {% else %}
-                    Выберите <b>несколько</b> вариантов ответа.
+                    Выберите <b>один или несколько</b> вариантов ответа.
                     {% endif %}
                 </small>
                 {% for answer in question.answers.all %}

@@ -6,6 +6,7 @@
 
 {% block extrahead %}
 <link rel="stylesheet" href="{% static 'courses/css/lesson.css' %}">
+<link rel="stylesheet" href="{% static 'social/css/comment_section.css' %}">
 {% endblock %}
 
 {% block extrajs %}
@@ -33,6 +34,9 @@
 
         <div class="lesson-content-text" id="lesson-content-text">
             {{ current_lesson.content|safe }}
+            <div class="like-container">
+                {% include 'social/like_button.html' %}
+            </div>
         </div>
 
         <div class="lesson-buttons">
@@ -55,7 +59,11 @@
                         </form>
                         {% endif %}
                     {% else %}
-                    <div class="lesson-btn-complete inactive">Урок пройден!</div>
+                        {% if current_lesson.quiz and current_lesson.quiz.questions.all %}
+                        <a href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}" class="lesson-btn-complete inactive">Перепройти тест</a>
+                        {% else %}
+                        <a class="lesson-btn-complete inactive">Урок пройден</a>
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div class="col-12 col-sm-4">
@@ -67,11 +75,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="lesson-comments-section">
-            <h3>Комментарии (0)</h3>
-            <small>в разработке</small>
-        </div>
+        
+        {% include 'social/comment_section.html' %}
 
     </div>
 

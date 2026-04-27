@@ -1,0 +1,82 @@
+{% load static %}
+
+<style>
+.lesson-comments-section {
+    padding: 2rem;
+}
+
+.lesson-comments-section h3 {
+    margin-bottom: 0;
+}
+
+.comment-item {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #475569;
+    border-radius: 12px;
+    display: flow-root;
+}
+
+.comment-item:hover {
+    border: 1px solid rgb(106,98,233);
+}
+
+.comment-item p {
+    margin-bottom: 0.5rem;
+}
+
+.comment-replies {
+    border-left: 2px solid #e2e8f0; 
+    padding-left: 1rem;
+}
+
+.reply-btn {
+    width: fit-content;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    height: fit-content;
+}
+
+.reply-btn:hover {
+    background-color: transparent;
+    color: rgb(106,98,233);
+}
+
+.reply-item {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    font-size: 1rem;
+}
+
+</style>
+
+<div class="comment-card" style="margin-bottom: 1rem;">
+    <div class="comment-item {% if comment.parent %}reply-item{% endif %}">
+        <p>
+            <b>{{ comment.user.username }}</b>
+            &nbsp;|&nbsp;&nbsp;{{ comment.user.get_role_display|lower }}{% if current_course.author == comment.user %}, автор курса{% endif %}
+        </p>
+        <p>{{ comment.text }}</p>
+        <small>{{ comment.created_at }}</small>
+        
+        <div class="comment-actions mt-3">
+            <button class="reply-btn" 
+                    hx-get="{% url 'get_reply_form' current_course.id current_lesson.order_num comment.id %}" 
+                    hx-target="#reply-form-{{ comment.id }}">
+            Ответить
+            </button>
+        </div>
+        <div id="reply-form-{{ comment.id }}"></div>
+    </div>
+
+    {% if not comment.parent %}
+    <div class="comment-replies" id="replies-list-{{ comment.id }}">
+        {% for reply in comment.get_thread_replies %}
+            {% include 'social/comment_item.html' with comment=reply %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

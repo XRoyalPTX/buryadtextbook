@@ -1,0 +1,57 @@
+{% load static %}
+
+<style>
+
+.reply-form {
+    padding-top: 1rem;
+}
+
+textarea:focus {
+    outline-color: rgb(78,69,228);
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+}
+
+.btn-comment {
+    padding: 0.2rem 1rem; 
+    font-size: 14px;
+    width: fit-content;
+}
+
+.cancel-btn {
+    border: none; 
+    background: none; 
+    cursor: pointer; 
+    color: #64748b; 
+    font-size: 14px;
+}
+
+textarea {
+    width: 100%; 
+    border-radius: 8px; 
+    padding: 1rem; 
+    border: 1px solid #cbd5e1;
+}
+
+.cancel-btn {
+    width: fit-content;
+}
+
+</style>
+
+<div class="reply-form">
+    <form hx-post="{% url 'add_comment' course_id lesson_order_num %}" 
+          hx-target="#replies-list-{{ root_comment.id }}" 
+          hx-swap="beforeend" 
+          hx-on::after-request="this.remove()"> 
+        {% csrf_token %}
+        
+        <input type="hidden" name="parent_id" value="{{ parent_comment.id }}">
+        
+        <textarea name="text" placeholder="Ответить @{{ parent_comment.user.username }}..." required></textarea>
+        
+        <div style="display: flex; gap: 16px; margin-top: 0rem;">
+            <button type="submit" class="btn-comment">Отправить</button>
+            <button type="button" onclick="this.closest('.reply-form').remove()" class="cancel-btn">Отмена</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,87 @@
+{% load static %}
+
+<style>
+.lesson-comments-section {
+    padding: 2rem;
+}
+
+.lesson-comments-section h3 {
+    margin-bottom: 0;
+}
+
+.comment-form {
+    margin-top: 1rem;
+}
+
+.comment-form form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.comment-form form textarea {
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.comment-form form textarea:focus {
+    outline-color: rgb(78,69,228);
+    box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.08);
+}
+
+.comment-form form button {
+    margin-top: 0.5rem;
+    display: block;
+    background-color: transparent;
+    border-radius: 12px;
+    text-decoration: none;
+    padding: 0.4rem 1.2rem;
+    font-weight: 700;
+    transition: 0.3s;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid rgb(106,98,233);
+    color: rgb(106,98,233);
+    width: fit-content;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.comment-form form button:hover {
+    background-color: rgb(106,98,233);
+    box-shadow: 0 0 40px -5px rgba(106,98,233, 0.3);
+    color: white;
+    cursor: pointer;
+}
+
+@media(max-width: 575px) {
+    .lesson-comments-section {
+        padding: 1rem;
+    }
+}
+
+</style>
+
+<div class="lesson-comments-section">
+    <h3>Комментарии</h3>
+
+    <div class="comment-form">
+        <form hx-post="{% url 'add_comment' current_course.id current_lesson.order_num %}" 
+              hx-target="#comments-list" 
+              hx-swap="afterbegin" 
+              hx-on::after-request="this.reset()">
+            {% csrf_token %}
+            <textarea name="text" placeholder="Поделитесь мыслями об уроке..." required></textarea>
+            <button type="submit" class="btn-comment">Оставить комментарий</button>
+        </form>
+    </div>
+    
+    <div id="comments-list">
+        {% for comment in comments %}
+            {% if not comment.parent %}
+                {% include 'social/comment_item.html' with comment=comment %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
