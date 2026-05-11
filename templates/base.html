@@ -24,15 +24,19 @@
     <header>
 
         <div class="in-header-container-big">
-            <nav class="menu-btns">
-                <a href="{% url 'home' %}" class="logo">cэсэн</a>
-                <a href="{% url 'home' %}" class="menu-btn mx-3 {% if request.path == '/' %}active{% endif %}">{% trans "Главная" %}</a>
-                <a href="{% url 'courses' %}" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">{% trans "Курсы" %}</a>
-                <a href="{% url 'dictionary' %}" class="menu-btn mx-3 {% if request.path == '/features/dictionary/' %}active{% endif %}">{% trans 'Словарь' %}</a>
-                {% if user.role == 'expert' or user.is_superuser %}
-                    <a href="{% url 'studio_courses' user.username %}" class="studio-btn mx-3">{% trans 'Студия' %}</a>
-                {% endif %}
-            </nav>
+            <div class="logo-and-menu">
+                <div>
+                    <a href="{% url 'home' %}" class="logo"><b>СЭСЭН</b></a>
+                </div>
+                <nav class="menu-btns">
+                    <a href="{% url 'home' %}" class="menu-btn mx-3 {% if request.path == '/' %}active{% endif %}">{% trans "Главная" %}</a>
+                    <a href="{% url 'courses' %}" class="menu-btn mx-3 {% if request.path == '/courses/' %}active{% endif %}">{% trans "Курсы" %}</a>
+                    <a href="{% url 'dictionary' %}" class="menu-btn mx-3 {% if request.path == '/features/dictionary/' %}active{% endif %}">{% trans 'Словарь' %}</a>
+                    {% if user.role == 'expert' or user.is_superuser %}
+                        <a href="{% url 'studio_courses' user.username %}" class="studio-btn mx-3">{% trans 'Студия' %}</a>
+                    {% endif %}
+                </nav>
+            </div>
 
             {% if user.is_authenticated %}
                 <nav class="menu-help-btns">
@@ -46,7 +50,7 @@
                         hx-vals='{"language": "en", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="Switch to English">
+                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="Switch to English">
                         </a>
                     {% else %}
                         <a href="#" 
@@ -55,7 +59,7 @@
                         hx-vals='{"language": "ru", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="Перейти на русский">
+                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="Перейти на русский">
                         </a>
                     {% endif %}
                 </nav>
@@ -71,7 +75,7 @@
                         hx-vals='{"language": "en", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="Switch to English">
+                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="Switch to English">
                         </a>
                     {% else %}
                         <a href="#" 
@@ -80,7 +84,7 @@
                         hx-vals='{"language": "ru", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="Перейти на русский">
+                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="Перейти на русский">
                         </a>
                     {% endif %}
                     

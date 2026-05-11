@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block title %}Сэсэн | Урок | {{ current_lesson.title }}{% endblock %}
 
 {% load static %}
@@ -51,7 +51,7 @@
                 <div class="col-12 col-sm-4">
                     {% if not is_lesson_completed %}
                         {% if current_lesson.quiz and current_lesson.quiz.questions.all %}
-                        <a class="lesson-btn-complete" href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}">Перейти к тестированию.</a>
+                        <a class="lesson-btn-complete" href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}">Пройти тест</a>
                         {% else %}
                         <form method="post" action="{% url 'complete_lesson' current_course.id current_lesson.order_num %}">
                             {% csrf_token %}

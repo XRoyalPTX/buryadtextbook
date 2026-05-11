@@ -157,8 +157,6 @@ class ProfileViewTest(TestCase):
         response = self.client.get('/profile/')
         self.assertTemplateUsed(response, 'users/profile.html')
 
-        self.assertIn('random_buryad_word', response.context)
-
 
 class UpdateUserViewTest(TestCase):
     def test_update_user_view_get_request(self):

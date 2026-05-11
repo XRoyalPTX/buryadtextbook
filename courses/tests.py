@@ -1,14 +1,12 @@
 from django.test import TestCase
-
-# Create your tests here.
-
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from .models import Course, Lesson
+from .models import Course, Lesson, CourseProgress
 from django.core.exceptions import ValidationError
 from unittest.mock import patch
 
 User = get_user_model()
+
 
 class CoursePermissionsTest(TestCase):
     
@@ -42,23 +40,23 @@ class CoursePermissionsTest(TestCase):
 
     def test_student_cannot_access_create_course(self):
         self.client.login(username='student_user', password='testpassword123')
-        response = self.client.get(reverse('create_course'))
+        response = self.client.get(reverse('create_course', args=[self.student.username]))
         self.assertEqual(response.status_code, 302)
 
     def test_expert_can_access_create_course(self):
         self.client.login(username='author_user', password='testpassword123')
-        response = self.client.get(reverse('create_course'))
+        response = self.client.get(reverse('create_course', args=[self.expert_author.username]))
         self.assertEqual(response.status_code, 200)
 
     def test_other_expert_cannot_delete_course(self):
         self.client.login(username='hacker_user', password='testpassword123')
-        response = self.client.post(reverse('delete_course', args=[self.course.id]))
+        response = self.client.post(reverse('delete_course', args=[self.expert_hacker.username, self.course.id]))
         self.assertContains(response, "У вас нет прав для удаления этого курса")
         self.assertTrue(Course.objects.filter(id=self.course.id).exists())
 
     def test_author_can_delete_course(self):
         self.client.login(username='author_user', password='testpassword123')
-        response = self.client.post(reverse('delete_course', args=[self.course.id]))
+        response = self.client.post(reverse('delete_course', args=[self.expert_author.username, self.course.id]))
         self.assertContains(response, "Курс успешно удален")
         self.assertFalse(Course.objects.filter(id=self.course.id).exists())
 
@@ -130,7 +128,7 @@ class CourseViewsTest(TestCase):
         self.student = User.objects.create_user(username='student', email='s@test.ru', password='123', role='student')
         
         self.course = Course.objects.create(title="Тестовый курс", description="Описание", author=self.expert)
-        self.lesson = Lesson.objects.create(title="Тестовый урок", content="Контент", course=self.course)
+        self.lesson = Lesson.objects.create(title="Тестовый урок", content="Контент", course=self.course, is_published=True)
 
     def test_courses_list_view(self):
         self.client.login(username='student', password='123')
@@ -144,21 +142,24 @@ class CourseViewsTest(TestCase):
 
     def test_open_lesson_view(self):
         self.client.login(username='student', password='123')
+        CourseProgress.objects.create(course=self.course, user=self.student)
+        
         response = self.client.get(reverse('open_lesson', args=[self.course.id, self.lesson.order_num]))
         self.assertEqual(response.status_code, 200)
 
     def test_create_course_success(self):
         self.client.login(username='expert', password='123')
-        response = self.client.post(reverse('create_course'), {
+        response = self.client.post(reverse('create_course', args=[self.expert.username]), {
             'title': 'Новый курс',
             'description': 'Описание нового курса'
         })
-        self.assertRedirects(response, reverse('studio_courses', args=[self.expert.username]))
-        self.assertTrue(Course.objects.filter(title='Новый курс').exists())
+        
+        new_course = Course.objects.get(title='Новый курс')
+        self.assertRedirects(response, reverse('studio_lessons', args=[self.expert.username, new_course.id]))
 
     def test_update_course_success(self):
         self.client.login(username='expert', password='123')
-        response = self.client.post(reverse('update_course', args=[self.course.id]), {
+        response = self.client.post(reverse('update_course', args=[self.expert.username, self.course.id]), {
             'title': 'Обновленный курс',
             'description': 'Обновленное описание'
         })
@@ -168,7 +169,7 @@ class CourseViewsTest(TestCase):
 
     def test_create_lesson_success(self):
         self.client.login(username='expert', password='123')
-        response = self.client.post(reverse('create_lesson', args=[self.course.id]), {
+        response = self.client.post(reverse('create_lesson', args=[self.expert.username, self.course.id]), {
             'title': 'Новый урок',
             'content': 'Текст нового урока'
         })
@@ -177,7 +178,7 @@ class CourseViewsTest(TestCase):
 
     def test_update_lesson_success(self):
         self.client.login(username='expert', password='123')
-        response = self.client.post(reverse('update_lesson', args=[self.course.id, self.lesson.id]), {
+        response = self.client.post(reverse('update_lesson', args=[self.expert.username, self.course.id, self.lesson.id]), {
             'title': 'Обновленный урок',
             'content': 'Новый текст'
         })
@@ -202,7 +203,7 @@ class CourseViewsTest(TestCase):
             reverse('change_order_number', args=[self.expert.username, self.course.id]),
             {'order[]': [lesson2.id, self.lesson.id]}
         )
-        self.assertEqual(response.status_code, 204) # Ожидаем успешный пустой ответ HTMX
+        self.assertEqual(response.status_code, 204)
         
         self.lesson.refresh_from_db()
         lesson2.refresh_from_db()
@@ -211,6 +212,9 @@ class CourseViewsTest(TestCase):
 
     def test_htmx_publish_flow(self):
         self.client.login(username='expert', password='123')
+        
+        self.lesson.is_published = False
+        self.lesson.save()
         
         response = self.client.post(reverse('publish_lesson', args=[self.expert.username, self.course.id, self.lesson.id]))
         self.assertEqual(response.status_code, 200)
@@ -232,13 +236,13 @@ class CourseViewsTest(TestCase):
 
     def test_delete_lesson_success(self):
         self.client.login(username='expert', password='123')
-        response = self.client.post(reverse('delete_lesson', args=[self.course.id, self.lesson.id]))
+        response = self.client.post(reverse('delete_lesson', args=[self.expert.username, self.course.id, self.lesson.id]))
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Lesson.objects.filter(id=self.lesson.id).exists())
 
     def test_update_course_no_changes(self):
         self.client.login(username='expert', password='123')
-        response = self.client.post(reverse('update_course', args=[self.course.id]), {
+        response = self.client.post(reverse('update_course', args=[self.expert.username, self.course.id]), {
             'title': self.course.title,
             'description': self.course.description
         })
@@ -246,19 +250,18 @@ class CourseViewsTest(TestCase):
 
     def test_update_lesson_no_changes(self):
         self.client.login(username='expert', password='123')
-        response = self.client.post(reverse('update_lesson', args=[self.course.id, self.lesson.id]), {
+        response = self.client.post(reverse('update_lesson', args=[self.expert.username, self.course.id, self.lesson.id]), {
             'title': self.lesson.title,
             'content': self.lesson.content
         })
         self.assertContains(response, 'Вы не ввели никаких изменений')
 
     def test_create_course_validation_error(self):
-        
         with patch.object(Course, 'full_clean') as mock_clean:
             mock_clean.side_effect = ValidationError('Тестовая ошибка валидации')
             self.client.login(username='expert', password='123')
             
-            response = self.client.post(reverse('create_course'), {
+            response = self.client.post(reverse('create_course', args=[self.expert.username]), {
                 'title': 'Новый курс',
                 'description': 'Описание'
             })
@@ -268,14 +271,15 @@ class CourseViewsTest(TestCase):
     def test_get_forms_and_actions(self):
         self.client.login(username='expert', password='123')
         
-        self.assertEqual(self.client.get(reverse('create_course')).status_code, 200)
-        self.assertEqual(self.client.get(reverse('update_course', args=[self.course.id])).status_code, 200)
-        self.assertEqual(self.client.get(reverse('create_lesson', args=[self.course.id])).status_code, 200)
-        self.assertEqual(self.client.get(reverse('update_lesson', args=[self.course.id, self.lesson.id])).status_code, 200)
+        self.assertEqual(self.client.get(reverse('create_course', args=[self.expert.username])).status_code, 200)
+        self.assertEqual(self.client.get(reverse('update_course', args=[self.expert.username, self.course.id])).status_code, 200)
+        self.assertEqual(self.client.get(reverse('create_lesson', args=[self.expert.username, self.course.id])).status_code, 200)
+        self.assertEqual(self.client.get(reverse('update_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 200)
         
-        self.assertEqual(self.client.get(reverse('delete_course', args=[self.course.id])).status_code, 200)
-        self.assertEqual(self.client.get(reverse('delete_lesson', args=[self.course.id, self.lesson.id])).status_code, 204)
+        self.assertEqual(self.client.get(reverse('delete_course', args=[self.expert.username, self.course.id])).status_code, 200)
+        self.assertEqual(self.client.get(reverse('delete_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 204)
 
+        # GET-запросы к маршрутам, которые рассчитаны только на POST, выбросят ошибку
         with self.assertRaises(ValueError):
             self.client.get(reverse('publish_course', args=[self.expert.username, self.course.id]))
         with self.assertRaises(ValueError):
@@ -290,18 +294,20 @@ class CourseViewsTest(TestCase):
         foreign_expert = User.objects.create_user(username='hacker', email='h@ya.ru', password='123', role='expert')
         self.client.login(username='hacker', password='123')
 
-        self.assertEqual(self.client.get(reverse('update_course', args=[self.course.id])).status_code, 403)
-        self.assertEqual(self.client.post(reverse('create_lesson', args=[self.course.id])).status_code, 403)
-        self.assertEqual(self.client.get(reverse('update_lesson', args=[self.course.id, self.lesson.id])).status_code, 403)
+        self.assertEqual(self.client.get(reverse('update_course', args=[foreign_expert.username, self.course.id])).status_code, 403)
+        self.assertEqual(self.client.post(reverse('create_lesson', args=[foreign_expert.username, self.course.id])).status_code, 403)
+        self.assertEqual(self.client.get(reverse('update_lesson', args=[foreign_expert.username, self.course.id, self.lesson.id])).status_code, 403)
+        self.assertEqual(self.client.post(reverse('change_order_number', args=[foreign_expert.username, self.course.id])).status_code, 403)
         
-        self.assertEqual(self.client.post(reverse('change_order_number', args=[self.expert.username, self.course.id])).status_code, 403)
-        self.assertEqual(self.client.post(reverse('publish_course', args=[self.expert.username, self.course.id])).status_code, 403)
-        self.assertEqual(self.client.post(reverse('unpublish_course', args=[self.expert.username, self.course.id])).status_code, 403)
-        self.assertEqual(self.client.post(reverse('publish_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 403)
-        self.assertEqual(self.client.post(reverse('unpublish_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 403)
+        self.assertEqual(self.client.post(reverse('publish_course', args=[foreign_expert.username, self.course.id])).status_code, 404)
+        self.assertEqual(self.client.post(reverse('unpublish_course', args=[foreign_expert.username, self.course.id])).status_code, 404)
+        self.assertEqual(self.client.post(reverse('publish_lesson', args=[foreign_expert.username, self.course.id, self.lesson.id])).status_code, 404)
+        self.assertEqual(self.client.post(reverse('unpublish_lesson', args=[foreign_expert.username, self.course.id, self.lesson.id])).status_code, 404)
 
-        response_delete_lesson = self.client.post(reverse('delete_lesson', args=[self.course.id, self.lesson.id]))
+        response_delete_lesson = self.client.post(reverse('delete_lesson', args=[foreign_expert.username, self.course.id, self.lesson.id]))
         self.assertContains(response_delete_lesson, "У вас нет прав для удаления этого урока")
+
+        self.assertEqual(self.client.post(reverse('publish_course', args=[self.expert.username, self.course.id])).status_code, 403)
 
     def test_publish_course_without_published_lessons_htmx(self):
         self.client.login(username='expert', password='123')

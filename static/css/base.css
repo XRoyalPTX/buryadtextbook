@@ -25,13 +25,18 @@ header {
     justify-content: space-between;
 }
 
+.logo-and-menu {
+    display: flex;
+    align-items: center;
+}
+
 .logo {
     text-decoration: none;
     background: linear-gradient(135deg, rgb(78,69,228), rgb(243,61,93));
     -webkit-background-clip: text;
     color: transparent;
     transition: 0.2s;
-    font-size: 26px;
+    font-size: 20px;
     font-weight: 700;
     font-style: italic;
     transition: 0.6s;

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponse
+from django.utils.translation import gettext_lazy as _
 
 from courses.models import Course, Lesson
 from users.models import MyUser

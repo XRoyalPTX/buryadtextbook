@@ -120,25 +120,24 @@
     color: white;
 }
 
-.lesson-btn-complete {
+button.lesson-btn-complete, .lesson-btn-complete {
     display: block;
     background: linear-gradient(135deg, rgb(78,69,228), rgb(129,140,248), rgb(243,61,93));
     background-size: 150% auto;
     background-position: left center;
     box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-    padding-block: 1rem;
     padding-inline: 2rem;
+    padding-block: 1rem;
     border-radius: 12px;
     color: white;
     text-decoration: none;
     font-weight: 700;
     transition: 0.6s;
     text-align: center;
-    width: fit-content;
-    margin: 0 auto;
     outline: none;
     border: 0;
     width: 100%;
+    height: 56px;
 }
 
 .lesson-btn-complete.inactive {
@@ -146,6 +145,7 @@
     box-shadow: 0 4px 15px rgb(30, 41, 59, 0.5);
     background-size: 150% auto;
     transition: 0.6s;
+    padding-block: 1rem;
 }
 
 .lesson-btn-complete:focus {
@@ -164,6 +164,26 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+}
+
+/* Оформление всех таблиц, созданных через CKEditor */
+.lesson-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5rem 0;
+    border: 2px solid #dee2e6; /* Внешняя граница */
+}
+
+.lesson-content th, 
+.lesson-content td {
+    border: 2px solid #dee2e6; /* Внутренние границы ячеек */
+    padding: 12px;
+    text-align: left;
+}
+
+.lesson-content th {
+    background-color: #f8f9fa;
+    font-weight: 600;
 }
 
 @media(max-width: 575px) {

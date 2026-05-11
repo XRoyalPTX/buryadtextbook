@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from courses.models import Course, Lesson, LessonProgress
+from courses.models import Course, Lesson, LessonProgress, CourseProgress
 from .models import Quiz, Question, QuizProgress
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -7,6 +7,8 @@ from .forms import QuizForm, QuestionForm, AnswerFormSet
 from django.core.exceptions import ValidationError, PermissionDenied
 from django.contrib import messages
 from django.utils import timezone
+from datetime import timedelta
+
 
 # Create your views here.
 
@@ -41,9 +43,49 @@ def open_quiz(request, course_id, lesson_order_num, quiz_id):
                 user=request.user, 
                 lesson=current_lesson
             )
+            
             if not lesson_progress.complete_date:
+                today = timezone.now().date()
                 lesson_progress.complete_date = timezone.now()
                 lesson_progress.save()
+
+                published_lessons_count = current_course.lessons.filter(is_published=True).count()
+                
+                completed_lessons_count = LessonProgress.objects.filter(
+                    user=request.user,
+                    lesson__course=current_course,
+                    lesson__is_published=True,
+                    complete_date__isnull=False
+                ).count()
+
+                if published_lessons_count == completed_lessons_count:
+                    current_course_progress = CourseProgress.objects.filter(
+                        user=request.user,
+                        course=current_course
+                    ).first()
+
+                    if current_course_progress and not current_course_progress.complete_date:
+                        current_course_progress.complete_date = timezone.now()
+                        current_course_progress.save()
+                        messages.success(request, 'Поздравляем! Вы полностью прошли курс!')
+
+                current_user = request.user
+                if current_user.streak_count == 0:
+                    current_user.last_activity_date = today
+                    current_user.streak_count = 1
+                    current_user.save()
+                elif current_user.streak_count > 0 and current_user.last_activity_date == today - timedelta(days=1):
+                    current_user.last_activity_date = today
+                    current_user.streak_count += 1
+                    current_user.save()
+                elif current_user.streak_count > 0 and current_user.last_activity_date < today - timedelta(days=1):
+                    current_user.last_activity_date = today
+                    current_user.streak_count = 1
+                    current_user.save()
+
+                messages.success(request, 'Тест пройден, урок отмечен пройденным.')
+            else:
+                messages.success(request, 'Тест пройден.')
         
         return redirect('quiz_result', course_id=current_course.id, lesson_order_num=current_lesson.order_num, quiz_id=current_quiz.id, progress_id=progress.id)
 

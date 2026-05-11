@@ -157,20 +157,21 @@ LOGIN_URL = 'login'
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
+        'extraPlugins': 'lineheight',
+        'extraConfig': ','.join([
+            "disallowedContent: 'img{width,height,float}; table{width,height}; td{width,height}; span{font-family}'",
+            "extraAllowedContent: 'table(*); td(*); th(*); tr(*)'", # Разрешаем все классы для таблиц
+        ]),
         'toolbar_Custom': [
-            # Базовое форматирование и цвета (важно для выделения правил)
             ['Bold', 'Italic', 'Underline', 'Strike', '-', 'TextColor', 'BGColor'],
-            # Списки и выравнивание
             ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight'],
-            # Ссылки
             ['Link', 'Unlink'],
-            # Заголовки (H2, H3) и размер шрифта для структуры урока
-            ['Format', 'FontSize'],
-            # Вставка таблиц (для спряжений), линий и спецсимволов
+            ['Format', 'FontSize', 'lineheight'], 
             ['Table', 'HorizontalRule', 'SpecialChar'],
         ],
-        'height': 350, 
-        'language': 'ru', 
+        'height': 350,
+        'language': 'ru',
+        'line_height': '1/1rem;1.15/1.15rem;1.2/1.2rem;1.5/1.5rem;2/2rem;3/3rem',
         'removePlugins': 'elementspath',
         'resize_enabled': False,
     }
