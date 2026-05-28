@@ -53,23 +53,47 @@
 
 </style>
 
-<div class="comment-card" style="margin-bottom: 1rem;">
+<div class="comment-card" id="comment-{{ comment.id }}" style="margin-bottom: 1rem;">
     <div class="comment-item {% if comment.parent %}reply-item{% endif %}">
         <p>
             <b>{{ comment.user.username }}</b>
             &nbsp;|&nbsp;&nbsp;{{ comment.user.get_role_display|lower }}{% if current_course.author == comment.user %}, автор курса{% endif %}
         </p>
-        <p>{{ comment.text }}</p>
-        <small>{{ comment.created_at }}</small>
-        
-        <div class="comment-actions mt-3">
-            <button class="reply-btn" 
-                    hx-get="{% url 'get_reply_form' current_course.id current_lesson.order_num comment.id %}" 
-                    hx-target="#reply-form-{{ comment.id }}">
-            Ответить
-            </button>
-        </div>
-        <div id="reply-form-{{ comment.id }}"></div>
+
+        {% if comment.is_deleted %}
+            <p style="color: #64748b; font-style: italic;">
+                {% if comment.deleted_by == comment.user %}
+                    Комментарий удален пользователем
+                {% else %}
+                    Комментарий удален администратором
+                {% endif %}
+            </p>
+            <small>{{ comment.created_at }}</small>
+        {% else %}
+            <p>{{ comment.text }}</p>
+            <small>{{ comment.created_at }}</small>
+            
+            <div class="comment-actions mt-3">
+                <button class="reply-btn" 
+                        hx-get="{% url 'get_reply_form' current_course.id current_lesson.order_num comment.id %}" 
+                        hx-target="#reply-form-{{ comment.id }}">
+                Ответить
+                </button>
+                
+                {% if request.user == comment.user or request.user == current_course.author or request.user.is_superuser %}
+                &nbsp;
+                <button class="reply-btn delete-btn"
+                        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+                        hx-post="{% url 'delete_comment' current_course.id current_lesson.order_num comment.id %}"
+                        hx-target="#comment-{{ comment.id }}"
+                        hx-confirm="Вы действительно хотите удалить данный комментарий?"
+                        hx-swap="outerHTML">
+                Удалить
+                </button>
+                {% endif %}
+            </div>
+            <div id="reply-form-{{ comment.id }}"></div>
+        {% endif %}
     </div>
 
     {% if not comment.parent %}

@@ -7,6 +7,9 @@ from courses.models import Course, Lesson
 from users.models import MyUser
 from .models import Comment, Like
 
+from django.core.exceptions import PermissionDenied
+from django.utils import timezone
+
 # Create your views here.
 
 
@@ -80,3 +83,26 @@ def get_reply_form(request, course_id, lesson_order_num, comment_id):
         'course_id': course_id,
         'lesson_order_num': lesson_order_num,
     })
+
+
+@login_required
+def delete_comment(request, course_id, lesson_order_num, comment_id):
+    current_course = get_object_or_404(Course, pk=course_id)
+    current_lesson = get_object_or_404(Lesson, order_num=lesson_order_num, course=current_course)
+    comment = get_object_or_404(Comment, id=comment_id, lesson=current_lesson)
+
+    if request.user == comment.user or request.user == current_course.author or request.user.is_superuser:
+        if request.method == 'POST':
+            comment.is_deleted = True
+            comment.deleted_at = timezone.now()
+            comment.deleted_by = request.user
+            comment.save()
+
+            return render(request, 'social/comment_item.html', {
+                'comment': comment,
+                'current_course': current_course,
+                'current_lesson': current_lesson
+            })
+            
+    # Если прав нет, выбрасываем 403 Forbidden
+    raise PermissionDenied

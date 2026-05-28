@@ -2,9 +2,7 @@ from django.db import models
 from users.models import MyUser
 from courses.models import Lesson
 from django.utils.translation import gettext_lazy as _
-
-# Create your models here.
-
+from django.utils import timezone
 
 class Comment(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
@@ -19,6 +17,17 @@ class Comment(models.Model):
         on_delete=models.CASCADE, 
         related_name='replies'
     )
+    
+    is_deleted = models.BooleanField("Удален", default=False)
+    deleted_at = models.DateTimeField("Время удаления", null=True, blank=True)
+    deleted_by = models.ForeignKey(
+        MyUser, 
+        null=True, 
+        blank=True, 
+        on_delete=models.SET_NULL, 
+        related_name='deleted_comments', 
+        verbose_name="Кем удален"
+    )
 
     class Meta:
         verbose_name = "Комментарий"
@@ -30,7 +39,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Комментарий от {self.user.username} к уроку {self.lesson.title}"
-
 
 class Like(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
