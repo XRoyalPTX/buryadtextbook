@@ -57,6 +57,21 @@
                 </div>
                 {% endfor %}
             </div>
+
+            <div class="agree-checkbox" style="margin-top: 1.5rem;">
+                <input type="checkbox" id="agreement" name="agreement" style="cursor: pointer; display: block;" required>
+                <label for="agreement" style="display: block;">
+                    Я принимаю условия 
+                    <a href="{% url 'agreement' %}" target="_blank" style="text-decoration: underline;">Пользовательского соглашения</a> 
+                </label>
+            </div>
+            <div class="agree-checkbox" style="margin-top: 0.5rem;">
+                <input type="checkbox" id="agreement" name="agreement" style="cursor: pointer; display: block;" required>
+                <label for="agreement" style="display: block;">Я соглашаюсь с 
+                    <a href="{% url 'confidential' %}" target="_blank" style="text-decoration: underline;">Политикой конфиденциальности</a>.
+                </label>
+            </div>
+
             <button type="submit" class="reg-btn-form">Создать аккаунт</button>
         </form>
         <br>

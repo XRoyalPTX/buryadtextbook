@@ -19,3 +19,11 @@ def under_construction(request):
         'previous_url': previous_url,
     }
     return render(request, 'home/under_construction.html', context)
+
+
+def confidential(request):
+    return render(request, 'home/confidential.html', context=None)
+
+
+def agreement(request):
+    return render(request, 'home/agreement.html', context=None)
