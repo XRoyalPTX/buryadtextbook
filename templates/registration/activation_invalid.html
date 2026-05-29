@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Сэсэн | Ошибка активации{% endblock %}
+
+{% block extrahead %}
+<style>
+.auth-main-container { display: flex; align-items: center; padding-top: 120px; padding-bottom: 120px; }
+.auth-container { margin: 0 auto; max-width: 450px; background-color: white; padding: 2rem; border-radius: 24px; box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08); border: solid 1px rgb(226,232,240); width: 100%; }
+.btn-gradient { display: block; background: linear-gradient(135deg, rgb(78,69,228), rgb(129,140,248), rgb(243,61,93)); padding-block: 1rem; border-radius: 12px; color: white; text-decoration: none; font-weight: 700; text-align: center; border: none; }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="auth-main-container">
+    <div class="auth-container text-center">
+        <h3 style="color: rgb(243, 61, 93);">Ошибка активации</h3>
+        <br>
+        <p>Эта ссылка недействительна. Возможно, аккаунт уже активирован, либо срок действия ссылки (3 дня) истек.</p>
+        <br>
+        <a href="{% url 'register' %}" class="btn-gradient">Пройти регистрацию заново</a>
+    </div>
+</div>
+{% endblock %}

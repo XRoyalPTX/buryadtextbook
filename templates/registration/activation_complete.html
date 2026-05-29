@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Сэсэн | Аккаунт активирован{% endblock %}
+
+{% block extrahead %}
+<style>
+.auth-main-container { display: flex; align-items: center; padding-top: 120px; padding-bottom: 120px; }
+.auth-container { margin: 0 auto; max-width: 450px; background-color: white; padding: 2rem; border-radius: 24px; box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08); border: solid 1px rgb(226,232,240); width: 100%; }
+.btn-back { display: inline-block; background-color: transparent; border: 2px solid rgb(106,98,233); border-radius: 12px; text-decoration: none; padding: 0.4rem 1.2rem; color: rgb(106,98,233); font-weight: 700; transition: 0.3s; font-size: 16px; text-align: center; width: 100%; }
+.btn-back:hover { background-color: rgb(106,98,233); color: white; box-shadow: 0 0 40px -5px rgba(106,98,233, 0.5); }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="auth-main-container">
+    <div class="auth-container text-center">
+        <h3>Успешная активация!</h3>
+        <br>
+        <p>Ваш Email успешно подтвержден. Теперь профиль активен, и вы можете зайти на платформу.</p>
+        <br>
+        <a href="{% url 'login' %}" class="btn-back">Войти в аккаунт</a>
+    </div>
+</div>
+{% endblock %}

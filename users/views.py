@@ -11,6 +11,11 @@ from django.utils import timezone
 from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import send_mail
+
 
 # Модель User (которая на самом деле MyUser)
 User = get_user_model()
@@ -28,12 +33,44 @@ def register(request):
             user = form.save(commit=False)
             user.first_name = form.cleaned_data['first_name'].capitalize()
             user.last_name = form.cleaned_data['last_name'].capitalize()
+            
+            user.is_active = False
             user.save()
-            messages.success(request, _('Аккаунт успешно создан.'))
-            return redirect('login')
+            
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            
+            current_site = request.get_host()
+            activation_url = f"http://{current_site}/auth/activate/{uid}/{token}/"
+            
+            subject = "Активация аккаунта Сэсэн"
+            message = f"Сайн байна! Спасибо за регистрацию на платформе Сэсэн.\n\n" \
+                      f"Для подтверждения вашего Email и активации профиля перейдите по ссылке:\n" \
+                      f"{activation_url}\n\n" \
+                      f"Ссылка действительна в течение 3 дней."
+            
+            send_mail(subject, message, None, [user.email])
+            
+            return render(request, 'registration/activation_sent.html')
     else:
         form = RegisterForm()
     return render(request, "users/register.html", {'form': form})
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True 
+        user.save()
+        messages.success(request, _('Ваш аккаунт успешно активирован. Теперь вы можете войти.'))
+        return redirect('login')
+    else:
+        return render(request, 'registration/activation_invalid.html')
 
 
 def login(request):
