@@ -35,3 +35,19 @@ $(document).ready(function(){
     });
 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cookieBanner = document.getElementById("cookie-banner");
+    const acceptBtn = document.getElementById("cookie-accept-btn");
+
+    if (!localStorage.getItem("cookie_accepted")) {
+        setTimeout(() => {
+            cookieBanner.classList.remove("hidden");
+        }, 1000);
+    }
+
+    acceptBtn.addEventListener("click", function () {
+        localStorage.setItem("cookie_accepted", "true");
+        cookieBanner.classList.add("hidden");
+    });
+});

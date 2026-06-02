@@ -192,5 +192,12 @@
     <script src="{% static 'js/base.js' %}"></script>
     {% block extrajs %}{% endblock %}
 
+    <div id="cookie-banner" class="cookie-banner hidden">
+        <div class="cookie-content">
+            <p>Мы используем файлы cookie, чтобы сделать платформу «Сэсэн» удобнее. Оставаясь на сайте, вы соглашаетесь с нашей <a href="{% url 'confidential' %}">политикой конфиденциальности</a>.</p>
+            <button id="cookie-accept-btn" class="cookie-btn">Отлично</button>
+        </div>
+    </div>
+
 </body>
 </html>
