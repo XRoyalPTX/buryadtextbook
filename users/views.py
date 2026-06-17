@@ -182,12 +182,49 @@ def update_user(request):
         form = UpdateUserForm(data=request.POST, instance=request.user)
         if form.is_valid():
             if form.has_changed():
-                user = form.save(commit=False)
-                user.first_name = form.cleaned_data['first_name'].capitalize()
-                user.last_name = form.cleaned_data['last_name'].capitalize()
-                user.save()
-                messages.success(request, _('Данные успешно изменены.'))
-                return redirect('profile')
+
+                if 'email' in form.changed_data:
+                    new_email = form.cleaned_data['email']
+                    
+                    token = default_token_generator.make_token(request.user)
+                    uid = urlsafe_base64_encode(force_bytes(request.user.pk))
+                    encoded_email = urlsafe_base64_encode(force_bytes(new_email))
+                    
+                    protocol = 'https' if request.is_secure() else 'http'
+                    current_site = request.get_host()
+                    
+                    activation_url = f"{protocol}://{current_site}/auth/change-email/{uid}/{token}/{encoded_email}/"
+                    
+                    subject = "Подтверждение смены Email на Сэсэн"
+                    message = (
+                        f"Сайн байна, {request.user.first_name}!\n\n"
+                        f"Вы запросили изменение адреса электронной почты на платформе Сэсэн.\n"
+                        f"Для подтверждения нового Email перейдите по ссылке:\n"
+                        f"{activation_url}\n\n"
+                        f"Если вы не совершали данного действия, просто проигнорируйте это письмо. "
+                        f"Ваш аккаунт останется привязан к старому адресу."
+                    )
+                    
+                    try:
+                        send_mail(subject, message, settings.EMAIL_HOST_USER, [new_email], fail_silently=False)
+                        
+                        user = form.save(commit=False)
+                        user.first_name = form.cleaned_data['first_name'].capitalize()
+                        user.last_name = form.cleaned_data['last_name'].capitalize()
+                        user.email = request.user._meta.model.objects.get(pk=request.user.pk).email
+                        user.save()
+                        
+                        messages.info(request, _('На вашу новую почту отправлено письмо со ссылкой для подтверждения.'))
+                        return redirect('profile')
+                    except Exception as e:
+                        form.add_error(None, _('Ошибка отправки письма. Попробуйте позже.'))
+                else:
+                    user = form.save(commit=False)
+                    user.first_name = form.cleaned_data['first_name'].capitalize()
+                    user.last_name = form.cleaned_data['last_name'].capitalize()
+                    user.save()
+                    messages.success(request, _('Данные успешно изменены.'))
+                    return redirect('profile')
             else:
                 form.add_error(None, _('Вы не ввели никаких изменений.'))
     else:

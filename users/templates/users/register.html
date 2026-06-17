@@ -32,7 +32,7 @@
                     {{ field }}
                     <br>
                     {% if field.name == "username" %}
-                        <span id="username_help_text" class="username_help_text">Обязательное поле. До 150 символов (буквы, цифры и @/./+/-/_).</span>
+                        <span id="username_help_text" class="username_help_text">Обязательное поле. До 20 символов (буквы, цифры и @/./+/-/_).</span>
                     {% endif %}
 
                     {% if field.errors %}
@@ -65,9 +65,12 @@
                     <a href="{% url 'agreement' %}" target="_blank" style="text-decoration: underline;">Пользовательского соглашения</a> 
                 </label>
             </div>
+
             <div class="agree-checkbox" style="margin-top: 0.5rem;">
-                <input type="checkbox" id="agreement" name="agreement" style="cursor: pointer; display: block;" required>
-                <label for="agreement" style="display: block;">Я соглашаюсь с 
+                <input type="checkbox" id="privacy" name="privacy" style="cursor: pointer; display: block;" required>
+                
+                <label for="privacy" style="display: block;">
+                    Я соглашаюсь с 
                     <a href="{% url 'confidential' %}" target="_blank" style="text-decoration: underline;">Политикой конфиденциальности</a>.
                 </label>
             </div>
