@@ -3,11 +3,21 @@ from users.models import MyUser
 from courses.models import Lesson
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.core.validators import MinLengthValidator, MaxLengthValidator 
+
 
 class Comment(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='comments')
-    text = models.TextField("Комментарий")
+
+    text = models.TextField(
+        "Комментарий",
+        validators=[
+            MinLengthValidator(1, message="Комментарий слишком короткий (минимум 1 символ)."),
+            MaxLengthValidator(1000, message="Комментарий не может быть длиннее 1000 символов.")
+        ]
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     
     parent = models.ForeignKey(

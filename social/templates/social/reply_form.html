@@ -48,7 +48,7 @@ textarea {
         
         <input type="hidden" name="parent_id" value="{{ parent_comment.id }}">
         
-        <textarea name="text" placeholder="Ответить @{{ parent_comment.user.username }}..." required></textarea>
+        <textarea name="text" placeholder="Ответить @{{ parent_comment.user.username }}..." maxlength="1000" required></textarea>
         
         <div style="display: flex; gap: 16px; margin-top: 0rem;">
             <button type="submit" class="btn-comment">Отправить</button>

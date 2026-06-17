@@ -72,7 +72,7 @@
               hx-swap="afterbegin" 
               hx-on::after-request="this.reset()">
             {% csrf_token %}
-            <textarea name="text" placeholder="Поделитесь мыслями об уроке..." required></textarea>
+            <textarea name="text" placeholder="Поделитесь мыслями об уроке..." maxlength="1000" required></textarea>
             <button type="submit" class="btn-comment">Оставить комментарий</button>
         </form>
     </div>

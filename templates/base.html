@@ -150,7 +150,7 @@
 
             <div class="row gy-3 gx-0 justify-content-between">
 
-                <div class="col-12 col-md-4">
+                <div class="col-12">
                     <div class="footer-list">
                         <h4 style="color: rgb(15,23,42)">Сэсэн</h4>
                         <p>{% trans 'Онлайн-площадка сохранения и развития бурятского языка.' %}<br>
@@ -158,7 +158,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-4 col-md-2">
+                <div class="col-12 col-md-4">
                     <div class="footer-list">
                         <h5 style="color: rgb(15,23,42)">{% trans 'Ссылки' %}</h5>
                         <a href="{% url 'home' %}">{% trans 'Главная' %}</a><br>
@@ -166,24 +166,34 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-4 col-md-2">
+                <div class="col-12 col-md-4">
                     <div class="footer-list">
                         <h5 style="color: rgb(15,23,42)">{% trans 'Информация' %}</h5>
+                        <a href="{% url 'about' %}">{% trans 'Об авторе' %}</a><br>
                         <a href="{% url 'confidential' %}">{% trans 'Политика конфиденциальности' %}</a><br>
                         <a href="{% url 'agreement' %}">{% trans 'Пользовательское соглашение' %}</a>
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-4 col-md-2">
+                <div class="col-12 col-md-4">
                     <div class="footer-list">
-                        <h5 style="color: rgb(15,23,42)">{% trans 'Помощь' %}</h5>
-                        <a href="{% url 'home' %}">F.A.Q.</a><br>
-                        <a href="{% url 'under_construction' %}">{% trans 'Написать поддержке' %}</a>
+                        <h5 style="color: rgb(15,23,42)">{% trans 'Контакты и соцсети' %}</h5>
+                        <a href="https://t.me/sesen_web" target="_blank" rel="noopener">Telegram</a><br>
+                        <a href="{% url 'under_construction' %}">{% trans 'Написать поддержке' %}</a><br>
                     </div>
                 </div>
 
             </div>
         </div>
+
+        <hr style="border-color: rgba(15,23,42, 0.5);">
+        <div class="row">
+            <div class="col-12 text-center text-md-start">
+                <p class="text-muted small mb-0">Email: webappsesen@yandex.ru</p>
+                <p class="text-muted small mb-0">&copy; {% now "Y" %} {% trans 'Сэсэн. Все права защищены.' %} 16+</p>
+            </div>
+        </div>
+
     </footer>
 
     <!-- ПОДКЛЮЧЕНИЕ JS-СКРИПТОВ-->
@@ -195,8 +205,8 @@
 
     <div id="cookie-banner" class="cookie-banner hidden">
         <div class="cookie-content">
-            <p>Мы используем файлы cookie, чтобы сделать платформу «Сэсэн» удобнее. Оставаясь на сайте, вы соглашаетесь с нашей <a href="{% url 'confidential' %}">политикой конфиденциальности</a>.</p>
-            <button id="cookie-accept-btn" class="cookie-btn">Отлично</button>
+            <p>{% trans 'Мы используем файлы cookie, чтобы сделать платформу «Сэсэн» удобнее. Оставаясь на сайте, вы соглашаетесь с нашей' %} <a href="{% url 'confidential' %}">{% trans 'политикой конфиденциальности' %}</a>.</p>
+            <button id="cookie-accept-btn" class="cookie-btn">{% trans 'Отлично' %}</button>
         </div>
     </div>
 

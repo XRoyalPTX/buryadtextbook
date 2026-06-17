@@ -2,6 +2,7 @@ from django.db import models
 from courses.models import Lesson
 from users.models import MyUser
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 
 # Create your models here.
 
@@ -12,8 +13,15 @@ class Quiz(models.Model):
         on_delete=models.CASCADE,
         related_name='quiz',
     )
-    title = models.CharField("Название теста", max_length=255)
-    description = models.TextField("Описание теста")
+    title = models.CharField(
+        "Название теста", 
+        max_length=150, # Уменьшили со 255 до 150
+        validators=[MaxLengthValidator(150, message="Название теста не может быть длиннее 150 символов.")]
+    )
+    description = models.TextField(
+        "Описание теста",
+        validators=[MaxLengthValidator(1000, message="Описание теста не может быть длиннее 1000 символов.")]
+    )
 
     def __str__(self):
         return f"Тест {self.title} к уроку {self.lesson.title}"
@@ -27,8 +35,23 @@ class Question(models.Model):
     ]
 
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
-    text = models.CharField(max_length=511)
-    content = models.TextField(null=True, blank=True)
+    
+    text = models.CharField(
+        "Текст вопроса",
+        max_length=300, 
+        validators=[
+            MinLengthValidator(3, message="Вопрос слишком короткий."),
+            MaxLengthValidator(300, message="Вопрос не может быть длиннее 300 символов.")
+        ]
+    )
+
+    content = models.TextField(
+        "Дополнительный контент", 
+        null=True, 
+        blank=True,
+        validators=[MaxLengthValidator(2000, message="Дополнительный контент не должен превышать 2000 символов.")]
+    )
+
     type = models.CharField(
         max_length=40,
         choices=types_choices,
@@ -56,7 +79,11 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    text = models.CharField("Текст ответа", max_length=255)
+    text = models.CharField(
+        "Текст ответа", 
+        max_length=150,
+        validators=[MaxLengthValidator(150, message="Вариант ответа не может быть длиннее 150 символов.")]
+    )
     is_correct = models.BooleanField("Правильность ответа")
 
     def __str__(self):

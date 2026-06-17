@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import MyUser
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxLengthValidator, MinLengthValidator
 from ckeditor.fields import RichTextField
 from django.db.models import Max
 
@@ -9,8 +9,15 @@ from django.db.models import Max
 
 
 class Course(models.Model):
-    title = models.CharField("Название курса", max_length=255)
-    description = models.TextField("Описание курса")
+    title = models.CharField(
+        "Название курса", 
+        max_length=100, 
+        validators=[MaxLengthValidator(100, message="Название курса не может быть длиннее 100 символов.")]
+    )
+    description = models.TextField(
+        "Описание курса",
+        validators=[MaxLengthValidator(1500, message="Описание курса не может быть длиннее 1500 символов.")]
+    )
     author = models.ForeignKey(
         MyUser,
         on_delete=models.CASCADE, 
@@ -52,8 +59,15 @@ class Course(models.Model):
 
 
 class Lesson(models.Model):
-    title = models.CharField("Название урока", max_length=255)
-    content = RichTextField("Контент урока")
+    title = models.CharField(
+        "Название урока", 
+        max_length=120,
+        validators=[MaxLengthValidator(120, message="Название урока не может быть длиннее 120 символов.")]
+    )
+    content = RichTextField(
+        "Контент урока",
+        validators=[MaxLengthValidator(50000, message="Контент урока слишком огромный (максимум 50 000 символов вместе с разметкой).")]
+    )
     order_num = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)], verbose_name="Порядковый номер урока")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons', verbose_name="Курс")
     is_published = models.BooleanField(default=False, verbose_name="Опубликовано")

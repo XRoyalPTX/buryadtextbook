@@ -15,7 +15,9 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.core.mail import send_mail
-
+from django.db import transaction
+import logging
+from django.conf import settings
 
 # Модель User (которая на самом деле MyUser)
 User = get_user_model()
@@ -23,37 +25,55 @@ User = get_user_model()
 
 # Create your views here.
 
+logger = logging.getLogger(__name__)
 
 def register(request):
     if request.user.is_authenticated:
         return redirect('profile')
+        
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.first_name = form.cleaned_data['first_name'].capitalize()
-            user.last_name = form.cleaned_data['last_name'].capitalize()
-            
-            user.is_active = False
-            user.save()
-            
-            token = default_token_generator.make_token(user)
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            
-            current_site = request.get_host()
-            activation_url = f"http://{current_site}/auth/activate/{uid}/{token}/"
-            
-            subject = "Активация аккаунта Сэсэн"
-            message = f"Сайн байна! Спасибо за регистрацию на платформе Сэсэн.\n\n" \
-                      f"Для подтверждения вашего Email и активации профиля перейдите по ссылке:\n" \
-                      f"{activation_url}\n\n" \
-                      f"Ссылка действительна в течение 3 дней."
-            
-            send_mail(subject, message, None, [user.email])
-            
-            return render(request, 'registration/activation_sent.html')
+            try:
+                with transaction.atomic():
+                    user = form.save(commit=False)
+                    user.first_name = form.cleaned_data['first_name'].capitalize()
+                    user.last_name = form.cleaned_data['last_name'].capitalize()
+                    
+                    user.is_active = False
+                    user.save() 
+
+                    token = default_token_generator.make_token(user)
+                    uid = urlsafe_base64_encode(force_bytes(user.pk))
+                    
+                    protocol = 'https' if request.is_secure() else 'http'
+                    current_site = request.get_host()
+                    activation_url = f"{protocol}://{current_site}/auth/activate/{uid}/{token}/"
+                    
+                    subject = "Активация аккаунта Сэсэн"
+                    message = (
+                        f"Сайн байна! Спасибо за регистрацию на платформе Сэсэн.\n\n"
+                        f"Для подтверждения вашего Email и активации профиля перейдите по ссылке:\n"
+                        f"{activation_url}\n\n"
+                        f"Ссылка действительна в течение 3 дней."
+                    )
+                    
+                    send_mail(
+                        subject, 
+                        message, 
+                        settings.EMAIL_HOST_USER, 
+                        [user.email],
+                        fail_silently=False 
+                    )
+                
+                return render(request, 'registration/activation_sent.html')
+                
+            except Exception as e:
+                logger.error(f"Ошибка при регистрации пользователя: {e}")
+                form.add_error(None, _("Не удалось отправить письмо с активацией. Пожалуйста, проверьте правильность Email или попробуйте позже."))
     else:
         form = RegisterForm()
+        
     return render(request, "users/register.html", {'form': form})
 
 
