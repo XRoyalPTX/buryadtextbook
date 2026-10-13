@@ -19,11 +19,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    if os.getenv('DEBUG', 'False') == 'True':
+        SECRET_KEY = 'django-insecure-dev-fallback-key-do-not-use-in-production'
+    else:
+        raise ValueError("The SECRET_KEY environment variable must be set in production!")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['.sesen.su', '127.0.0.1', 'localhost']
+allowed_hosts_raw = os.getenv('ALLOWED_HOSTS')
+if allowed_hosts_raw:
+    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_raw.split(',') if host.strip()]
+else:
+    ALLOWED_HOSTS = ['.sesen.su', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -203,3 +212,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Доверенные хосты для CSRF-запросов на сервере
 CSRF_TRUSTED_ORIGINS = ['https://sesen.su', 'https://www.sesen.su', 'https://web.sesen.su']
+
+# Дополнительные заголовки безопасности
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'

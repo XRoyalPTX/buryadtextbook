@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from courses.models import Course, Lesson, LessonProgress
+from courses.models import Course, Lesson, LessonProgress, CourseProgress
 from .models import Quiz, Question, Answer, QuizProgress
 from .forms import QuizForm, AnswerFormSet
 
@@ -18,7 +18,11 @@ class QuizBaseTest(TestCase):
         self.hacker = User.objects.create_user(username='hacker_user', password='123', email='hacker@test.com', role='expert')
 
         self.course = Course.objects.create(title="Курс", description="...", author=self.expert)
-        self.lesson = Lesson.objects.create(title="Урок", content="...", course=self.course, order_num=1)
+        self.lesson = Lesson.objects.create(title="Урок", content="...", course=self.course, order_num=1, is_published=True)
+        self.course.is_published = True
+        self.course.save()
+        CourseProgress.objects.create(course=self.course, user=self.student)
+
         self.quiz = Quiz.objects.create(lesson=self.lesson, title="Тест 1", description="Описание")
 
         self.q_single = Question.objects.create(quiz=self.quiz, text="Q1", type='single_choice')

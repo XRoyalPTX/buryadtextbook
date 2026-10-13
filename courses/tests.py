@@ -129,6 +129,8 @@ class CourseViewsTest(TestCase):
         
         self.course = Course.objects.create(title="Тестовый курс", description="Описание", author=self.expert)
         self.lesson = Lesson.objects.create(title="Тестовый урок", content="Контент", course=self.course, is_published=True)
+        self.course.is_published = True
+        self.course.save()
 
     def test_courses_list_view(self):
         self.client.login(username='student', password='123')
@@ -276,18 +278,13 @@ class CourseViewsTest(TestCase):
         self.assertEqual(self.client.get(reverse('create_lesson', args=[self.expert.username, self.course.id])).status_code, 200)
         self.assertEqual(self.client.get(reverse('update_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 200)
         
-        self.assertEqual(self.client.get(reverse('delete_course', args=[self.expert.username, self.course.id])).status_code, 200)
-        self.assertEqual(self.client.get(reverse('delete_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 204)
+        self.assertEqual(self.client.get(reverse('delete_course', args=[self.expert.username, self.course.id])).status_code, 405)
+        self.assertEqual(self.client.get(reverse('delete_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 405)
 
-        # GET-запросы к маршрутам, которые рассчитаны только на POST, выбросят ошибку
-        with self.assertRaises(ValueError):
-            self.client.get(reverse('publish_course', args=[self.expert.username, self.course.id]))
-        with self.assertRaises(ValueError):
-            self.client.get(reverse('unpublish_course', args=[self.expert.username, self.course.id]))
-        with self.assertRaises(ValueError):
-            self.client.get(reverse('publish_lesson', args=[self.expert.username, self.course.id, self.lesson.id]))
-        with self.assertRaises(ValueError):
-            self.client.get(reverse('unpublish_lesson', args=[self.expert.username, self.course.id, self.lesson.id]))
+        self.assertEqual(self.client.get(reverse('publish_course', args=[self.expert.username, self.course.id])).status_code, 405)
+        self.assertEqual(self.client.get(reverse('unpublish_course', args=[self.expert.username, self.course.id])).status_code, 405)
+        self.assertEqual(self.client.get(reverse('publish_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 405)
+        self.assertEqual(self.client.get(reverse('unpublish_lesson', args=[self.expert.username, self.course.id, self.lesson.id])).status_code, 405)
 
     def test_foreign_expert_permissions(self):
         User = get_user_model()

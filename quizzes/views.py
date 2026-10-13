@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.http import Http404
+from django.views.decorators.http import require_POST
 from courses.models import Course, Lesson, LessonProgress, CourseProgress
 from .models import Quiz, Question, QuizProgress
 from django.shortcuts import render, get_object_or_404
@@ -23,6 +25,15 @@ def open_quiz(request, course_id, lesson_order_num, quiz_id):
     current_course = get_object_or_404(Course, pk=course_id)
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
     current_quiz = get_object_or_404(Quiz, pk=quiz_id, lesson=current_lesson)
+
+    # Проверка публикации и прав доступа
+    is_owner_or_admin = (request.user == current_course.author or request.user.is_superuser)
+    if not is_owner_or_admin:
+        if not current_course.is_published or not current_lesson.is_published:
+            raise Http404("Тест не найден.")
+        if not CourseProgress.objects.filter(course=current_course, user=request.user).exists():
+            messages.warning(request, "Для прохождения теста необходимо начать курс.")
+            return redirect('open_course', course_id=course_id)
 
     if request.method == 'POST':
         from .models import QuizProgress
@@ -95,16 +106,16 @@ def open_quiz(request, course_id, lesson_order_num, quiz_id):
         'current_quiz': current_quiz,
     })
 
-@login_required
+@user_passes_test(is_expert)
 def create_quiz(request, username, course_id, lesson_order_num):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, id=course_id)
-    if request.user != current_course.author:
+    if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
 
-    current_lesson = get_object_or_404(Lesson, order_num=lesson_order_num, course__id=course_id)
+    current_lesson = get_object_or_404(Lesson, order_num=lesson_order_num, course=current_course)
     
     if hasattr(current_lesson, 'quiz'):
         return redirect('update_quiz', username=request.user.username, course_id=current_course.id, lesson_order_num=current_lesson.order_num, quiz_id=current_lesson.quiz.id) 
@@ -126,18 +137,17 @@ def create_quiz(request, username, course_id, lesson_order_num):
     })
 
 
-@login_required
+@user_passes_test(is_expert)
 def quiz_builder(request, username, course_id, lesson_order_num, quiz_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, id=course_id)
-    if request.user != current_course.author:
+    if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
-
-    quiz = get_object_or_404(Quiz, id=quiz_id)
+    quiz = get_object_or_404(Quiz, id=quiz_id, lesson=current_lesson)
     questions = quiz.questions.all().prefetch_related('answers')
     
     return render(request, 'quizzes/quiz_builder.html', {
@@ -147,18 +157,18 @@ def quiz_builder(request, username, course_id, lesson_order_num, quiz_id):
     })
 
 
-@login_required
+@user_passes_test(is_expert)
 def update_quiz(request, username, course_id, lesson_order_num, quiz_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, id=course_id)
-    if request.user != current_course.author:
+    if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    quiz = get_object_or_404(Quiz, id=quiz_id, lesson=current_lesson)
 
-    quiz = get_object_or_404(Quiz, id=quiz_id)
     if request.method == 'POST':
         form = QuizForm(request.POST, instance=quiz)
         if form.is_valid():
@@ -176,36 +186,36 @@ def update_quiz(request, username, course_id, lesson_order_num, quiz_id):
     })
 
 
-@login_required
+@require_POST
+@user_passes_test(is_expert)
 def delete_quiz(request, username, course_id, lesson_order_num, quiz_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, id=course_id)
-    if request.user != current_course.author:
+    if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    quiz = get_object_or_404(Quiz, id=quiz_id, lesson=current_lesson)
 
-    quiz = get_object_or_404(Quiz, id=quiz_id)
-
-    if request.method == 'POST':
-        quiz.delete()
-        messages.success(request, 'Тест успешно удален.')
+    quiz.delete()
+    messages.success(request, 'Тест успешно удален.')
 
     return redirect('studio_lessons', username=current_course.author.username, course_id=current_course.id)
 
 
-@login_required
+@user_passes_test(is_expert)
 def add_question(request, username, course_id, lesson_order_num, quiz_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, id=course_id)
-    if request.user != current_course.author:
+    if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
     
-    current_quiz = get_object_or_404(Quiz, id=quiz_id)
+    current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    current_quiz = get_object_or_404(Quiz, id=quiz_id, lesson=current_lesson)
 
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -240,34 +250,37 @@ def add_question(request, username, course_id, lesson_order_num, quiz_id):
     })
 
 
-@login_required
+@require_POST
+@user_passes_test(is_expert)
 def delete_question(request, username, course_id, lesson_order_num, quiz_id, question_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, id=course_id)
-    if request.user != current_course.author:
+    if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
     
-    question = get_object_or_404(Question, id=question_id, quiz__id=quiz_id)
+    current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    current_quiz = get_object_or_404(Quiz, id=quiz_id, lesson=current_lesson)
+    question = get_object_or_404(Question, id=question_id, quiz=current_quiz)
 
-    if request.method == 'POST':
-        question.delete()
-        messages.success(request, 'Вопрос успешно удален.')
+    question.delete()
+    messages.success(request, 'Вопрос успешно удален.')
 
     return redirect('open_quiz_builder', username=username, course_id=course_id, lesson_order_num=lesson_order_num, quiz_id=quiz_id)
 
 
-@login_required
+@user_passes_test(is_expert)
 def update_question(request, username, course_id, lesson_order_num, quiz_id, question_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, id=course_id)
-    if request.user != current_course.author:
+    if request.user != current_course.author and not request.user.is_superuser:
         raise PermissionDenied()
     
-    current_quiz = get_object_or_404(Quiz, id=quiz_id)
+    current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    current_quiz = get_object_or_404(Quiz, id=quiz_id, lesson=current_lesson)
     question = get_object_or_404(Question, id=question_id, quiz=current_quiz)
 
     if request.method == 'POST':
@@ -301,15 +314,18 @@ def update_question(request, username, course_id, lesson_order_num, quiz_id, que
 
 @login_required
 def quiz_result(request, course_id, lesson_order_num, quiz_id, progress_id):
-    progress = get_object_or_404(QuizProgress, id=progress_id, user=request.user)
+    current_course = get_object_or_404(Course, pk=course_id)
+    current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
+    current_quiz = get_object_or_404(Quiz, pk=quiz_id, lesson=current_lesson)
+    progress = get_object_or_404(QuizProgress, id=progress_id, user=request.user, quiz=current_quiz)
     
-    total_questions = progress.quiz.questions.count()
+    total_questions = current_quiz.questions.count()
     percent = (progress.score / total_questions * 100) if total_questions > 0 else 0
     
     return render(request, 'quizzes/quiz_result.html', {
         'progress': progress,
         'total': total_questions,
         'percent': round(percent),
-        'current_course': progress.quiz.lesson.course,
-        'current_lesson': progress.quiz.lesson
-    })
+        'current_course': current_course,
+        'current_lesson': current_lesson
+    })

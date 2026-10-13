@@ -25,8 +25,38 @@ class RegisterForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.pop('autofocus', None)
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username', '').strip()
+        if User.objects.filter(username__iexact=username).exists():
+            raise forms.ValidationError(_("Пользователь с таким никнеймом уже существует."))
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '').strip().lower()
+        if User.objects.filter(email__iexact=email).exists():
+            raise forms.ValidationError(_("Пользователь с такой электронной почтой уже существует."))
+        return email
+
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username', '').strip()
+        query = User.objects.filter(username__iexact=username)
+        if self.instance.pk:
+            query = query.exclude(pk=self.instance.pk)
+        if query.exists():
+            raise forms.ValidationError(_("Пользователь с таким никнеймом уже существует."))
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '').strip().lower()
+        query = User.objects.filter(email__iexact=email)
+        if self.instance.pk:
+            query = query.exclude(pk=self.instance.pk)
+        if query.exists():
+            raise forms.ValidationError(_("Пользователь с такой электронной почтой уже существует."))
+        return email

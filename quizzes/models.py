@@ -62,13 +62,16 @@ class Question(models.Model):
         if not submitted_answer_ids:
             return False
 
-        correct_answer_ids = self.answers.filter(
+        correct_answer_ids = set(self.answers.filter(
             is_correct=True
-        ).values_list('id', flat=True)
+        ).values_list('id', flat=True))
 
-        int_submitted_answer_ids = [int(item) for item in submitted_answer_ids]
+        try:
+            int_submitted_answer_ids = {int(item) for item in submitted_answer_ids}
+        except (ValueError, TypeError):
+            return False
         
-        return set(int_submitted_answer_ids) == set(correct_answer_ids)
+        return int_submitted_answer_ids == correct_answer_ids
 
     def __str__(self):
         return f"Вопрос к тесту {self.quiz.title}"

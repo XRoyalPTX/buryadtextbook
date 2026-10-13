@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm, UpdateUserForm
@@ -61,7 +62,7 @@ def register(request):
                     send_mail(
                         subject, 
                         message, 
-                        settings.EMAIL_HOST_USER, 
+                        settings.DEFAULT_FROM_EMAIL, 
                         [user.email],
                         fail_silently=False 
                     )
@@ -89,6 +90,27 @@ def activate(request, uidb64, token):
         user.save()
         messages.success(request, _('Ваш аккаунт успешно активирован. Теперь вы можете войти.'))
         return redirect('login')
+    else:
+        return render(request, 'registration/activation_invalid.html')
+
+
+def change_email(request, uidb64, token, encoded_email):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+        new_email = force_str(urlsafe_base64_decode(encoded_email))
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+        new_email = None
+
+    if user is not None and new_email and default_token_generator.check_token(user, token):
+        if User.objects.filter(email__iexact=new_email).exclude(pk=user.pk).exists():
+            messages.error(request, _('Данный адрес электронной почты уже используется другим пользователем.'))
+            return redirect('profile')
+        user.email = new_email
+        user.save(update_fields=['email'])
+        messages.success(request, _('Email успешно изменен.'))
+        return redirect('profile')
     else:
         return render(request, 'registration/activation_invalid.html')
 
@@ -144,7 +166,9 @@ def profile(request):
     today = timezone.now().date()
 
     if request.user.last_activity_date < today - timedelta(days=1):
-        request.user.streak_count = 0
+        if request.user.streak_count != 0:
+            request.user.streak_count = 0
+            request.user.save(update_fields=['streak_count'])
 
     for progress in user_course_progresses:
         course = progress.course
@@ -206,7 +230,7 @@ def update_user(request):
                     )
                     
                     try:
-                        send_mail(subject, message, settings.EMAIL_HOST_USER, [new_email], fail_silently=False)
+                        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_email], fail_silently=False)
                         
                         user = form.save(commit=False)
                         user.first_name = form.cleaned_data['first_name'].capitalize()

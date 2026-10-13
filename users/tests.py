@@ -28,7 +28,8 @@ class RegisterViewTest(TestCase):
             'password2': 'clown1000',
         })
 
-        self.assertEqual(response.status_code, 302) #проверка Reidrect
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/activation_sent.html')
         self.assertEqual(MyUser.objects.count(), 1)
 
         new_user = MyUser.objects.first()
@@ -36,6 +37,7 @@ class RegisterViewTest(TestCase):
         self.assertEqual(new_user.first_name, 'Владислав')
         self.assertEqual(new_user.last_name, 'Архинчеев')
         self.assertEqual(new_user.email, 'vladik@ya.ru')
+        self.assertFalse(new_user.is_active)
 
 
     def test_register_view_get_request(self):
@@ -189,7 +191,8 @@ class UpdateUserViewTest(TestCase):
         test_user.refresh_from_db()
         
         self.assertEqual(test_user.username, 'royal')
-        self.assertEqual(test_user.email, 'vlad@ya.ru')
+        # До перехода по ссылке из письма email остается старым
+        self.assertEqual(test_user.email, 'vladik@ya.ru')
         self.assertEqual(response.status_code, 302)
 
     def test_update_user_view_post_request_not_changed_data(self):
@@ -245,3 +248,24 @@ class UpdatePasswordViewTest(TestCase):
         self.assertTrue('_auth_user_id' in self.client.session)
         self.assertTrue(test_user.check_password('clown1001'))
         self.assertEqual(response.status_code, 302)
+
+
+class ChangeEmailViewTest(TestCase):
+    def test_change_email_valid_token(self):
+        from django.contrib.auth.tokens import default_token_generator
+        from django.utils.http import urlsafe_base64_encode
+        from django.utils.encoding import force_bytes
+
+        user = MyUser.objects.create_user(
+            username='user_change',
+            email='old@example.com',
+            password='password123'
+        )
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        new_email_b64 = urlsafe_base64_encode(force_bytes('new@example.com'))
+
+        response = self.client.get(f'/auth/change-email/{uid}/{token}/{new_email_b64}/')
+        self.assertEqual(response.status_code, 302)
+        user.refresh_from_db()
+        self.assertEqual(user.email, 'new@example.com')

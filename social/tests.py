@@ -3,7 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from courses.models import Course, Lesson
+from courses.models import Course, Lesson, CourseProgress
 from .models import Comment, Like
 
 User = get_user_model()
@@ -21,8 +21,12 @@ class SocialSystemTest(TestCase):
             title="Тестовый курс", description="Описание", author=self.expert
         )
         self.lesson = Lesson.objects.create(
-            title="Урок 1", content="Контент", course=self.course, order_num=1
+            title="Урок 1", content="Контент", course=self.course, order_num=1, is_published=True
         )
+        self.course.is_published = True
+        self.course.save()
+
+        CourseProgress.objects.create(course=self.course, user=self.student)
 
     def test_comment_creation_and_str(self):
         comment = Comment.objects.create(

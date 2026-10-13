@@ -1,11 +1,10 @@
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpRequest, HttpResponse, Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_POST
 from .models import Course, Lesson, MyUser, CourseProgress, LessonProgress
 from quizzes.models import Quiz
 from social.models import Like
-from django.http import Http404
-from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from .forms import CreateCourseForm, UpdateCourseForm, CreateLessonForm, UpdateLessonForm
 from django.core.exceptions import ValidationError, PermissionDenied
@@ -24,7 +23,7 @@ def is_expert(user):
 
 def courses(request):
     current_user = request.user
-    courses = Course.objects.all()
+    courses = Course.objects.filter(is_published=True)
 
     if not request.user.is_authenticated:
         return render(request, 'courses/courses.html', {'courses': courses})
@@ -49,7 +48,15 @@ def courses(request):
 
 def open_course(request, course_id):
     current_course = get_object_or_404(Course, pk=course_id)
-    lessons = Lesson.objects.filter(course=current_course, is_published=True).order_by('order_num')
+    is_author_or_admin = request.user.is_authenticated and (request.user == current_course.author or request.user.is_superuser)
+
+    if not current_course.is_published and not is_author_or_admin:
+        raise Http404("Курс не найден.")
+
+    if is_author_or_admin:
+        lessons = Lesson.objects.filter(course=current_course).order_by('order_num')
+    else:
+        lessons = Lesson.objects.filter(course=current_course, is_published=True).order_by('order_num')
 
     if not request.user.is_authenticated:
         return render(request, 'courses/course.html', context={
@@ -72,7 +79,7 @@ def open_course(request, course_id):
         else:
             lesson.status = 'begun'
 
-    course_progress = CourseProgress.objects.filter(course = current_course, user = request.user).first()
+    course_progress = CourseProgress.objects.filter(course=current_course, user=request.user).first()
 
     if not course_progress:
         current_course.status = 'not_begun'
@@ -80,7 +87,6 @@ def open_course(request, course_id):
         current_course.status = 'completed'
     else:
         current_course.status = 'begun'
-        
 
     return render(request, 'courses/course.html', context={
         'current_course': current_course,
@@ -138,6 +144,7 @@ def update_course(request, username, course_id):
         
 
 
+@require_POST
 @user_passes_test(is_expert)
 def delete_course(request, username, course_id):
     if request.user.username != username and not request.user.is_superuser:
@@ -160,11 +167,8 @@ def delete_course(request, username, course_id):
         response['HX-Reswap'] = 'none'
         return response
 
-    if request.method == 'POST':
-        current_course.delete()
-        return HttpResponse(success_message)
-    
-    return HttpResponse()
+    current_course.delete()
+    return HttpResponse(success_message)
 
 
 @login_required
@@ -172,9 +176,13 @@ def open_lesson(request, course_id, lesson_order_num):
     current_course = get_object_or_404(Course, pk=course_id)
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
 
-    if not CourseProgress.objects.filter(course=current_course, user=request.user).exists():
-        messages.warning(request, "Для просмотра уроков необходимо начать прохождение курса.")
-        return redirect('open_course', course_id=course_id)
+    is_author_or_admin = (request.user == current_course.author or request.user.is_superuser)
+    if not is_author_or_admin:
+        if not current_course.is_published or not current_lesson.is_published:
+            raise Http404("Урок не найден.")
+        if not CourseProgress.objects.filter(course=current_course, user=request.user).exists():
+            messages.warning(request, "Для просмотра уроков необходимо начать прохождение курса.")
+            return redirect('open_course', course_id=course_id)
     
     from social.models import Like, Comment
     user_liked = Like.objects.filter(user=request.user, lesson=current_lesson).exists()
@@ -215,7 +223,7 @@ def open_lesson(request, course_id, lesson_order_num):
     })
 
 
-@login_required
+@user_passes_test(is_expert)
 def create_lesson(request, username, course_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
@@ -275,13 +283,14 @@ def update_lesson(request, username, course_id, lesson_id):
     })
 
 
+@require_POST
 @user_passes_test(is_expert)
 def delete_lesson(request, username, course_id, lesson_id):
     if request.user.username != username and not request.user.is_superuser:
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, pk=course_id)
-    current_lesson = get_object_or_404(Lesson, pk=lesson_id)
+    current_lesson = get_object_or_404(Lesson, pk=lesson_id, course=current_course)
     deleted_order_num = current_lesson.order_num
 
     success_message = '''
@@ -300,16 +309,11 @@ def delete_lesson(request, username, course_id, lesson_id):
         response['HX-Reswap'] = 'none'
         return response
     
-    if request.method == 'POST':
-        if current_lesson.course == current_course:
-            response = HttpResponse(success_message)
-            current_lesson.delete()
-            current_course.lessons.filter(
-                order_num__gt=deleted_order_num
-            ).update(order_num=F('order_num') - 1)
-            return response
-        
-    return HttpResponse(status=204) 
+    current_lesson.delete()
+    current_course.lessons.filter(
+        order_num__gt=deleted_order_num
+    ).update(order_num=F('order_num') - 1)
+    return HttpResponse(success_message)
 
 
 @user_passes_test(is_expert)
@@ -350,6 +354,7 @@ def studio_lessons(request, username, course_id):
     })
 
 
+@require_POST
 @user_passes_test(is_expert)
 def change_order_number(request, username, course_id):
     if request.user.username != username and not request.user.is_superuser:
@@ -359,12 +364,18 @@ def change_order_number(request, username, course_id):
     lessons = current_course.lessons
 
     if request.user == current_course.author or request.user.is_superuser:
-        list_id = request.POST.getlist('order[]')
+        raw_list_id = request.POST.getlist('order[]')
+        valid_ids = []
+        for item in raw_list_id:
+            try:
+                valid_ids.append(int(item))
+            except (ValueError, TypeError):
+                pass
 
-        for lesson_id in list_id:
+        for lesson_id in valid_ids:
             lessons.filter(pk=lesson_id).update(order_num=F('order_num') + 1000)
 
-        for new_order_num, lesson_id in enumerate(list_id, start=1):
+        for new_order_num, lesson_id in enumerate(valid_ids, start=1):
             lessons.filter(pk=lesson_id).update(order_num=new_order_num)
 
         return HttpResponse(status=204)
@@ -372,6 +383,7 @@ def change_order_number(request, username, course_id):
         raise PermissionDenied()
 
 
+@require_POST
 @user_passes_test(is_expert)
 def publish_course(request, username, course_id):
     if request.user.username != username and not request.user.is_superuser:
@@ -395,18 +407,18 @@ def publish_course(request, username, course_id):
     if request.user != current_author and not request.user.is_superuser:
         raise PermissionDenied()
 
-    if request.method == 'POST':
-        current_course.is_published = True
-        current_course.save()
+    current_course.is_published = True
+    current_course.save()
 
-        if not current_course.is_published:
-            card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
-            return HttpResponse(card_html + error_message)
-        else:
-            card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
-            return HttpResponse(card_html + success_message)
+    if not current_course.is_published:
+        card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
+        return HttpResponse(card_html + error_message)
+    else:
+        card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
+        return HttpResponse(card_html + success_message)
         
 
+@require_POST
 @user_passes_test(is_expert)
 def unpublish_course(request, username, course_id):
     if request.user.username != username and not request.user.is_superuser:
@@ -425,13 +437,13 @@ def unpublish_course(request, username, course_id):
         </div>
     '''
 
-    if request.method == 'POST':
-        current_course.is_published = False
-        current_course.save()
-        card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
-        return HttpResponse(card_html + success_message)
+    current_course.is_published = False
+    current_course.save()
+    card_html = render_to_string('courses/course_card.html', {'card': current_course}, request=request)
+    return HttpResponse(card_html + success_message)
 
 
+@require_POST
 @user_passes_test(is_expert)
 def publish_lesson(request, username, course_id, lesson_id):
     if request.user.username != username and not request.user.is_superuser:
@@ -450,17 +462,17 @@ def publish_lesson(request, username, course_id, lesson_id):
         </div>
     '''
     
-    if request.method == 'POST':
-        current_lesson.is_published = True
-        current_lesson.save()
-        CourseProgress.objects.filter(
-            course=current_course, 
-            complete_date__isnull=False
-        ).update(complete_date=None)
-        card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
-        return HttpResponse(card_html + success_message)
-    
+    current_lesson.is_published = True
+    current_lesson.save()
+    CourseProgress.objects.filter(
+        course=current_course, 
+        complete_date__isnull=False
+    ).update(complete_date=None)
+    card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
+    return HttpResponse(card_html + success_message)
 
+
+@require_POST
 @user_passes_test(is_expert)
 def unpublish_lesson(request, username, course_id, lesson_id):
     if request.user.username != username and not request.user.is_superuser:
@@ -479,22 +491,28 @@ def unpublish_lesson(request, username, course_id, lesson_id):
         </div>
     '''
     
-    if request.method == 'POST':
-        current_lesson.is_published = False
-        current_lesson.save()
-        card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
-        return HttpResponse(card_html + success_message)
-    
+    current_lesson.is_published = False
+    current_lesson.save()
+    card_html = render_to_string('courses/lesson_card.html', {'card': current_lesson, 'current_course': current_course}, request=request)
+    return HttpResponse(card_html + success_message)
 
 
 @login_required
 def create_course_progress(request, course_id):
     current_course = get_object_or_404(Course, pk=course_id)
+    is_author_or_admin = (request.user == current_course.author or request.user.is_superuser)
+    if not current_course.is_published and not is_author_or_admin:
+        raise Http404("Курс не найден.")
+
     current_user = request.user
     first_lesson = current_course.lessons.filter(
         course = current_course,
         is_published = True,
     ).order_by('order_num').first()
+
+    if not first_lesson:
+        messages.warning(request, 'В данном курсе пока нет опубликованных уроков.')
+        return redirect('open_course', course_id=course_id)
 
     progress, created = CourseProgress.objects.get_or_create(course=current_course, user=current_user)
 
@@ -503,60 +521,65 @@ def create_course_progress(request, course_id):
     return redirect('open_lesson', course_id, first_lesson.order_num)
 
 
+@require_POST
 @login_required
 def complete_lesson(request, course_id, lesson_order_num):
     current_course = get_object_or_404(Course, pk=course_id)
     current_user = request.user
     current_lesson = get_object_or_404(Lesson, course=current_course, order_num=lesson_order_num)
     
+    is_author_or_admin = (request.user == current_course.author or request.user.is_superuser)
+    if not is_author_or_admin:
+        if not current_course.is_published or not current_lesson.is_published:
+            raise Http404("Урок не найден.")
+
     # Получаем прогресс текущего урока
-    current_lesson_progress = LessonProgress.objects.filter(
+    current_lesson_progress, _ = LessonProgress.objects.get_or_create(
         user=current_user, 
         lesson=current_lesson
-    ).first()
+    )
 
     today = timezone.now().date()
 
-    if request.method == 'POST':
-        if not current_lesson_progress.complete_date:
-            current_lesson_progress.complete_date = timezone.now()
-            current_lesson_progress.save()
+    if not current_lesson_progress.complete_date:
+        current_lesson_progress.complete_date = timezone.now()
+        current_lesson_progress.save()
 
-            published_lessons_count = current_course.lessons.filter(is_published=True).count()
-            
-            completed_lessons_count = LessonProgress.objects.filter(
+        published_lessons_count = current_course.lessons.filter(is_published=True).count()
+        
+        completed_lessons_count = LessonProgress.objects.filter(
+            user=current_user,
+            lesson__course=current_course,
+            lesson__is_published=True,
+            complete_date__isnull=False
+        ).count()
+
+        if published_lessons_count == completed_lessons_count:
+            current_course_progress = CourseProgress.objects.filter(
                 user=current_user,
-                lesson__course=current_course,
-                lesson__is_published=True,
-                complete_date__isnull=False
-            ).count()
+                course=current_course
+            ).first()
 
-            if published_lessons_count == completed_lessons_count:
-                current_course_progress = CourseProgress.objects.filter(
-                    user=current_user,
-                    course=current_course
-                ).first()
+            if current_course_progress and not current_course_progress.complete_date:
+                current_course_progress.complete_date = timezone.now()
+                current_course_progress.save()
+                messages.success(request, 'Поздравляем! Вы полностью прошли курс!')
 
-                if current_course_progress and not current_course_progress.complete_date:
-                    current_course_progress.complete_date = timezone.now()
-                    current_course_progress.save()
-                    messages.success(request, 'Поздравляем! Вы полностью прошли курс!')
+        if current_user.streak_count == 0:
+            current_user.last_activity_date = today
+            current_user.streak_count = 1
+            current_user.save()
+        elif current_user.streak_count > 0 and current_user.last_activity_date == today - timedelta(days=1):
+            current_user.last_activity_date = today
+            current_user.streak_count += 1
+            current_user.save()
+        elif current_user.streak_count > 0 and current_user.last_activity_date < today - timedelta(days=1):
+            current_user.last_activity_date = today
+            current_user.streak_count = 1
+            current_user.save()
 
-            if current_user.streak_count == 0:
-                current_user.last_activity_date = today
-                current_user.streak_count = 1
-                current_user.save()
-            elif current_user.streak_count > 0 and current_user.last_activity_date == today - timedelta(days=1):
-                current_user.last_activity_date = today
-                current_user.streak_count += 1
-                current_user.save()
-            elif current_user.streak_count > 0 and current_user.last_activity_date < today - timedelta(days=1):
-                current_user.last_activity_date = today
-                current_user.streak_count = 1
-                current_user.save()
+        messages.success(request, 'Урок отмечен пройденным.')
+    else:
+        messages.info(request, 'Вы уже проходили этот урок ранее.')
 
-            messages.success(request, 'Урок отмечен пройденным.')
-        else:
-            messages.info(request, 'Вы уже проходили этот урок ранее.')
-
-        return redirect('open_lesson', course_id, lesson_order_num)
+    return redirect('open_lesson', course_id, lesson_order_num)
