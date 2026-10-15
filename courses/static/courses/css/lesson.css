@@ -165,7 +165,7 @@ button.lesson-btn-complete, .lesson-btn-complete {
     align-items: center;
 }
 
-/* Оформление всех таблиц, созданных через CKEditor */
+/* Оформление таблиц контента урока */
 .lesson-content table {
     border-collapse: collapse;
     width: 100%;

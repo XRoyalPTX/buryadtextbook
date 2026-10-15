@@ -14,9 +14,9 @@
 {% endblock %}
 
 {% block main %}
-<div class="create-lesson-main text-center">
+<div class="create-lesson-main">
 
-    <div class="container create-lesson-form text-left">
+    <div class="container create-lesson-form text-start">
     <h3>Создание нового урока №{{ auto_order_num }}</h3>
         <form method="post">
             {% csrf_token %}
