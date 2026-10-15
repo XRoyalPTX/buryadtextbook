@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'features',
     'quizzes',
     'social',
-    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -159,28 +158,6 @@ AUTH_USER_MODEL = 'users.MyUser'
 
 LOGIN_URL = 'login'
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
-        'extraPlugins': 'lineheight',
-        'extraConfig': ','.join([
-            "disallowedContent: 'img{width,height,float}; table{width,height}; td{width,height}; span{font-family}'",
-            "extraAllowedContent: 'table(*); td(*); th(*); tr(*)'", 
-        ]),
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'TextColor', 'BGColor'],
-            ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight'],
-            ['Link', 'Unlink'],
-            ['Format', 'FontSize', 'lineheight'], 
-            ['Table', 'HorizontalRule', 'SpecialChar'],
-        ],
-        'height': 350,
-        'language': 'ru',
-        'line_height': '1/1rem;1.15/1.15rem;1.2/1.2rem;1.5/1.5rem;2/2rem;3/3rem',
-        'removePlugins': 'elementspath',
-        'resize_enabled': False,
-    }
-}
 
 # Настройки почты
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')

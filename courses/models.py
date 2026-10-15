@@ -2,7 +2,6 @@ from django.db import models
 from users.models import MyUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxLengthValidator, MinLengthValidator
-from ckeditor.fields import RichTextField
 from django.db.models import Max
 
 # Create your models here.
@@ -64,7 +63,7 @@ class Lesson(models.Model):
         max_length=120,
         validators=[MaxLengthValidator(120, message="Название урока не может быть длиннее 120 символов.")]
     )
-    content = RichTextField(
+    content = models.TextField(
         "Контент урока",
         validators=[MaxLengthValidator(50000, message="Контент урока слишком огромный (максимум 50 000 символов вместе с разметкой).")]
     )

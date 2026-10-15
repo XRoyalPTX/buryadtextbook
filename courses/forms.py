@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from .models import Course, Lesson
+from .widgets import TipTapWidget
 
 User = get_user_model()
 
@@ -48,6 +49,10 @@ class CreateLessonForm(forms.ModelForm):
             'order_num': 'Порядковый номер урока',
         }
 
+        widgets = {
+            'content': TipTapWidget(),
+        }
+
 
 class UpdateLessonForm(forms.ModelForm):
     class Meta:
@@ -58,4 +63,8 @@ class UpdateLessonForm(forms.ModelForm):
             'title': 'Название урока',
             'content': 'Теоретическая часть урока',
             'order_num': 'Порядковый номер урока',
+        }
+
+        widgets = {
+            'content': TipTapWidget(),
         }
