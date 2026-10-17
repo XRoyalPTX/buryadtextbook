@@ -3,41 +3,41 @@ from users.models import MyUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxLengthValidator, MinLengthValidator
 from django.db.models import Max
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
 
 class Course(models.Model):
     title = models.CharField(
-        "Название курса", 
+        _("Название курса"), 
         max_length=100, 
-        validators=[MaxLengthValidator(100, message="Название курса не может быть длиннее 100 символов.")]
+        validators=[MaxLengthValidator(100, message=_("Название курса не может быть длиннее 100 символов."))]
     )
     description = models.TextField(
-        "Описание курса",
-        validators=[MaxLengthValidator(1500, message="Описание курса не может быть длиннее 1500 символов.")]
+        _("Описание курса"),
+        validators=[MaxLengthValidator(1500, message=_("Описание курса не может быть длиннее 1500 символов."))]
     )
     author = models.ForeignKey(
         MyUser,
         on_delete=models.CASCADE, 
-        verbose_name="Автор",
+        verbose_name=_("Автор"),
         limit_choices_to={"role": "expert"}
     )
-    is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
-    date_created = models.DateField("Дата создания", auto_now_add=True)
-    date_updated = models.DateField("Последнее изменение",auto_now=True)
+    is_published = models.BooleanField(default=False, verbose_name=_("Опубликовано"))
+    date_created = models.DateField(_("Дата создания"), auto_now_add=True)
+    date_updated = models.DateField(_("Последнее изменение"), auto_now=True)
 
 
     def clean(self):
         if self.pk and self.is_published and self.lessons.filter(is_published=True).count() == 0:
-            raise ValidationError('Нельзя опубликовать курс, у которого нет опубликованных уроков. Опубликуйте хотя бы один урок из этого курса для публикации самого курса.')
-
+            raise ValidationError(_('Нельзя опубликовать курс, у которого нет опубликованных уроков. Опубликуйте хотя бы один урок из этого курса для публикации самого курса.'))
 
         if not hasattr(self, 'author') or self.author is None:
             return 
         
         if self.author.role != "expert" and not self.author.is_superuser:
-            raise ValidationError('Автором курса может быть только пользователь с ролью "Эксперт"')
+            raise ValidationError(_('Автором курса может быть только пользователь с ролью "Эксперт"'))
 
 
     def __str__(self):
@@ -59,17 +59,17 @@ class Course(models.Model):
 
 class Lesson(models.Model):
     title = models.CharField(
-        "Название урока", 
+        _("Название урока"), 
         max_length=120,
-        validators=[MaxLengthValidator(120, message="Название урока не может быть длиннее 120 символов.")]
+        validators=[MaxLengthValidator(120, message=_("Название урока не может быть длиннее 120 символов."))]
     )
     content = models.TextField(
-        "Контент урока",
-        validators=[MaxLengthValidator(50000, message="Контент урока слишком огромный (максимум 50 000 символов вместе с разметкой).")]
+        _("Контент урока"),
+        validators=[MaxLengthValidator(50000, message=_("Контент урока слишком огромный (максимум 50 000 символов вместе с разметкой)."))]
     )
-    order_num = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)], verbose_name="Порядковый номер урока")
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons', verbose_name="Курс")
-    is_published = models.BooleanField(default=False, verbose_name="Опубликовано")
+    order_num = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)], verbose_name=_("Порядковый номер урока"))
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons', verbose_name=_("Курс"))
+    is_published = models.BooleanField(default=False, verbose_name=_("Опубликовано"))
 
     class Meta:
         unique_together = [['course', 'order_num']]
@@ -88,10 +88,10 @@ class Lesson(models.Model):
             self.course.save()
 
 class CourseProgress(models.Model):
-    start_date = models.DateTimeField("Дата начала прохождения курса", auto_now_add=True)
-    complete_date = models.DateTimeField("Дата завершения курса", null=True, blank=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='progresses', verbose_name="Курс")
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='course_progresses', verbose_name="Студент")
+    start_date = models.DateTimeField(_("Дата начала прохождения курса"), auto_now_add=True)
+    complete_date = models.DateTimeField(_("Дата завершения курса"), null=True, blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='progresses', verbose_name=_("Курс"))
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='course_progresses', verbose_name=_("Студент"))
 
     class Meta:
         unique_together = [['course', 'user']]
@@ -101,10 +101,10 @@ class CourseProgress(models.Model):
     
 
 class LessonProgress(models.Model):
-    start_date = models.DateTimeField("Дата начала прохождения урока", auto_now_add=True)
-    complete_date = models.DateTimeField("Дата завершения урока", null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='progresses', verbose_name="Урок")
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='lesson_progresses', verbose_name="Студент")
+    start_date = models.DateTimeField(_("Дата начала прохождения урока"), auto_now_add=True)
+    complete_date = models.DateTimeField(_("Дата завершения урока"), null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='progresses', verbose_name=_("Урок"))
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='lesson_progresses', verbose_name=_("Студент"))
 
     class Meta:
         unique_together = [['lesson', 'user']]

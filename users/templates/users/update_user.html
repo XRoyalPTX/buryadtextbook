@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Изменение данных{% endblock %}
+{% block title %}Сэсэн | {% trans "Изменение данных" %}{% endblock %}
 
 {% load static %}
 
@@ -17,7 +17,7 @@
 
     <div class="container upd-user-form">
 
-        <h3>Изменение данных</h3>
+        <h3>{% trans "Изменение данных" %}</h3>
         <form method="post">
             {% csrf_token %}
             <div class="upd-user-inputs">
@@ -32,7 +32,7 @@
                     {{ field }}
                     <br>
                     {% if field.name == "username" %}
-                        <span id="username_help_text" class="username_help_text">До 20 символов (буквы, цифры и @/./+/-/_).</span>
+                        <span id="username_help_text" class="username_help_text">{% trans "До 20 символов (буквы, цифры и @/./+/-/_)." %}</span>
                     {% endif %}
 
                     {% if field.errors %}
@@ -44,8 +44,8 @@
                 </div>
                 {% endfor %}
             </div>
-            <button type="submit" class="upd-user-btn-form">Изменить данные</button>
-            <a href="{% url 'profile' %}" class="to-profile-btn">Отмена</a>
+            <button type="submit" class="upd-user-btn-form">{% trans "Изменить данные" %}</button>
+            <a href="{% url 'profile' %}" class="to-profile-btn">{% trans "Отмена" %}</a>
         </form>
     </div>
 

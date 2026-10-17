@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 from .models import Course, Lesson
 from .widgets import TipTapWidget
 
@@ -13,12 +14,12 @@ class CreateCourseForm(forms.ModelForm):
         fields = ('title', 'description')
 
         labels = {
-            'title': 'Название курса',
-            'description': 'Описание курса',
+            'title': _('Название курса'),
+            'description': _('Описание курса'),
         }
 
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 8, 'placeholder': 'О чем этот курс?'}),
+            'description': forms.Textarea(attrs={'rows': 8, 'placeholder': _('О чем этот курс?')}),
         }
 
 
@@ -29,12 +30,12 @@ class UpdateCourseForm(forms.ModelForm):
         fields = ('title', 'description')
 
         labels = {
-            'title': 'Название курса',
-            'description': 'Описание курса',
+            'title': _('Название курса'),
+            'description': _('Описание курса'),
         }
 
         widgets = {
-            'description': forms.Textarea(attrs={'rows': 8, 'placeholder': 'О чем этот курс?'}),
+            'description': forms.Textarea(attrs={'rows': 8, 'placeholder': _('О чем этот курс?')}),
         }
 
 
@@ -44,9 +45,9 @@ class CreateLessonForm(forms.ModelForm):
         fields = ('title', 'content')
 
         labels = {
-            'title': 'Название урока',
-            'content': 'Теоретическая часть урока',
-            'order_num': 'Порядковый номер урока',
+            'title': _('Название урока'),
+            'content': _('Теоретическая часть урока'),
+            'order_num': _('Порядковый номер урока'),
         }
 
         widgets = {
@@ -60,9 +61,9 @@ class UpdateLessonForm(forms.ModelForm):
         fields = ('title', 'content')
 
         labels = {
-            'title': 'Название урока',
-            'content': 'Теоретическая часть урока',
-            'order_num': 'Порядковый номер урока',
+            'title': _('Название урока'),
+            'content': _('Теоретическая часть урока'),
+            'order_num': _('Порядковый номер урока'),
         }
 
         widgets = {

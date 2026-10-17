@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Профиль{% endblock %}
+{% block title %}Сэсэн | {% trans "Профиль" %}{% endblock %}
 
 {% load static %}
 
@@ -28,7 +28,7 @@
                 <p style="overflow-wrap: break-word;">{{ user.email }}</p>
                 {% if user.is_superuser %}
                     <div class="superuser-plate">
-                        Администратор
+                        {% trans "Администратор" %}
                     </div>
                 {% elif user.role == 'expert' %}
                     <div class="expert-plate">
@@ -39,12 +39,12 @@
                         {{ user.get_role_display }}
                     </div>
                 {% endif %}
-                <a href="{% url 'update_user' %}" class="profile-card-btn">Изменить данные</a>
-                <a href="{% url 'update_password' %}" class="profile-card-btn">Изменить пароль</a>
-                <a href="{% url 'logout' %}" class="profile-card-btn profile-card-btn-logout" id="id_profile-card-btn-logout">Выйти из профиля</a>
+                <a href="{% url 'update_user' %}" class="profile-card-btn">{% trans "Изменить данные" %}</a>
+                <a href="{% url 'update_password' %}" class="profile-card-btn">{% trans "Изменить пароль" %}</a>
+                <a href="{% url 'logout' %}" class="profile-card-btn profile-card-btn-logout" id="id_profile-card-btn-logout">{% trans "Выйти из профиля" %}</a>
                 <form method="post" action="{% url 'delete_user' %}">
                     {% csrf_token %}
-                    <button class="profile-card-btn-dlt" id="id_profile-card-btn-dlt" type="submit">Удалить аккаунт</button>
+                    <button class="profile-card-btn-dlt" id="id_profile-card-btn-dlt" type="submit" data-confirm="{% trans 'Вы точно хотите удалить аккаунт?\nЭто повлечет за собой удаление всех данных!' %}">{% trans "Удалить аккаунт" %}</button>
                 </form>
             </div>
         </div>
@@ -54,45 +54,50 @@
                 <div class="row gx-0 justify-content-between">
                     <div class="col-6">
                         <div class="profile-progress-info-courses random-buryad-word-card" id="id_random-buryad-word-card">
-                            <span>Пройдено уроков</span>
+                            <span>{% trans "Пройдено уроков" %}</span>
                             <span class="progress-count">{{ num_of_lessons }}</span>
-                            <span id="id_random-buryad-word-tip">за все время обучения</span>
+                            <span id="id_random-buryad-word-tip">{% trans "за все время обучения" %}</span>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="profile-progress-info-lessons">
-                            <span>Ударная серия</span>
+                            <span>{% trans "Ударная серия" %}</span>
                             <span class="progress-count">
-                                {{ user.streak_count }}
-                                {% if streak_last_digit == 1 and streak_last_two != 11 %}
-                                    день
-                                {% elif streak_last_digit >= 2 and 4 >= streak_last_digit and 10 > streak_last_two %}
-                                    дня
-                                {% elif streak_last_digit >= 2 and 4 >= streak_last_digit and streak_last_two >= 20 %}
-                                    дня
+                                {% get_current_language as CURRENT_LANG %}
+                                {% if CURRENT_LANG == 'ru' %}
+                                    {{ user.streak_count }}
+                                    {% if streak_last_digit == 1 and streak_last_two != 11 %}
+                                        день
+                                    {% elif streak_last_digit >= 2 and 4 >= streak_last_digit and 10 > streak_last_two %}
+                                        дня
+                                    {% elif streak_last_digit >= 2 and 4 >= streak_last_digit and streak_last_two >= 20 %}
+                                        дня
+                                    {% else %}
+                                        дней
+                                    {% endif %}
                                 {% else %}
-                                    дней
+                                    {{ user.streak_count }} {% if user.streak_count == 1 %}day{% else %}days{% endif %}
                                 {% endif %}
                             </span>
-                            <span>активности подряд!</span>
+                            <span>{% trans "активности подряд!" %}</span>
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-evenly gx-0">
                     <div class="col-12">
                         <div class="profile-progress-info-bar">
-                            <h2>Моё обучение</h2>
-                            <span style="display: block; margin-bottom: 0;">Прогресс по текущим курсам</span>
+                            <h2>{% trans "Моё обучение" %}</h2>
+                            <span style="display: block; margin-bottom: 0;">{% trans "Прогресс по текущим курсам" %}</span>
                             {% if not user_course_progresses %}
                             <p style="display: block; margin-bottom: 0; margin-top: 1rem; font-size: 1rem;">
-                                Ой, тут ничего нет. Видимо, Вы еще не начали прохождение курсов.
+                                {% trans "Ой, тут ничего нет. Видимо, Вы еще не начали прохождение курсов." %}
                             </p>
                             {% endif %}
                             {% for user_course_progress in user_course_progresses %}
                                 <div class="user-progress-card">
                                     <h3>{{ user_course_progress.course.title }}</h3>
                                     <div class="user-progress-card-nums">
-                                        <span>{{ user_course_progress.completed_lessons }} из {{ user_course_progress.total_lessons }}</span>
+                                        <span>{{ user_course_progress.completed_lessons }} {% trans "из" %} {{ user_course_progress.total_lessons }}</span>
                                         <span>{{ user_course_progress.percent }}%</span>
                                     </div>
                                     <progress id="progress" value="{{ user_course_progress.percent }}" max="100"></progress>

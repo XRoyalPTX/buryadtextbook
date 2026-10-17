@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Студия | Уроки курса {{ current_course.title }}{% endblock %}
+{% block title %}Сэсэн | {% trans "Студия" %} | {% trans "Уроки курса" %} {{ current_course.title }}{% endblock %}
 
 {% load static %}
 
@@ -16,17 +16,17 @@
 {% block main %}
 <div class="studio-lessons-main text-center">
 
-    <a href="{% url 'studio_courses' current_course.author.username %}" class="to-courses-btn">На страницу курсов</a>
+    <a href="{% url 'studio_courses' current_course.author.username %}" class="to-courses-btn">{% trans "На страницу курсов" %}</a>
     
     <div class="welcome-container">
         <div style="max-width: 574px;">
-            <h1>Список уроков курса</h1>
+            <h1>{% trans "Список уроков курса" %}</h1>
             <p>{{ current_course.title }}</p>
         </div>
-        <a href="{% url 'create_lesson' current_course.author.username current_course.id %}">Создать новый урок</a>
+        <a href="{% url 'create_lesson' current_course.author.username current_course.id %}">{% trans "Создать новый урок" %}</a>
     </div>
 
-    <div class="studio-lessons" id="lesson-sortable-container" data-url="{% url 'change_order_number' user.username current_course.id %}">
+    <div class="studio-lessons" id="lesson-sortable-container" data-url="{% url 'change_order_number' user.username current_course.id %}" data-error-msg="{% trans 'Ошибка при сохранении порядка. Статус сервера: ' %}">
         {% if lessons.count != 0 %}
             {% for card in lessons %}
                 {% include 'courses/lesson_card.html' with card=card %}
@@ -35,7 +35,7 @@
         {% else %}
 
         <p style="display: block; margin-bottom: 0; margin-top: 1rem; font-size: 1rem; font-size: 24px;">
-            Ой, тут ничего нет. Видимо, Вы еще не создали ни один урок.
+            {% trans "Ой, тут ничего нет. Видимо, Вы еще не создали ни один урок." %}
         </p>
 
         {% endif %}

@@ -48,11 +48,12 @@ textarea {
         
         <input type="hidden" name="parent_id" value="{{ parent_comment.id }}">
         
-        <textarea name="text" placeholder="Ответить @{{ parent_comment.user.username }}..." maxlength="1000" required></textarea>
+        {% blocktrans with username=parent_comment.user.username asvar reply_placeholder %}Ответить @{{ username }}...{% endblocktrans %}
+        <textarea name="text" placeholder="{{ reply_placeholder }}" maxlength="1000" required></textarea>
         
         <div style="display: flex; gap: 16px; margin-top: 0rem;">
-            <button type="submit" class="btn-comment">Отправить</button>
-            <button type="button" onclick="this.closest('.reply-form').remove()" class="cancel-btn">Отмена</button>
+            <button type="submit" class="btn-comment">{% trans "Отправить" %}</button>
+            <button type="button" onclick="this.closest('.reply-form').remove()" class="cancel-btn">{% trans "Отмена" %}</button>
         </div>
     </form>
 </div>

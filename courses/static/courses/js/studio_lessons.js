@@ -26,7 +26,8 @@ $(document).ready(function(){
                 if (response.ok) {
                     console.log("Порядок сохранен");
                 } else {
-                    alert("Ошибка при сохранении порядка. Статус сервера: " + response.status);
+                    const errMsg = (el.dataset.errorMsg || "Ошибка при сохранении порядка. Статус сервера: ") + response.status;
+                    alert(errMsg);
                 }
             })
         }

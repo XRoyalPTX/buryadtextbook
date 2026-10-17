@@ -18,9 +18,9 @@ def _check_lesson_access(user, course, lesson):
     is_owner_or_admin = (user == course.author or user.is_superuser)
     if not is_owner_or_admin:
         if not course.is_published or not lesson.is_published:
-            raise Http404("Урок не найден.")
+            raise Http404(_("Урок не найден."))
         if not CourseProgress.objects.filter(course=course, user=user).exists():
-            raise PermissionDenied("Для взаимодействия с уроком необходимо начать курс.")
+            raise PermissionDenied(_("Для взаимодействия с уроком необходимо начать курс."))
 
 
 @require_POST
@@ -58,7 +58,7 @@ def add_comment(request, course_id, lesson_order_num):
     
     input_text = (request.POST.get('text') or '').strip()
     if not input_text or len(input_text) > 1000:
-        return HttpResponse("Длина комментария должна быть от 1 до 1000 символов.", status=400)
+        return HttpResponse(_("Длина комментария должна быть от 1 до 1000 символов."), status=400)
 
     parent_id = request.POST.get('parent_id')
     parent_obj = None
@@ -114,7 +114,7 @@ def delete_comment(request, course_id, lesson_order_num, comment_id):
     comment = get_object_or_404(Comment, id=comment_id, lesson=current_lesson)
 
     if not (request.user == comment.user or request.user == current_course.author or request.user.is_superuser):
-        raise PermissionDenied("У вас нет прав для удаления этого комментария.")
+        raise PermissionDenied(_("У вас нет прав для удаления этого комментария."))
 
     if not comment.is_deleted:
         comment.is_deleted = True

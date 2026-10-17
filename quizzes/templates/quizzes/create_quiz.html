@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Создание теста{% endblock %}
+{% block title %}{% trans "Сэсэн" %} | {% trans "Создание теста" %}{% endblock %}
 
 {% load static %}
 
@@ -17,11 +17,11 @@
 
     <div class="create-quiz-form text-left">
         <a href="{% url 'studio_lessons' current_lesson.course.author.username current_lesson.course.id %}" class="back-link">
-            &larr; Вернуться к курсу
+            &larr; {% trans "Вернуться к курсу" %}
         </a>
 
-        <h3>Создание теста</h3>
-        <p class="subtitle">К уроку: <strong>{{ current_lesson.title }}</strong></p>
+        <h3>{% trans "Создание теста" %}</h3>
+        <p class="subtitle">{% blocktrans with title=current_lesson.title %}К уроку: <strong>{{ title }}</strong>{% endblocktrans %}</p>
 
         <form method="post">
             {% csrf_token %}
@@ -39,10 +39,10 @@
                 
                 <span class="help-text" id="{{ field.id_for_label }}-help">
                     {% if field.name == 'title' %}
-                        Введите понятное название для теста.
+                        {% trans "Введите понятное название для теста." %}
                     {% endif %}
                     {% if field.name == 'description' %}
-                        Инструкция для студентов перед началом прохождения.
+                        {% trans "Инструкция для студентов перед началом прохождения." %}
                     {% endif %}
                 </span>
 
@@ -54,7 +54,7 @@
             </div>
             {% endfor %}
 
-            <button type="submit" class="create-quiz-btn-form">Создать и добавить вопросы</button>
+            <button type="submit" class="create-quiz-btn-form">{% trans "Создать и добавить вопросы" %}</button>
         </form>
     </div>
 

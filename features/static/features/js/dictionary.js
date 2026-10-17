@@ -1,9 +1,17 @@
 $(document).ready(function(){
 
+    let $app = $("#dictionary-app");
+    let textBur = $app.data('placeholder-bur') || 'Введите слово на бурятском';
+    let textRus = $app.data('placeholder-rus') || 'Введите слово на русском';
+    let initialText = $app.data('initial-text') || 'Тут появится найденный перевод слова.';
+    let notFoundText = $app.data('not-found') || 'Ой... Видимо, такого слова ещё нет в словаре.';
+    let serverErrorText = $app.data('server-error') || 'Произошла ошибка сервера.';
+
     let $isBuryadToRussian = true;
     let $fromToText = $("#from-to");
     let $input = $("#word-input");
     let $container = $("#id_translations");
+    let isDefaultText = true;
 
     $("#from-bur-to-rus").on('click', function(){
         $(this).addClass('active');
@@ -11,11 +19,12 @@ $(document).ready(function(){
         $isBuryadToRussian = true;
         $fromToText.text('бурятско-русский');
         $input.val('');
-        $input.attr('placeholder', 'Введите слово на бурятском');
+        $input.attr('placeholder', textBur);
         $("#buryad-letters-wrapper").stop().slideDown(300);
-        if (!($container.text().includes('перевод слова.'))) {
+        if (!isDefaultText) {
             $container.stop().slideUp(300, function(){
-                $container.text('Тут появится найденный перевод слова.');
+                $container.text(initialText);
+                isDefaultText = true;
                 $container.stop().slideDown(300);
             });
         };
@@ -27,11 +36,12 @@ $(document).ready(function(){
         $isBuryadToRussian = false;
         $fromToText.text('русско-бурятский');
         $input.val('');
-        $input.attr('placeholder', 'Введите слово на русском');
+        $input.attr('placeholder', textRus);
         $("#buryad-letters-wrapper").stop().slideUp(300);
-        if (!($container.text().includes('перевод слова.'))) {
+        if (!isDefaultText) {
             $container.stop().slideUp(300, function(){
-                $container.text('Тут появится найденный перевод слова.');
+                $container.text(initialText);
+                isDefaultText = true;
                 $container.stop().slideDown(300);
             });
         };
@@ -53,9 +63,9 @@ $(document).ready(function(){
 
             if (!response.ok) {
                 if (response.status === 404) {
-                    throw new Error("Ой... Видимо, такого слова ещё нет в словаре.");
+                    throw new Error(notFoundText);
                 } else {
-                    throw new Error("Произошла ошибка сервера.");
+                    throw new Error(serverErrorText);
                 }
             }
 
@@ -65,11 +75,12 @@ $(document).ready(function(){
             let all_translations = translations.map(item => item.value);
 
             if (all_translations.length == 0) {
-                throw new Error("Ой... Видимо, такого слова ещё нет в словаре.")
+                throw new Error(notFoundText);
             }
 
             all_translations = all_translations.join('\n');
 
+            isDefaultText = false;
             $container.stop().slideUp(300, function(){
                 $container.text(all_translations);
                 $container.stop().slideDown(300);
@@ -77,6 +88,7 @@ $(document).ready(function(){
             
 
         } catch(error) {
+            isDefaultText = false;
             $container.stop().slideUp(300, function(){
                 $container.text(error.message);
                 $container.stop().slideDown(300);

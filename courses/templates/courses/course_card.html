@@ -4,19 +4,19 @@
     <div class="course-card-text">
         {% if card.is_published %}
         <div class="status true">
-            Опубликован
+            {% trans "Опубликован" %}
         </div>
         {% else %}
         <div class="status false">
-            Черновик
+            {% trans "Черновик" %}
         </div>
         {% endif %}
         <div>
             <h3>{{ card.title }}</h3>
         </div>
         <div>
-            <span style="margin-right: 1rem;">Уроков: {{ card.lessons_count }}</span>
-            <span>Студентов: {{ card.progresses.count }}</span>
+            <span style="margin-right: 1rem;">{% trans "Уроков" %}: {{ card.lessons_count }}</span>
+            <span>{% trans "Студентов" %}: {{ card.progresses.count }}</span>
         </div>
     </div>
     <div class="course-card-publish-card">
@@ -25,33 +25,33 @@
         <form 
             hx-post="{% url 'unpublish_course' card.author.username card.id %}"
             hx-target="#course-{{ card.id }}"
-            hx-confirm="Вы действительно хотите добавить курс {{ card.title }} в черновик?"
+            hx-confirm="{% blocktrans with title=card.title %}Вы действительно хотите добавить курс {{ title }} в черновик?{% endblocktrans %}"
             hx-swap="outerHTML">
             {% csrf_token %}
-            <button type="submit" class="unpublish-btn">В черновик</button>
+            <button type="submit" class="unpublish-btn">{% trans "В черновик" %}</button>
         </form>
         {% else %}
         <form 
             hx-post="{% url 'publish_course' card.author.username card.id %}"
             hx-target="#course-{{ card.id }}"
-            hx-confirm="Вы действительно хотите опубликовать курс {{ card.title }}?"
+            hx-confirm="{% blocktrans with title=card.title %}Вы действительно хотите опубликовать курс {{ title }}?{% endblocktrans %}"
             hx-swap="outerHTML">
             {% csrf_token %}
-            <button type="submit" class="publish-btn">Опубликовать</button>
+            <button type="submit" class="publish-btn">{% trans "Опубликовать" %}</button>
         </form>
         {% endif %}
 
     </div>
     <div class="course-card-buttons">
-        <a href="{% url 'update_course' card.author.username card.id %}" class="simple-btn">Редактировать курс</a>
-        <a href="{% url 'studio_lessons' card.author.username card.id %}" class="simple-btn">Редактировать уроки</a>
+        <a href="{% url 'update_course' card.author.username card.id %}" class="simple-btn">{% trans "Редактировать курс" %}</a>
+        <a href="{% url 'studio_lessons' card.author.username card.id %}" class="simple-btn">{% trans "Редактировать уроки" %}</a>
         <form 
             hx-post="{% url 'delete_course' card.author.username card.id %}"
             hx-target="#course-{{ card.id }}"
-            hx-confirm="Вы действительно хотите удалить курс «{{ card.title }}»? Удаление приведет к полной потере данных, включая уроки и тесты."
+            hx-confirm="{% blocktrans with title=card.title %}Вы действительно хотите удалить курс «{{ title }}»? Удаление приведет к полной потере данных, включая уроки и тесты.{% endblocktrans %}"
             hx-swap="outerHTML">
             {% csrf_token %}
-            <button type="submit" class="delete-btn">Удалить курс</button>
+            <button type="submit" class="delete-btn">{% trans "Удалить курс" %}</button>
         </form>
     </div>
 </div>

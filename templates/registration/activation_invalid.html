@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Сэсэн | Ошибка активации{% endblock %}
+{% load i18n %}
+{% block title %}Сэсэн | {% trans "Ошибка активации" %}{% endblock %}
 
 {% block extrahead %}
 <style>
@@ -12,11 +13,11 @@
 {% block main %}
 <div class="auth-main-container">
     <div class="auth-container text-center">
-        <h3 style="color: rgb(243, 61, 93);">Ошибка активации</h3>
+        <h3 style="color: rgb(243, 61, 93);">{% trans "Ошибка активации" %}</h3>
         <br>
-        <p>Эта ссылка недействительна. Возможно, аккаунт уже активирован, либо срок действия ссылки (3 дня) истек.</p>
+        <p>{% trans "Эта ссылка недействительна. Возможно, аккаунт уже активирован, либо срок действия ссылки (3 дня) истек." %}</p>
         <br>
-        <a href="{% url 'register' %}" class="btn-gradient">Пройти регистрацию заново</a>
+        <a href="{% url 'register' %}" class="btn-gradient">{% trans "Пройти регистрацию заново" %}</a>
     </div>
 </div>
 {% endblock %}

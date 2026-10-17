@@ -51,13 +51,13 @@ def register(request):
                     current_site = request.get_host()
                     activation_url = f"{protocol}://{current_site}/auth/activate/{uid}/{token}/"
                     
-                    subject = "Активация аккаунта Сэсэн"
-                    message = (
-                        f"Сайн байна! Спасибо за регистрацию на платформе Сэсэн.\n\n"
-                        f"Для подтверждения вашего Email и активации профиля перейдите по ссылке:\n"
-                        f"{activation_url}\n\n"
-                        f"Ссылка действительна в течение 3 дней."
-                    )
+                    subject = _("Активация аккаунта Сэсэн")
+                    message = _(
+                        "Сайн байна! Спасибо за регистрацию на платформе Сэсэн.\n\n"
+                        "Для подтверждения вашего Email и активации профиля перейдите по ссылке:\n"
+                        "%(activation_url)s\n\n"
+                        "Ссылка действительна в течение 3 дней."
+                    ) % {'activation_url': activation_url}
                     
                     send_mail(
                         subject, 
@@ -219,15 +219,15 @@ def update_user(request):
                     
                     activation_url = f"{protocol}://{current_site}/auth/change-email/{uid}/{token}/{encoded_email}/"
                     
-                    subject = "Подтверждение смены Email на Сэсэн"
-                    message = (
-                        f"Сайн байна, {request.user.first_name}!\n\n"
-                        f"Вы запросили изменение адреса электронной почты на платформе Сэсэн.\n"
-                        f"Для подтверждения нового Email перейдите по ссылке:\n"
-                        f"{activation_url}\n\n"
-                        f"Если вы не совершали данного действия, просто проигнорируйте это письмо. "
-                        f"Ваш аккаунт останется привязан к старому адресу."
-                    )
+                    subject = _("Подтверждение смены Email на Сэсэн")
+                    message = _(
+                        "Сайн байна, %(first_name)s!\n\n"
+                        "Вы запросили изменение адреса электронной почты на платформе Сэсэн.\n"
+                        "Для подтверждения нового Email перейдите по ссылке:\n"
+                        "%(activation_url)s\n\n"
+                        "Если вы не совершали данного действия, просто проигнорируйте это письмо. "
+                        "Ваш аккаунт останется привязан к старому адресу."
+                    ) % {'first_name': request.user.first_name, 'activation_url': activation_url}
                     
                     try:
                         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [new_email], fail_silently=False)

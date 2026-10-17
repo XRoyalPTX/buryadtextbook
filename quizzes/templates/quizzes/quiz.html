@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Сэсэн | Тест | {{ current_quiz.title }}{% endblock %}
+{% block title %}{% trans "Сэсэн" %} | {% trans "Тест" %} | {{ current_quiz.title }}{% endblock %}
 
 {% load static %}
 
@@ -17,8 +17,8 @@
 <div class="quiz-main">
 
     <div class="quiz-card">
-        <h3 class="mb-2">Тест «{{ current_quiz.title }}»</h3> 
-        <p class="mb-3" style="font-size: 14px;">по уроку «{{ current_lesson.title }}»</p>
+        <h3 class="mb-2">{% blocktrans with title=current_quiz.title %}Тест «{{ title }}»{% endblocktrans %}</h3> 
+        <p class="mb-3" style="font-size: 14px;">{% blocktrans with title=current_lesson.title %}по уроку «{{ title }}»{% endblocktrans %}</p>
 
         <div class="quiz-description">
             <p class="mt-0">
@@ -31,13 +31,13 @@
 
             {% for question in current_quiz.questions.all %}
                 <div class="quiz-question-card">
-                <small>Вопрос {{ forloop.counter }}</small>
+                <small>{% blocktrans with num=forloop.counter %}Вопрос {{ num }}{% endblocktrans %}</small>
                 <p class="question-text">{{ question.text }}</p>
                 <small class="question-type-tip">
                     {% if question.type == 'single_choice' %}
-                    Выберите <b>один</b> вариант ответа.
+                    {% blocktrans %}Выберите <b>один</b> вариант ответа.{% endblocktrans %}
                     {% else %}
-                    Выберите <b>один или несколько</b> вариантов ответа.
+                    {% blocktrans %}Выберите <b>один или несколько</b> вариантов ответа.{% endblocktrans %}
                     {% endif %}
                 </small>
                 {% for answer in question.answers.all %}
@@ -54,7 +54,7 @@
                 {% endfor %}
                 </div>
             {% endfor %}
-            <button type="submit" class="btn-send-answers">Отправить ответы</button>
+            <button type="submit" class="btn-send-answers">{% trans "Отправить ответы" %}</button>
         </form>
 
     </div>

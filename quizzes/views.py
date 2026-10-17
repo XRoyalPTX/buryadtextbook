@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError, PermissionDenied
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
+from django.utils.translation import gettext as _
 
 
 # Create your views here.
@@ -30,9 +31,9 @@ def open_quiz(request, course_id, lesson_order_num, quiz_id):
     is_owner_or_admin = (request.user == current_course.author or request.user.is_superuser)
     if not is_owner_or_admin:
         if not current_course.is_published or not current_lesson.is_published:
-            raise Http404("Тест не найден.")
+            raise Http404(_("Тест не найден."))
         if not CourseProgress.objects.filter(course=current_course, user=request.user).exists():
-            messages.warning(request, "Для прохождения теста необходимо начать курс.")
+            messages.warning(request, _("Для прохождения теста необходимо начать курс."))
             return redirect('open_course', course_id=course_id)
 
     if request.method == 'POST':
@@ -78,7 +79,7 @@ def open_quiz(request, course_id, lesson_order_num, quiz_id):
                     if current_course_progress and not current_course_progress.complete_date:
                         current_course_progress.complete_date = timezone.now()
                         current_course_progress.save()
-                        messages.success(request, 'Поздравляем! Вы полностью прошли курс!')
+                        messages.success(request, _('Поздравляем! Вы полностью прошли курс!'))
 
                 current_user = request.user
                 if current_user.streak_count == 0:
@@ -94,9 +95,9 @@ def open_quiz(request, course_id, lesson_order_num, quiz_id):
                     current_user.streak_count = 1
                     current_user.save()
 
-                messages.success(request, 'Тест пройден, урок отмечен пройденным.')
+                messages.success(request, _('Тест пройден, урок отмечен пройденным.'))
             else:
-                messages.success(request, 'Тест пройден.')
+                messages.success(request, _('Тест пройден.'))
         
         return redirect('quiz_result', course_id=current_course.id, lesson_order_num=current_lesson.order_num, quiz_id=current_quiz.id, progress_id=progress.id)
 
@@ -126,7 +127,7 @@ def create_quiz(request, username, course_id, lesson_order_num):
             quiz = form.save(commit=False)
             quiz.lesson = current_lesson 
             quiz.save()
-            messages.success(request, 'Тест успешно создан.')
+            messages.success(request, _('Тест успешно создан.'))
             return redirect('open_quiz_builder', username=request.user.username, course_id=current_course.id, lesson_order_num=current_lesson.order_num, quiz_id=quiz.id)
     else:
         form = QuizForm()
@@ -173,7 +174,7 @@ def update_quiz(request, username, course_id, lesson_order_num, quiz_id):
         form = QuizForm(request.POST, instance=quiz)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Тест успешно изменен.')
+            messages.success(request, _('Тест успешно изменен.'))
             return redirect('open_quiz_builder', username=request.user.username, course_id=current_course.id, lesson_order_num=current_lesson.order_num, quiz_id=quiz.id)
     else:
         form = QuizForm(instance=quiz)
@@ -200,7 +201,7 @@ def delete_quiz(request, username, course_id, lesson_order_num, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id, lesson=current_lesson)
 
     quiz.delete()
-    messages.success(request, 'Тест успешно удален.')
+    messages.success(request, _('Тест успешно удален.'))
 
     return redirect('studio_lessons', username=current_course.author.username, course_id=current_course.id)
 
@@ -230,7 +231,7 @@ def add_question(request, username, course_id, lesson_order_num, quiz_id):
                 question.save() 
                 formset.save() 
                 
-                messages.success(request, 'Вопрос успешно добавлен.')
+                messages.success(request, _('Вопрос успешно добавлен.'))
                 
                 if 'save_and_add_another' in request.POST:
                     return redirect('add_question', username=username, course_id=course_id, lesson_order_num=lesson_order_num, quiz_id=quiz_id)
@@ -265,7 +266,7 @@ def delete_question(request, username, course_id, lesson_order_num, quiz_id, que
     question = get_object_or_404(Question, id=question_id, quiz=current_quiz)
 
     question.delete()
-    messages.success(request, 'Вопрос успешно удален.')
+    messages.success(request, _('Вопрос успешно удален.'))
 
     return redirect('open_quiz_builder', username=username, course_id=course_id, lesson_order_num=lesson_order_num, quiz_id=quiz_id)
 
@@ -294,7 +295,7 @@ def update_question(request, username, course_id, lesson_order_num, quiz_id, que
                 updated_question.save() 
                 formset.save() 
                 
-                messages.success(request, 'Вопрос успешно изменен.')
+                messages.success(request, _('Вопрос успешно изменен.'))
                 return redirect('open_quiz_builder', username=username, course_id=course_id, 
                                 lesson_order_num=lesson_order_num, quiz_id=quiz_id)
         else:

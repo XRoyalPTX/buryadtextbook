@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 20:41+0300\n"
+"POT-Creation-Date: 2026-10-17 18:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,12 +20,998 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\buryadtextbook\settings.py:130
+#: .\buryadtextbook\settings.py:132
 msgid "Russian"
 msgstr ""
 
-#: .\buryadtextbook\settings.py:131
+#: .\buryadtextbook\settings.py:133
 msgid "English"
+msgstr ""
+
+#: .\courses\forms.py:17 .\courses\forms.py:33 .\courses\models.py:13
+msgid "Название курса"
+msgstr ""
+
+#: .\courses\forms.py:18 .\courses\forms.py:34 .\courses\models.py:18
+msgid "Описание курса"
+msgstr ""
+
+#: .\courses\forms.py:22 .\courses\forms.py:38
+msgid "О чем этот курс?"
+msgstr ""
+
+#: .\courses\forms.py:48 .\courses\forms.py:64 .\courses\models.py:62
+msgid "Название урока"
+msgstr ""
+
+#: .\courses\forms.py:49 .\courses\forms.py:65
+msgid "Теоретическая часть урока"
+msgstr ""
+
+#: .\courses\forms.py:50 .\courses\forms.py:66 .\courses\models.py:70
+msgid "Порядковый номер урока"
+msgstr ""
+
+#: .\courses\models.py:15
+msgid "Название курса не может быть длиннее 100 символов."
+msgstr ""
+
+#: .\courses\models.py:19
+msgid "Описание курса не может быть длиннее 1500 символов."
+msgstr ""
+
+#: .\courses\models.py:24 .\courses\templates\courses\courses.html:39
+msgid "Автор"
+msgstr ""
+
+#: .\courses\models.py:27 .\courses\models.py:72
+msgid "Опубликовано"
+msgstr ""
+
+#: .\courses\models.py:28
+msgid "Дата создания"
+msgstr ""
+
+#: .\courses\models.py:29
+msgid "Последнее изменение"
+msgstr ""
+
+#: .\courses\models.py:34
+msgid ""
+"Нельзя опубликовать курс, у которого нет опубликованных уроков. Опубликуйте "
+"хотя бы один урок из этого курса для публикации самого курса."
+msgstr ""
+
+#: .\courses\models.py:40
+msgid "Автором курса может быть только пользователь с ролью \"Эксперт\""
+msgstr ""
+
+#: .\courses\models.py:64
+msgid "Название урока не может быть длиннее 120 символов."
+msgstr ""
+
+#: .\courses\models.py:67
+msgid "Контент урока"
+msgstr ""
+
+#: .\courses\models.py:68
+msgid ""
+"Контент урока слишком огромный (максимум 50 000 символов вместе с разметкой)."
+msgstr ""
+
+#: .\courses\models.py:71 .\courses\models.py:93
+#: .\courses\templates\courses\course.html:3
+msgid "Курс"
+msgstr ""
+
+#: .\courses\models.py:91
+msgid "Дата начала прохождения курса"
+msgstr ""
+
+#: .\courses\models.py:92
+msgid "Дата завершения курса"
+msgstr ""
+
+#: .\courses\models.py:94 .\courses\models.py:107 .\users\models.py:55
+msgid "Студент"
+msgstr ""
+
+#: .\courses\models.py:104
+msgid "Дата начала прохождения урока"
+msgstr ""
+
+#: .\courses\models.py:105
+msgid "Дата завершения урока"
+msgstr ""
+
+#: .\courses\models.py:106 .\courses\templates\courses\lesson.html:3
+#: .\courses\templates\courses\lesson.html:31
+msgid "Урок"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:22
+msgid "К списку курсов"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:26
+#: .\courses\templates\courses\course.html:51
+#: .\courses\templates\courses\courses.html:32
+msgid "Не начат"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:28
+#: .\courses\templates\courses\course.html:53
+#: .\courses\templates\courses\courses.html:34
+#: .\courses\templates\courses\lesson.html:27
+msgid "Пройден"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:30
+#: .\courses\templates\courses\course.html:55
+#: .\courses\templates\courses\courses.html:36
+#: .\courses\templates\courses\lesson.html:29
+msgid "Начат"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:35
+msgid "Записаться"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:37
+msgid "Авторизуйтесь для прохождения курса"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:42
+msgid "Перечень уроков курса"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:58
+msgid "Авторизуйтесь для прохождения урока"
+msgstr ""
+
+#: .\courses\templates\courses\course.html:62
+#: .\courses\templates\courses\course.html:64
+msgid "Перейти к уроку"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:7
+#: .\courses\templates\courses\lesson_card.html:9
+msgid "Опубликован"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:11
+#: .\courses\templates\courses\lesson_card.html:13
+msgid "Черновик"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:18
+msgid "Уроков"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:19
+msgid "Студентов"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:28
+#, python-format
+msgid "Вы действительно хотите добавить курс %(title)s в черновик?"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:31
+#: .\courses\templates\courses\lesson_card.html:34
+msgid "В черновик"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:37
+#, python-format
+msgid "Вы действительно хотите опубликовать курс %(title)s?"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:40
+#: .\courses\templates\courses\lesson_card.html:43
+msgid "Опубликовать"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:46
+msgid "Редактировать курс"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:47
+msgid "Редактировать уроки"
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:51
+#, python-format
+msgid ""
+"Вы действительно хотите удалить курс «%(title)s»? Удаление приведет к полной "
+"потере данных, включая уроки и тесты."
+msgstr ""
+
+#: .\courses\templates\courses\course_card.html:54
+msgid "Удалить курс"
+msgstr ""
+
+#: .\courses\templates\courses\courses.html:3
+#: .\courses\templates\courses\studio_courses.html:3
+#: .\home\templates\home\homepage.html:38 .\templates\base.html:35
+#: .\templates\base.html:111 .\templates\base.html:166
+msgid "Курсы"
+msgstr ""
+
+#: .\courses\templates\courses\courses.html:22
+msgid "Доступные курсы"
+msgstr ""
+
+#: .\courses\templates\courses\courses.html:23
+msgid "Откройте курс для просмотра описания и перечня уроков."
+msgstr ""
+
+#: .\courses\templates\courses\courses.html:41
+msgid "Открыть курс"
+msgstr ""
+
+#: .\courses\templates\courses\create_course.html:3
+#: .\courses\templates\courses\create_course.html:19
+msgid "Создание курса"
+msgstr ""
+
+#: .\courses\templates\courses\create_course.html:36
+#: .\courses\templates\courses\create_lesson.html:37
+#: .\courses\templates\courses\update_course.html:36
+#: .\courses\templates\courses\update_lesson.html:40
+msgid "В названии можно ввести максимум 255 символов."
+msgstr ""
+
+#: .\courses\templates\courses\create_course.html:39
+#: .\courses\templates\courses\update_course.html:39
+msgid "Опишите, что будет пройдено в курсе."
+msgstr ""
+
+#: .\courses\templates\courses\create_course.html:54
+msgid "Создать курс"
+msgstr ""
+
+#: .\courses\templates\courses\create_lesson.html:3
+msgid "Создание урока"
+msgstr ""
+
+#: .\courses\templates\courses\create_lesson.html:20
+msgid "Создание нового урока"
+msgstr ""
+
+#: .\courses\templates\courses\create_lesson.html:52
+msgid "Создать урок"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:22
+msgid "К списку уроков"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:45
+msgid "Предыдущий урок"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:47
+#: .\courses\templates\courses\lesson.html:72
+#: .\quizzes\templates\quizzes\create_quiz.html:20
+#: .\quizzes\templates\quizzes\update_quiz.html:20
+msgid "Вернуться к курсу"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:53
+msgid "Пройти тест"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:57
+msgid "Отметить пройденным"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:62
+msgid "Перепройти тест"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:64
+msgid "Урок пройден"
+msgstr ""
+
+#: .\courses\templates\courses\lesson.html:70
+msgid "Следующий урок"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:20
+#: .\courses\templates\courses\studio_courses.html:61
+msgid "Лайков"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:21
+msgid "Комментариев"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:32
+#, python-format
+msgid "Вы действительно хотите добавить урок %(title)s в черновик?"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:41
+#, python-format
+msgid "Вы действительно хотите опубликовать урок %(title)s?"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:50
+msgid "Редактировать"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:53
+msgid "Редактировать тест"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:55
+msgid "Добавить тест"
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:61
+#, python-format
+msgid ""
+"Вы действительно хотите удалить урок «%(title)s»? Удаление приведет к полной "
+"потере данных, включая тесты."
+msgstr ""
+
+#: .\courses\templates\courses\lesson_card.html:64
+#: .\social\templates\social\comment_item.html:91
+msgid "Удалить"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:3
+#: .\courses\templates\courses\studio_lessons.html:3 .\templates\base.html:38
+#: .\templates\base.html:114
+msgid "Студия"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:25
+msgid "Ваша студия эксперта"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:26
+#, python-format
+msgid "Добро пожаловать в студию, %(username)s. Время творить!"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:28
+msgid "Создать новый курс"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:31
+#, python-format
+msgid "Студия пользователя %(username)s"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:32
+#, python-format
+msgid ""
+"Добро пожаловать в студию %(username)s. Посмотрим, что же создал данный "
+"эксперт?"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:43
+msgid "Курсов"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:52
+msgid "Тестов"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:72
+msgid "Управление курсами"
+msgstr ""
+
+#: .\courses\templates\courses\studio_courses.html:80
+msgid "Ой, тут ничего нет. Видимо, Вы еще не создали ни один курс."
+msgstr ""
+
+#: .\courses\templates\courses\studio_lessons.html:3
+msgid "Уроки курса"
+msgstr ""
+
+#: .\courses\templates\courses\studio_lessons.html:19
+msgid "На страницу курсов"
+msgstr ""
+
+#: .\courses\templates\courses\studio_lessons.html:23
+msgid "Список уроков курса"
+msgstr ""
+
+#: .\courses\templates\courses\studio_lessons.html:26
+msgid "Создать новый урок"
+msgstr ""
+
+#: .\courses\templates\courses\studio_lessons.html:29
+msgid "Ошибка при сохранении порядка. Статус сервера: "
+msgstr ""
+
+#: .\courses\templates\courses\studio_lessons.html:38
+msgid "Ой, тут ничего нет. Видимо, Вы еще не создали ни один урок."
+msgstr ""
+
+#: .\courses\templates\courses\update_course.html:3
+#: .\courses\templates\courses\update_course.html:19
+msgid "Редактирование курса"
+msgstr ""
+
+#: .\courses\templates\courses\update_course.html:54
+msgid "Изменить курс"
+msgstr ""
+
+#: .\courses\templates\courses\update_course.html:55
+msgid "Обратно в студию"
+msgstr ""
+
+#: .\courses\templates\courses\update_lesson.html:3
+#: .\courses\templates\courses\update_lesson.html:20
+msgid "Редактирование урока"
+msgstr ""
+
+#: .\courses\templates\courses\update_lesson.html:37
+msgid "Не используйте занятые номера уроков."
+msgstr ""
+
+#: .\courses\templates\courses\update_lesson.html:55
+msgid "Изменить урок"
+msgstr ""
+
+#: .\courses\views.py:55 .\courses\views.py:506
+msgid "Курс не найден."
+msgstr ""
+
+#: .\courses\views.py:112
+msgid "Курс успешно создан."
+msgstr ""
+
+#: .\courses\views.py:135
+msgid "Курс успешно отредактирован"
+msgstr ""
+
+#: .\courses\views.py:138 .\courses\views.py:275
+msgid "Вы не ввели никаких изменений"
+msgstr ""
+
+#: .\courses\views.py:157
+msgid "Курс успешно удален."
+msgstr ""
+
+#: .\courses\views.py:162
+msgid "У вас нет прав для удаления этого курса."
+msgstr ""
+
+#: .\courses\views.py:183 .\courses\views.py:535 .\social\views.py:21
+msgid "Урок не найден."
+msgstr ""
+
+#: .\courses\views.py:185
+msgid "Для просмотра уроков необходимо начать прохождение курса."
+msgstr ""
+
+#: .\courses\views.py:243
+#, python-format
+msgid "Урок №%(order_num)s успешно создан."
+msgstr ""
+
+#: .\courses\views.py:272
+#, python-format
+msgid "Урок №%(order_num)s успешно изменен."
+msgstr ""
+
+#: .\courses\views.py:299
+msgid "Урок успешно удален."
+msgstr ""
+
+#: .\courses\views.py:304
+msgid "У вас нет прав для удаления этого урока."
+msgstr ""
+
+#: .\courses\views.py:399
+msgid "Курс успешно опубликован."
+msgstr ""
+
+#: .\courses\views.py:404
+msgid ""
+"Курс не может быть опубликован, так как он не содержит ни одного "
+"опубликованного урока."
+msgstr ""
+
+#: .\courses\views.py:437
+msgid "Курс успешно добавлен в черновик."
+msgstr ""
+
+#: .\courses\views.py:462
+msgid "Урок успешно опубликован."
+msgstr ""
+
+#: .\courses\views.py:491
+msgid "Урок успешно добавлен в черновик."
+msgstr ""
+
+#: .\courses\views.py:515
+msgid "В данном курсе пока нет опубликованных уроков."
+msgstr ""
+
+#: .\courses\views.py:520
+msgid ""
+"Вы успешно записались на курс! Добро пожаловать на первый урок текущего "
+"курса."
+msgstr ""
+
+#: .\courses\views.py:567 .\quizzes\views.py:82
+msgid "Поздравляем! Вы полностью прошли курс!"
+msgstr ""
+
+#: .\courses\views.py:582
+msgid "Урок отмечен пройденным."
+msgstr ""
+
+#: .\courses\views.py:584
+msgid "Вы уже проходили этот урок ранее."
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:3
+#: .\quizzes\templates\quizzes\create_question.html:3
+#: .\quizzes\templates\quizzes\create_quiz.html:3
+#: .\quizzes\templates\quizzes\quiz.html:4
+#: .\quizzes\templates\quizzes\quiz_builder.html:3
+#: .\quizzes\templates\quizzes\quiz_result.html:3
+#: .\quizzes\templates\quizzes\update_question.html:3
+#: .\quizzes\templates\quizzes\update_quiz.html:3
+msgid "Сэсэн"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:3
+#: .\features\templates\features\dictionary.html:26 .\templates\base.html:36
+#: .\templates\base.html:112
+msgid "Словарь"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:19
+#: .\features\templates\features\dictionary.html:36
+msgid "Введите слово на бурятском"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:20
+msgid "Введите слово на русском"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:21
+#: .\features\templates\features\dictionary.html:52
+msgid "Тут появится найденный перевод слова."
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:22
+msgid "Ой... Видимо, такого слова ещё нет в словаре."
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:23
+msgid "Произошла ошибка сервера."
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:29
+msgid "бурятско-русский"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:31
+msgid "русско-бурятский"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:46
+msgid "Найти"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:56
+msgid "Для начала рекомендуем ознакомиться со следующими пунктами:"
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:57
+msgid ""
+"Словарь - это база переводов слов, а не полноценный переводчик. Невозможно "
+"будет перевести целое предложение."
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:58
+msgid ""
+"Чтобы найти слово, убедитесь, что оно правильно написано. Например, "
+"\"үбдэхэ\", а не \"убдэхэ\"."
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:59
+msgid ""
+"Словарь не может перевести слова, написанные не в начальной форме. К "
+"сожалению, невозможно будет перевести \"вечерами\", но можно \"вечер\"."
+msgstr ""
+
+#: .\features\templates\features\dictionary.html:62
+msgid ""
+"Реализовано на базе бесплатного <a href=\"https://burlang.ru/api/v1\">API "
+"burlang</a>"
+msgstr ""
+
+#: .\home\templates\home\about.html:3 .\templates\base.html:173
+msgid "Об авторе"
+msgstr ""
+
+#: .\home\templates\home\about.html:17
+msgid ""
+"Всем привет! На связи автор платформы <strong>Сэсэн</strong>. Меня зовут "
+"Владислав."
+msgstr ""
+
+#: .\home\templates\home\about.html:20
+msgid ""
+"Идея разработки данного веб-приложения пришла ко мне еще очень давно, когда "
+"я учился на третьем курсе.\n"
+"            Тогда у нас была курсовая работа по дисциплине \"Технология "
+"разработки программных систем\", и темой своей работы\n"
+"            я выбрал... \"Веб-приложение для изучения бурятского языка\". И, "
+"в целом, справился с задачей."
+msgstr ""
+
+#: .\home\templates\home\about.html:26
+msgid ""
+"Но почему же тогда проект появляется только сейчас, а не полтора года назад? "
+"Дело в том, что на тот момент\n"
+"            мои навыки программиста были недостаточно хороши. Да и дизайн "
+"приложения был не очень хорош. В общем, \n"
+"            были дыры, зашивание которых стоило бы много времени и ресурсов."
+msgstr ""
+
+#: .\home\templates\home\about.html:32
+msgid ""
+"Однако сейчас (текст пишется 4-го июня 2026 г.), когда я выпускаюсь из вуза, "
+"я могу быть уверенным в том,\n"
+"            что смогу разобраться с появляющимися проблемами во время "
+"эксплуатации веб-приложения. И поэтому готов\n"
+"            поделиться данным веб-приложением с общественностью."
+msgstr ""
+
+#: .\home\templates\home\about.html:38
+msgid ""
+"Собственно, каким боком я отношусь к бурятскому языку? Мой ответ: "
+"\"Непосредственно\". Я родился и вырос в\n"
+"            бурятской семье. Но к сожалению, не смог перенять язык и с "
+"рождения на нем не разговаривал."
+msgstr ""
+
+#: .\home\templates\home\about.html:43
+msgid ""
+"Вы, наверное, спросите, почему глагол \"разговаривал\" стоит в прошедшем "
+"времени? Все просто: в 10-м классе\n"
+"            я решил взять быка за рога и начать изучение родного себе языка. "
+"Я понимал, что это тяжелый путь, но иного\n"
+"            в голове не представилось: хотелось закрыть пробел там, где он "
+"был."
+msgstr ""
+
+#: .\home\templates\home\about.html:49
+msgid ""
+"После начала изучения языка я столкнулся с множеством проблем, одной из "
+"которых было отсутствие нормальной\n"
+"            материальной базы для погружения в предметную область. Чтобы "
+"найти хороший учебник, приходилось перевернуть\n"
+"            весь Интернет и обойти все возможные книжные магазины города "
+"Улан-Удэ."
+msgstr ""
+
+#: .\home\templates\home\about.html:55
+msgid ""
+"Спустя 5 лет я могу сказать, что овладел языком. Конечно, не уровень "
+"носителя, но поддержать диалог вполне\n"
+"            в моих силах. И за эти 5 лет все еще нет решения проблемы единой "
+"базы знаний языка. Поэтому хотел бы представить\n"
+"            вашему вниманию платформу \"Сэсэн\"."
+msgstr ""
+
+#: .\home\templates\home\about.html:61
+msgid ""
+"Да, сейчас функционал маленький: базовый словарь на основе бесплатного API; "
+"курсы с уроками и тестами,\n"
+"            которые создаются реальными людьми. И все."
+msgstr ""
+
+#: .\home\templates\home\about.html:66
+msgid ""
+"Но я не говорю, что развитие проекта на этом остановится. Каждый из вас, кто "
+"сейчас читает этот текст и пользуется\n"
+"            сайтом, может написать на почту <strong>webappsesen@yandex.ru</"
+"strong> со своими предложениями по улучшению \n"
+"            работы и расширению платформы. Например, в ближайшем будущем я "
+"бы хотел добавить такую возможность, чтобы \n"
+"            у каждого пользователя была своя книжка с заметками или "
+"собственный словарик, доступ к которым будет через профиль."
+msgstr ""
+
+#: .\home\templates\home\about.html:73
+msgid "Каждый может повлиять на развитие платформы. Спасибо за внимание!"
+msgstr ""
+
+#: .\home\templates\home\about.html:76
+msgid "Ссылки:"
+msgstr ""
+
+#: .\home\templates\home\about.html:79
+msgid "сэсэн | веб-приложение для изучения бурятского языка"
+msgstr ""
+
+#: .\home\templates\home\about.html:80
+msgid "ссылка на репозиторий"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:3 .\templates\base.html:175
+msgid "Пользовательское соглашение"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:16
+msgid "Пользовательское соглашение веб-приложения «Сэсэн»"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:18
+#: .\home\templates\home\confidential.html:18
+msgid "1. Общие положения"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:19
+msgid ""
+"1.1. Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует "
+"отношения между администрацией веб-приложения «Сэсэн» (далее — "
+"«Администрация») и пользователем сети Интернет (далее — «Пользователь»), "
+"зарегистрировавшимся на Платформе."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:20
+msgid ""
+"1.2. Регистрация на Платформе означает полное и безоговорочное принятие "
+"условий данного Соглашения."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:22
+msgid "2. Права и обязанности Пользователя"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:23
+msgid ""
+"2.1. Пользователь обязуется предоставить достоверную информацию при "
+"регистрации и несет ответственность за сохранность своего логина и пароля."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:24
+msgid "2.2. Пользователь имеет право:"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:26
+msgid ""
+"Проходить доступные образовательные курсы, выполнять тесты и отслеживать "
+"свой прогресс."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:27
+msgid ""
+"Оставлять комментарии к урокам, взаимодействовать с другими пользователями."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:28
+msgid ""
+"Публиковать собственные образовательные материалы (при наличии прав доступа "
+"«Эксперт»)."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:30
+msgid "2.3. Пользователю запрещается:"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:32
+msgid ""
+"Использовать Платформу для распространения спама, вредоносного ПО или "
+"осуществления хакерских атак."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:33
+msgid ""
+"Публиковать в комментариях или материалах уроков оскорбления, нецензурную "
+"лексику, а также информацию, нарушающую законодательство РФ."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:34
+msgid ""
+"Копировать и распространять авторские учебные материалы Платформы без "
+"разрешения авторов курсов."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:37
+msgid "3. Права и обязанности Администрации"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:38
+msgid ""
+"3.1. Администрация обязуется обеспечивать круглосуточную доступность "
+"Платформы, за исключением времени проведения технических работ."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:39
+msgid "3.2. Администрация оставляет за собой право:"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:41
+msgid ""
+"Скрывать или удалять комментарии пользователей, если они нарушают правила "
+"поведения или законодательство."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:42
+msgid ""
+"Блокировать или удалять учетные записи пользователей, систематически "
+"нарушающих данное Соглашение."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:43
+msgid ""
+"Изменять структуру, интерфейс и функционал Платформы без предварительного "
+"уведомления."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:46
+msgid "4. Пользовательский контент"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:47
+msgid ""
+"4.1. Размещая комментарии или учебные курсы на Платформе, Пользователь "
+"предоставляет Администрации неисключительное право на их отображение, "
+"хранение и воспроизведение в рамках работы веб-приложения."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:48
+msgid ""
+"4.2. Ответственность за достоверность и законность публикуемого контента "
+"несет исключительно разместивший его Пользователь."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:50
+msgid "5. Ограничение ответственности"
+msgstr ""
+
+#: .\home\templates\home\agreement.html:51
+#, python-format
+msgid ""
+"5.1. Платформа предоставляется по принципу «как есть» (as is). Администрация "
+"не гарантирует, что работа приложения будет непрерывной, безошибочной и на "
+"100%% соответствовать индивидуальным ожиданиям Пользователя."
+msgstr ""
+
+#: .\home\templates\home\agreement.html:52
+msgid ""
+"5.2. Администрация не несет ответственности за сбои в работе Платформы, "
+"вызванные проблемами на стороне хостинг-провайдера или интернет-соединения "
+"Пользователя."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:3 .\templates\base.html:174
+msgid "Политика конфиденциальности"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:16
+msgid "Политика конфиденциальности веб-приложения «Сэсэн»"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:19
+msgid ""
+"1.1. Настоящая Политика конфиденциальности описывает, как веб-приложение "
+"«Сэсэн» (далее — «Платформа») собирает, использует и защищает персональные "
+"данные пользователей."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:20
+msgid ""
+"1.2. Использование Платформы означает безоговорочное согласие пользователя с "
+"настоящей Политикой и указанными в ней условиями обработки данных."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:22
+msgid "2. Какие данные мы собираем"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:23
+msgid "При регистрации и использовании Платформы мы собираем следующие данные:"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:25
+msgid ""
+"<strong>Данные, предоставляемые пользователем:</strong> имя, фамилия, адрес "
+"электронной почты (e-mail), логин и пароль (пароли хранятся исключительно в "
+"зашифрованном виде)."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:26
+msgid ""
+"<strong>Данные, собираемые автоматически:</strong> файлы cookie, необходимые "
+"для обеспечения авторизации и сохранения сессий."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:27
+msgid ""
+"<strong>Данные об образовательном процессе:</strong> результаты прохождения "
+"тестирований, история изученных уроков бурятского языка, текущая «ударная "
+"серия» (статистика регулярности занятий), оставленные комментарии и отметки "
+"«Нравится»."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:30
+msgid "3. Цели сбора данных"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:31
+msgid "Мы используем ваши данные исключительно для:"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:33
+msgid ""
+"Создания и управления учетной записью пользователя (в ролях «Студент» или "
+"«Эксперт»)."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:34
+msgid "Сохранения и визуализации индивидуального прогресса обучения."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:35
+msgid ""
+"Обеспечения работы социального функционала (публикация и модерация "
+"комментариев)."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:36
+msgid "Улучшения работы Платформы и устранения технических ошибок."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:39
+msgid "4. Защита и передача данных"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:40
+msgid ""
+"4.1. Платформа принимает все необходимые технические меры для защиты данных "
+"от несанкционированного доступа (включая криптографическое хеширование "
+"паролей)."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:41
+msgid ""
+"4.2. Мы не продаем, не обмениваем и не передаем персональные данные "
+"пользователей третьим лицам, за исключением случаев, прямо предусмотренных "
+"законодательством РФ."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:43
+msgid "5. Права пользователя"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:44
+msgid "Пользователь имеет право в любой момент:"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:46
+msgid "Изменить или обновить свои персональные данные в Личном кабинете."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:47
+msgid ""
+"Полностью удалить свою учетную запись и всю связанную с ней персональную "
+"информацию (прогресс, комментарии, отметки)."
+msgstr ""
+
+#: .\home\templates\home\confidential.html:50
+msgid "6. Контакты"
+msgstr ""
+
+#: .\home\templates\home\confidential.html:51
+msgid ""
+"По всем вопросам, связанным с обработкой персональных данных, вы можете "
+"связаться с администрацией платформы по адресу: "
+"<strong>webappsesen@yandex.ru</strong>."
 msgstr ""
 
 #: .\home\templates\home\homepage.html:4
@@ -48,11 +1034,6 @@ msgstr ""
 
 #: .\home\templates\home\homepage.html:28
 msgid "Начать обучение"
-msgstr ""
-
-#: .\home\templates\home\homepage.html:38 .\templates\base.html:30
-#: .\templates\base.html:105 .\templates\base.html:160
-msgid "Курсы"
 msgstr ""
 
 #: .\home\templates\home\homepage.html:39
@@ -81,94 +1062,940 @@ msgid ""
 "личном кабинете."
 msgstr ""
 
-#: .\templates\base.html:29 .\templates\base.html:104 .\templates\base.html:159
+#: .\home\templates\home\under_construction.html:3
+msgid "Страница находится в разработке"
+msgstr ""
+
+#: .\home\templates\home\under_construction.html:20
+msgid ""
+"Данная страница находится в разработке.<br>Приносим прощения за доставленные "
+"неудобства"
+msgstr ""
+
+#: .\home\templates\home\under_construction.html:23
+msgid "Вернуться назад"
+msgstr ""
+
+#: .\quizzes\forms.py:13 .\quizzes\models.py:18
+msgid "Название теста"
+msgstr ""
+
+#: .\quizzes\forms.py:14 .\quizzes\models.py:23
+msgid "Описание теста"
+msgstr ""
+
+#: .\quizzes\forms.py:23 .\quizzes\models.py:41
+#: .\quizzes\templates\quizzes\create_question.html:26
+#: .\quizzes\templates\quizzes\update_question.html:26
+msgid "Текст вопроса"
+msgstr ""
+
+#: .\quizzes\forms.py:25
+msgid "Дополнительный контент (при необходимости)"
+msgstr ""
+
+#: .\quizzes\forms.py:47
+msgid "Добавьте хотя бы один вариант ответа."
+msgstr ""
+
+#: .\quizzes\forms.py:53
+#, python-format
+msgid ""
+"Для типа 'Один ответ' должен быть выбран ровно 1 верный вариант. Cейчас "
+"выбрано: %(correct_count)s"
+msgstr ""
+
+#: .\quizzes\forms.py:58
+msgid "Для типа 'Несколько ответов' выберите хотя бы один верный вариант."
+msgstr ""
+
+#: .\quizzes\models.py:20
+msgid "Название теста не может быть длиннее 150 символов."
+msgstr ""
+
+#: .\quizzes\models.py:24
+msgid "Описание теста не может быть длиннее 1000 символов."
+msgstr ""
+
+#: .\quizzes\models.py:34
+msgid "Один правильный ответ"
+msgstr ""
+
+#: .\quizzes\models.py:35
+msgid "Несколько правильных ответов"
+msgstr ""
+
+#: .\quizzes\models.py:44
+msgid "Вопрос слишком короткий."
+msgstr ""
+
+#: .\quizzes\models.py:45
+msgid "Вопрос не может быть длиннее 300 символов."
+msgstr ""
+
+#: .\quizzes\models.py:50
+msgid "Дополнительный контент"
+msgstr ""
+
+#: .\quizzes\models.py:53
+msgid "Дополнительный контент не должен превышать 2000 символов."
+msgstr ""
+
+#: .\quizzes\models.py:87
+msgid "Текст ответа"
+msgstr ""
+
+#: .\quizzes\models.py:89
+msgid "Вариант ответа не может быть длиннее 150 символов."
+msgstr ""
+
+#: .\quizzes\models.py:91
+msgid "Правильность ответа"
+msgstr ""
+
+#: .\quizzes\models.py:101
+msgid "Дата прохождения"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:3
+#: .\quizzes\templates\quizzes\quiz_builder.html:3
+#: .\quizzes\templates\quizzes\update_question.html:3
+msgid "Конструктор"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:3
+#: .\quizzes\templates\quizzes\create_question.html:19
+msgid "Добавление вопроса"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:15
+#: .\quizzes\templates\quizzes\update_question.html:15
+msgid "Назад к конструктору"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:20
+#: .\quizzes\templates\quizzes\update_question.html:20
+#, python-format
+msgid "к тесту «%(title)s»"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:28
+#: .\quizzes\templates\quizzes\update_question.html:28
+msgid "Тип вопроса"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:30
+#: .\quizzes\templates\quizzes\update_question.html:30
+msgid ""
+"Дополнительная информация к вопросу: текст, примеры и др. (при необходимости)"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:38
+#: .\quizzes\templates\quizzes\update_question.html:38
+msgid "Варианты ответов"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:39
+#: .\quizzes\templates\quizzes\update_question.html:39
+msgid ""
+"Отметьте галочкой правильный ответ (или несколько, если вопрос со "
+"множественным выбором)"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_question.html:66
+#: .\quizzes\templates\quizzes\update_question.html:66
+msgid "Сохранить"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_quiz.html:3
+#: .\quizzes\templates\quizzes\create_quiz.html:23
+msgid "Создание теста"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_quiz.html:24
+#: .\quizzes\templates\quizzes\update_quiz.html:24
+#, python-format
+msgid "К уроку: <strong>%(title)s</strong>"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_quiz.html:42
+#: .\quizzes\templates\quizzes\update_quiz.html:42
+msgid "Введите понятное название для теста."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_quiz.html:45
+#: .\quizzes\templates\quizzes\update_quiz.html:45
+msgid "Инструкция для студентов перед началом прохождения."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\create_quiz.html:57
+msgid "Создать и добавить вопросы"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz.html:4
+msgid "Тест"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz.html:20
+#, python-format
+msgid "Тест «%(title)s»"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz.html:21
+#, python-format
+msgid "по уроку «%(title)s»"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz.html:34
+#, python-format
+msgid "Вопрос %(num)s"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz.html:38
+msgid "Выберите <b>один</b> вариант ответа."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz.html:40
+msgid "Выберите <b>один или несколько</b> вариантов ответа."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz.html:57
+msgid "Отправить ответы"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:14
+msgid "Назад к урокам"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:18
+msgid "Конструктор теста"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:23
+msgid "Редактировать название и описание теста"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:24
+msgid "Удалить весь тест со всеми вопросами?"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:26
+msgid "Удалить тест"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:32
+msgid "Вопросы"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:33
+msgid "Добавить вопрос"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:41
+#, python-format
+msgid "Тип: %(type)s"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:47
+msgid "Правильный ответ:"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:56
+msgid "Редактировать вопрос"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:58
+msgid "Вы действительно хотите удалить вопрос?"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:60
+msgid "Удалить вопрос"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_builder.html:67
+msgid "В этом тесте пока нет вопросов. Самое время добавить первый!"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:3
+msgid "Результат теста"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:27
+msgid "Поздравляем! Вы прошли тест."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:29
+msgid "К сожалению, тест не пройден."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:34
+#, python-format
+msgid "Вы ответили правильно на <b>%(score)s</b> из <b>%(total)s</b> вопросов."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:35
+#, python-format
+msgid "Для успешного прохождения необходимо набрать минимум 60%%."
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:43
+msgid "Вернуться к уроку"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:46
+#: .\quizzes\templates\quizzes\quiz_result.html:50
+msgid "Попробовать еще раз"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\quiz_result.html:53
+msgid "Повторить материал"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\update_question.html:3
+#: .\quizzes\templates\quizzes\update_question.html:19
+msgid "Изменение вопроса"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\update_quiz.html:3
+#: .\quizzes\templates\quizzes\update_quiz.html:23
+msgid "Редактирование теста"
+msgstr ""
+
+#: .\quizzes\templates\quizzes\update_quiz.html:57
+msgid "Сохранить изменения"
+msgstr ""
+
+#: .\quizzes\views.py:34
+msgid "Тест не найден."
+msgstr ""
+
+#: .\quizzes\views.py:36
+msgid "Для прохождения теста необходимо начать курс."
+msgstr ""
+
+#: .\quizzes\views.py:98
+msgid "Тест пройден, урок отмечен пройденным."
+msgstr ""
+
+#: .\quizzes\views.py:100
+msgid "Тест пройден."
+msgstr ""
+
+#: .\quizzes\views.py:130
+msgid "Тест успешно создан."
+msgstr ""
+
+#: .\quizzes\views.py:177
+msgid "Тест успешно изменен."
+msgstr ""
+
+#: .\quizzes\views.py:204
+msgid "Тест успешно удален."
+msgstr ""
+
+#: .\quizzes\views.py:234
+msgid "Вопрос успешно добавлен."
+msgstr ""
+
+#: .\quizzes\views.py:269
+msgid "Вопрос успешно удален."
+msgstr ""
+
+#: .\quizzes\views.py:298
+msgid "Вопрос успешно изменен."
+msgstr ""
+
+#: .\social\models.py:14 .\social\models.py:43
+msgid "Комментарий"
+msgstr ""
+
+#: .\social\models.py:16
+msgid "Комментарий слишком короткий (минимум 1 символ)."
+msgstr ""
+
+#: .\social\models.py:17
+msgid "Комментарий не может быть длиннее 1000 символов."
+msgstr ""
+
+#: .\social\models.py:31
+msgid "Удален"
+msgstr ""
+
+#: .\social\models.py:32
+msgid "Время удаления"
+msgstr ""
+
+#: .\social\models.py:39
+msgid "Кем удален"
+msgstr ""
+
+#: .\social\models.py:44 .\social\templates\social\comment_section.html:67
+msgid "Комментарии"
+msgstr ""
+
+#: .\social\models.py:60
+msgid "Лайк"
+msgstr ""
+
+#: .\social\models.py:61
+msgid "Лайки"
+msgstr ""
+
+#: .\social\templates\social\comment_item.html:60
+msgid "автор курса"
+msgstr ""
+
+#: .\social\templates\social\comment_item.html:66
+msgid "Комментарий удален пользователем"
+msgstr ""
+
+#: .\social\templates\social\comment_item.html:68
+msgid "Комментарий удален администратором"
+msgstr ""
+
+#: .\social\templates\social\comment_item.html:80
+msgid "Ответить"
+msgstr ""
+
+#: .\social\templates\social\comment_item.html:89
+msgid "Вы действительно хотите удалить данный комментарий?"
+msgstr ""
+
+#: .\social\templates\social\comment_section.html:75
+msgid "Поделитесь мыслями об уроке..."
+msgstr ""
+
+#: .\social\templates\social\comment_section.html:76
+msgid "Оставить комментарий"
+msgstr ""
+
+#: .\social\templates\social\reply_form.html:51
+#, python-format
+msgid "Ответить @%(username)s..."
+msgstr ""
+
+#: .\social\templates\social\reply_form.html:55
+msgid "Отправить"
+msgstr ""
+
+#: .\social\templates\social\reply_form.html:56
+#: .\users\templates\users\update_password.html:58
+#: .\users\templates\users\update_user.html:48
+msgid "Отмена"
+msgstr ""
+
+#: .\social\views.py:23
+msgid "Для взаимодействия с уроком необходимо начать курс."
+msgstr ""
+
+#: .\social\views.py:61
+msgid "Длина комментария должна быть от 1 до 1000 символов."
+msgstr ""
+
+#: .\social\views.py:117
+msgid "У вас нет прав для удаления этого комментария."
+msgstr ""
+
+#: .\templates\base.html:34 .\templates\base.html:110 .\templates\base.html:165
 msgid "Главная"
 msgstr ""
 
-#: .\templates\base.html:31 .\templates\base.html:106
-msgid "Словарь"
-msgstr ""
-
-#: .\templates\base.html:33 .\templates\base.html:108
-msgid "Студия"
-msgstr ""
-
-#: .\templates\base.html:39 .\templates\base.html:100
+#: .\templates\base.html:45 .\templates\base.html:106
+#: .\users\templates\users\profile.html:3
 msgid "Профиль"
 msgstr ""
 
-#: .\templates\base.html:102
-msgid "Войти"
-msgstr ""
-
-#: .\templates\base.html:119
+#: .\templates\base.html:55 .\templates\base.html:80 .\templates\base.html:125
 msgid "Switch to English"
 msgstr ""
 
-#: .\templates\base.html:121
+#: .\templates\base.html:64 .\templates\base.html:89 .\templates\base.html:127
 msgid "Перейти на русский"
 msgstr ""
 
-#: .\templates\base.html:151
+#: .\templates\base.html:70 .\templates\base.html:108
+#: .\users\templates\users\register.html:81
+msgid "Войти"
+msgstr ""
+
+#: .\templates\base.html:157
 msgid "Онлайн-площадка сохранения и развития бурятского языка."
 msgstr ""
 
-#: .\templates\base.html:152
+#: .\templates\base.html:158
 msgid "Давайте беречь наш язык"
 msgstr ""
 
-#: .\templates\base.html:158
+#: .\templates\base.html:164
 msgid "Ссылки"
 msgstr ""
 
-#: .\templates\base.html:166
+#: .\templates\base.html:172
 msgid "Информация"
 msgstr ""
 
-#: .\templates\base.html:167
-msgid "О проекте"
+#: .\templates\base.html:181
+msgid "Контакты и соцсети"
 msgstr ""
 
-#: .\templates\base.html:168
-msgid "Об авторах"
-msgstr ""
-
-#: .\templates\base.html:174
-msgid "Помощь"
-msgstr ""
-
-#: .\templates\base.html:176
+#: .\templates\base.html:183
 msgid "Написать поддержке"
 msgstr ""
 
-#: .\users\templates\users\login.html:3
+#: .\templates\base.html:194
+msgid "Сэсэн. Все права защищены."
+msgstr ""
+
+#: .\templates\base.html:209
+msgid ""
+"Мы используем файлы cookie, чтобы сделать платформу «Сэсэн» удобнее. "
+"Оставаясь на сайте, вы соглашаетесь с нашей"
+msgstr ""
+
+#: .\templates\base.html:209
+msgid "политикой конфиденциальности"
+msgstr ""
+
+#: .\templates\base.html:210
+msgid "Отлично"
+msgstr ""
+
+#: .\templates\registration\activation_complete.html:3
+msgid "Аккаунт активирован"
+msgstr ""
+
+#: .\templates\registration\activation_complete.html:17
+msgid "Успешная активация!"
+msgstr ""
+
+#: .\templates\registration\activation_complete.html:19
+msgid ""
+"Ваш Email успешно подтвержден. Теперь профиль активен, и вы можете зайти на "
+"платформу."
+msgstr ""
+
+#: .\templates\registration\activation_complete.html:21
+#: .\templates\registration\password_reset_complete.html:58
+#: .\users\templates\users\login.html:51
+msgid "Войти в аккаунт"
+msgstr ""
+
+#: .\templates\registration\activation_invalid.html:3
+#: .\templates\registration\activation_invalid.html:16
+#: .\templates\registration\password_reset_confirm.html:171
+msgid "Ошибка активации"
+msgstr ""
+
+#: .\templates\registration\activation_invalid.html:18
+msgid ""
+"Эта ссылка недействительна. Возможно, аккаунт уже активирован, либо срок "
+"действия ссылки (3 дня) истек."
+msgstr ""
+
+#: .\templates\registration\activation_invalid.html:20
+msgid "Пройти регистрацию заново"
+msgstr ""
+
+#: .\templates\registration\activation_sent.html:3
+msgid "Подтверждение почты"
+msgstr ""
+
+#: .\templates\registration\activation_sent.html:15
+msgid "Регистрация успешна!"
+msgstr ""
+
+#: .\templates\registration\activation_sent.html:17
+msgid ""
+"На указанный Вами Email отправлено письмо со ссылкой для активации аккаунта."
+msgstr ""
+
+#: .\templates\registration\activation_sent.html:18
+msgid "Пожалуйста, проверьте почту и перейдите по ссылке, чтобы войти на сайт."
+msgstr ""
+
+#: .\templates\registration\password_reset_complete.html:4
+msgid "Пароль изменен"
+msgstr ""
+
+#: .\templates\registration\password_reset_complete.html:54
+msgid "Пароль изменен!"
+msgstr ""
+
+#: .\templates\registration\password_reset_complete.html:56
+msgid ""
+"Ваш новый пароль был успешно сохранен. Теперь вы можете использовать его для "
+"входа в систему."
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:4
+#: .\templates\registration\password_reset_done.html:4
+#: .\templates\registration\password_reset_form.html:4
+#: .\templates\registration\password_reset_form.html:70
+msgid "Восстановление пароля"
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:130
+msgid "Новый пароль"
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:154
+#: .\users\templates\users\register.html:46
+#: .\users\templates\users\update_password.html:43
+msgid "Пароль не должен быть слишком похож на другую вашу личную информацию."
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:155
+#: .\users\templates\users\register.html:47
+#: .\users\templates\users\update_password.html:44
+msgid "Ваш пароль должен содержать как минимум 8 символов."
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:156
+#: .\users\templates\users\register.html:48
+#: .\users\templates\users\update_password.html:45
+msgid "Пароль не должен быть слишком простым и распространенным."
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:157
+#: .\users\templates\users\register.html:49
+#: .\users\templates\users\update_password.html:46
+msgid "Пароль не может состоять только из цифр."
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:162
+#: .\users\templates\users\register.html:54
+#: .\users\templates\users\update_password.html:51
+msgid "Введите пароль ещё раз."
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:168
+msgid "Сохранить новый пароль"
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:172
+msgid ""
+"Эта ссылка для сброса пароля недействительна. Возможно, она уже была "
+"использована или её срок действия истек."
+msgstr ""
+
+#: .\templates\registration\password_reset_confirm.html:173
+msgid "Запросить ссылку повторно"
+msgstr ""
+
+#: .\templates\registration\password_reset_done.html:52
+msgid "Письмо отправлено!"
+msgstr ""
+
+#: .\templates\registration\password_reset_done.html:54
+msgid ""
+"Мы отправили Вам инструкцию по восстановлению пароля на указанный Email."
+msgstr ""
+
+#: .\templates\registration\password_reset_done.html:55
+msgid ""
+"Если письмо не пришло в течение пары минут, проверьте папку <strong>Спам</"
+"strong>."
+msgstr ""
+
+#: .\templates\registration\password_reset_done.html:57
+msgid "Вернуться к авторизации"
+msgstr ""
+
+#: .\templates\registration\password_reset_form.html:71
+msgid "Введите Ваш Email, и мы отправим ссылку для создания нового пароля."
+msgstr ""
+
+#: .\templates\registration\password_reset_form.html:79
+msgid "Сбросить пароль"
+msgstr ""
+
+#: .\users\forms.py:10 .\users\forms.py:15
+msgid "Логин"
+msgstr ""
+
+#: .\users\forms.py:11
+msgid "Пароль"
+msgstr ""
+
+#: .\users\forms.py:16
+msgid "Имя"
+msgstr ""
+
+#: .\users\forms.py:17
+msgid "Фамилия"
+msgstr ""
+
+#: .\users\forms.py:18
+msgid "Электронная почта"
+msgstr ""
+
+#: .\users\forms.py:31 .\users\forms.py:52 .\users\models.py:25
+msgid "Пользователь с таким никнеймом уже существует."
+msgstr ""
+
+#: .\users\forms.py:37 .\users\forms.py:61
+msgid "Пользователь с такой электронной почтой уже существует."
+msgstr ""
+
+#: .\users\models.py:13
+msgid "username"
+msgstr ""
+
+#: .\users\models.py:17
+msgid ""
+"Обязательное поле. От 3 до 20 символов. Только буквы, цифры и знаки @/./+/-/"
+"_."
+msgstr ""
+
+#: .\users\models.py:21
+msgid "Никнейм должен содержать минимум 3 символа."
+msgstr ""
+
+#: .\users\models.py:22
+msgid "Никнейм не может быть длиннее 20 символов."
+msgstr ""
+
+#: .\users\models.py:30
+msgid "first name"
+msgstr ""
+
+#: .\users\models.py:34
+msgid "Имя должно содержать минимум 1 символ."
+msgstr ""
+
+#: .\users\models.py:35
+msgid "Имя не может быть длиннее 50 символов."
+msgstr ""
+
+#: .\users\models.py:40
+msgid "last name"
+msgstr ""
+
+#: .\users\models.py:44
+msgid "Фамилия должна содержать минимум 1 символ."
+msgstr ""
+
+#: .\users\models.py:45
+msgid "Фамилия не может быть длиннее 50 символов."
+msgstr ""
+
+#: .\users\models.py:49
+msgid "Email"
+msgstr ""
+
+#: .\users\models.py:56
+msgid "Эксперт"
+msgstr ""
+
+#: .\users\models.py:59 .\users\templates\users\profile.html:64
+msgid "Ударная серия"
+msgstr ""
+
+#: .\users\models.py:60
+msgid "Дата последней активности"
+msgstr ""
+
+#: .\users\templates\users\login.html:3 .\users\templates\users\login.html:23
 msgid "Вход в аккаунт"
 msgstr ""
 
-#: .\users\views.py:32
-msgid "Аккаунт успешно создан."
+#: .\users\templates\users\login.html:54
+msgid "Забыли пароль?"
 msgstr ""
 
-#: .\users\views.py:50
+#: .\users\templates\users\login.html:54
+msgid "Восстановить"
+msgstr ""
+
+#: .\users\templates\users\login.html:55
+msgid "Нет аккаунта?"
+msgstr ""
+
+#: .\users\templates\users\login.html:55
+msgid "Зарегистрироваться"
+msgstr ""
+
+#: .\users\templates\users\profile.html:31
+msgid "Администратор"
+msgstr ""
+
+#: .\users\templates\users\profile.html:42
+#: .\users\templates\users\update_user.html:47
+msgid "Изменить данные"
+msgstr ""
+
+#: .\users\templates\users\profile.html:43
+#: .\users\templates\users\update_password.html:57
+msgid "Изменить пароль"
+msgstr ""
+
+#: .\users\templates\users\profile.html:44
+msgid "Выйти из профиля"
+msgstr ""
+
+#: .\users\templates\users\profile.html:47
+msgid ""
+"Вы точно хотите удалить аккаунт?\\nЭто повлечет за собой удаление всех "
+"данных!"
+msgstr ""
+
+#: .\users\templates\users\profile.html:47
+msgid "Удалить аккаунт"
+msgstr ""
+
+#: .\users\templates\users\profile.html:57
+msgid "Пройдено уроков"
+msgstr ""
+
+#: .\users\templates\users\profile.html:59
+msgid "за все время обучения"
+msgstr ""
+
+#: .\users\templates\users\profile.html:82
+msgid "активности подряд!"
+msgstr ""
+
+#: .\users\templates\users\profile.html:89
+msgid "Моё обучение"
+msgstr ""
+
+#: .\users\templates\users\profile.html:90
+msgid "Прогресс по текущим курсам"
+msgstr ""
+
+#: .\users\templates\users\profile.html:93
+msgid "Ой, тут ничего нет. Видимо, Вы еще не начали прохождение курсов."
+msgstr ""
+
+#: .\users\templates\users\profile.html:100
+msgid "из"
+msgstr ""
+
+#: .\users\templates\users\register.html:3
+#: .\users\templates\users\register.html:20
+msgid "Регистрация"
+msgstr ""
+
+#: .\users\templates\users\register.html:35
+msgid "Обязательное поле. До 20 символов (буквы, цифры и @/./+/-/_)."
+msgstr ""
+
+#: .\users\templates\users\register.html:64
+msgid "Я принимаю условия"
+msgstr ""
+
+#: .\users\templates\users\register.html:65
+msgid "Пользовательского соглашения"
+msgstr ""
+
+#: .\users\templates\users\register.html:73
+msgid "Я соглашаюсь с"
+msgstr ""
+
+#: .\users\templates\users\register.html:74
+msgid "Политикой конфиденциальности"
+msgstr ""
+
+#: .\users\templates\users\register.html:78
+msgid "Создать аккаунт"
+msgstr ""
+
+#: .\users\templates\users\register.html:81
+msgid "Уже есть аккаунт?"
+msgstr ""
+
+#: .\users\templates\users\update_password.html:3
+#: .\users\templates\users\update_password.html:20
+msgid "Изменение пароля"
+msgstr ""
+
+#: .\users\templates\users\update_user.html:3
+#: .\users\templates\users\update_user.html:20
+msgid "Изменение данных"
+msgstr ""
+
+#: .\users\templates\users\update_user.html:35
+msgid "До 20 символов (буквы, цифры и @/./+/-/_)."
+msgstr ""
+
+#: .\users\views.py:54
+msgid "Активация аккаунта Сэсэн"
+msgstr ""
+
+#: .\users\views.py:56
+#, python-format
+msgid ""
+"Сайн байна! Спасибо за регистрацию на платформе Сэсэн.\n"
+"\n"
+"Для подтверждения вашего Email и активации профиля перейдите по ссылке:\n"
+"%(activation_url)s\n"
+"\n"
+"Ссылка действительна в течение 3 дней."
+msgstr ""
+
+#: .\users\views.py:74
+msgid ""
+"Не удалось отправить письмо с активацией. Пожалуйста, проверьте правильность "
+"Email или попробуйте позже."
+msgstr ""
+
+#: .\users\views.py:91
+msgid "Ваш аккаунт успешно активирован. Теперь вы можете войти."
+msgstr ""
+
+#: .\users\views.py:108
+msgid "Данный адрес электронной почты уже используется другим пользователем."
+msgstr ""
+
+#: .\users\views.py:112
+msgid "Email успешно изменен."
+msgstr ""
+
+#: .\users\views.py:129
 msgid "Вы успешно вошли в аккаунт."
 msgstr ""
 
-#: .\users\views.py:53
+#: .\users\views.py:132
 msgid "Неверный логин или пароль"
 msgstr ""
 
-#: .\users\views.py:71
+#: .\users\views.py:150
 msgid "Аккаунт успешно удален."
 msgstr ""
 
-#: .\users\views.py:132
+#: .\users\views.py:222
+msgid "Подтверждение смены Email на Сэсэн"
+msgstr ""
+
+#: .\users\views.py:224
+#, python-format
+msgid ""
+"Сайн байна, %(first_name)s!\n"
+"\n"
+"Вы запросили изменение адреса электронной почты на платформе Сэсэн.\n"
+"Для подтверждения нового Email перейдите по ссылке:\n"
+"%(activation_url)s\n"
+"\n"
+"Если вы не совершали данного действия, просто проигнорируйте это письмо. Ваш "
+"аккаунт останется привязан к старому адресу."
+msgstr ""
+
+#: .\users\views.py:241
+msgid "На вашу новую почту отправлено письмо со ссылкой для подтверждения."
+msgstr ""
+
+#: .\users\views.py:244
+msgid "Ошибка отправки письма. Попробуйте позже."
+msgstr ""
+
+#: .\users\views.py:250
 msgid "Данные успешно изменены."
 msgstr ""
 
-#: .\users\views.py:135
+#: .\users\views.py:253
 msgid "Вы не ввели никаких изменений."
 msgstr ""
 
-#: .\users\views.py:149
+#: .\users\views.py:267
 msgid "Пароль успешно изменен."
 msgstr ""

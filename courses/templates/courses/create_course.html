@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Создание курса{% endblock %}
+{% block title %}Сэсэн | {% trans "Создание курса" %}{% endblock %}
 
 {% load static %}
 
@@ -16,7 +16,7 @@
 <div class="create-course-main text-center">
 
     <div class="container create-course-form text-left">
-    <h3>Создание курса</h3>
+    <h3>{% trans "Создание курса" %}</h3>
         <form method="post">
             {% csrf_token %}
 
@@ -33,10 +33,10 @@
                 {{ field }}
                 <span class="help-text" id="{{ field.id_for_label }}-help">
                     {% if field.name == 'title' %}
-                        В названии можно ввести максимум 255 символов.
+                        {% trans "В названии можно ввести максимум 255 символов." %}
                     {% endif %}
                     {% if field.name == 'description' %}
-                        Опишите, что будет пройдено в курсе.
+                        {% trans "Опишите, что будет пройдено в курсе." %}
                     {% endif %}
                 </span>
 
@@ -51,7 +51,7 @@
 
             {% endfor %}
 
-            <button type="submit" class="create-course-btn-form">Создать курс</button>
+            <button type="submit" class="create-course-btn-form">{% trans "Создать курс" %}</button>
         </form>
     </div>
 

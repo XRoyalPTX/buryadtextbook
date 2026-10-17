@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Конструктор | Изменение вопроса{% endblock %}
+{% block title %}{% trans "Сэсэн" %} | {% trans "Конструктор" %} | {% trans "Изменение вопроса" %}{% endblock %}
 
 {% load static %}
 
@@ -12,22 +12,22 @@
 
 <div class="create-question-main">
 
-    <a href="{% url 'open_quiz_builder' quiz.lesson.course.author.username quiz.lesson.course.id quiz.lesson.order_num quiz.id %}" class="to-quiz-btn">Назад к конструктору</a>
+    <a href="{% url 'open_quiz_builder' quiz.lesson.course.author.username quiz.lesson.course.id quiz.lesson.order_num quiz.id %}" class="to-quiz-btn">{% trans "Назад к конструктору" %}</a>
 
     <div class="create-question-form">
 
-        <h4>Изменение вопроса</h4>
-        <small>к тесту «{{ quiz.title }}»</small>
+        <h4>{% trans "Изменение вопроса" %}</h4>
+        <small>{% blocktrans with title=quiz.title %}к тесту «{{ title }}»{% endblocktrans %}</small>
 
         <form method="post">
             {% csrf_token %}
             
             <div class="create-question-form-question">
-                <label>Текст вопроса</label>
+                <label>{% trans "Текст вопроса" %}</label>
                 {{ form.text }}
-                <label>Тип вопроса</label>
+                <label>{% trans "Тип вопроса" %}</label>
                 {{ form.type }}
-                <label>Дополнительная информация к вопросу: текст, примеры и др. (при необходимости)</label>
+                <label>{% trans "Дополнительная информация к вопросу: текст, примеры и др. (при необходимости)" %}</label>
                 {{ form.content }}
                 {% if form.errors %}
                     <div>{{ form.errors }}</div>
@@ -35,8 +35,8 @@
             </div>
 
             <div class="create-question-form-answers">
-                <h5>Варианты ответов</h5>
-                <small>Отметьте галочкой правильный ответ (или несколько, если вопрос со множественным выбором)</small>
+                <h5>{% trans "Варианты ответов" %}</h5>
+                <small>{% trans "Отметьте галочкой правильный ответ (или несколько, если вопрос со множественным выбором)" %}</small>
                 {{ formset.management_form }}
                 
                 {% if formset.non_form_errors %}
@@ -63,7 +63,7 @@
 
             <div>
                 <button type="submit" class="save-btn">
-                    Сохранить
+                    {% trans "Сохранить" %}
                 </button>
             </div>
         </form>

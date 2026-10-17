@@ -11,10 +11,10 @@ class Comment(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='comments')
 
     text = models.TextField(
-        "Комментарий",
+        _("Комментарий"),
         validators=[
-            MinLengthValidator(1, message="Комментарий слишком короткий (минимум 1 символ)."),
-            MaxLengthValidator(1000, message="Комментарий не может быть длиннее 1000 символов.")
+            MinLengthValidator(1, message=_("Комментарий слишком короткий (минимум 1 символ).")),
+            MaxLengthValidator(1000, message=_("Комментарий не может быть длиннее 1000 символов."))
         ]
     )
 
@@ -28,20 +28,20 @@ class Comment(models.Model):
         related_name='replies'
     )
     
-    is_deleted = models.BooleanField("Удален", default=False)
-    deleted_at = models.DateTimeField("Время удаления", null=True, blank=True)
+    is_deleted = models.BooleanField(_("Удален"), default=False)
+    deleted_at = models.DateTimeField(_("Время удаления"), null=True, blank=True)
     deleted_by = models.ForeignKey(
         MyUser, 
         null=True, 
         blank=True, 
         on_delete=models.SET_NULL, 
         related_name='deleted_comments', 
-        verbose_name="Кем удален"
+        verbose_name=_("Кем удален")
     )
 
     class Meta:
-        verbose_name = "Комментарий"
-        verbose_name_plural = "Комментарии"
+        verbose_name = _("Комментарий")
+        verbose_name_plural = _("Комментарии")
         ordering = ['-created_at']
 
     def get_thread_replies(self):
@@ -57,8 +57,8 @@ class Like(models.Model):
 
     class Meta:
         unique_together = ('user', 'lesson')
-        verbose_name = "Лайк"
-        verbose_name_plural = "Лайки"
+        verbose_name = _("Лайк")
+        verbose_name_plural = _("Лайки")
 
     def __str__(self):
         return f"Лайк от {self.user.username} к уроку {self.lesson.title}"
