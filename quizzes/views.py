@@ -51,7 +51,7 @@ def open_quiz(request, course_id, lesson_order_num, quiz_id):
         progress.calculate_and_save_result(user_answers)
         
         if progress.is_passed:
-            lesson_progress, _ = LessonProgress.objects.get_or_create(
+            lesson_progress, _created = LessonProgress.objects.get_or_create(
                 user=request.user, 
                 lesson=current_lesson
             )

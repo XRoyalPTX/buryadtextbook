@@ -535,7 +535,7 @@ def complete_lesson(request, course_id, lesson_order_num):
             raise Http404(_("Урок не найден."))
 
     # Получаем прогресс текущего урока
-    current_lesson_progress, _ = LessonProgress.objects.get_or_create(
+    current_lesson_progress, _created = LessonProgress.objects.get_or_create(
         user=current_user, 
         lesson=current_lesson
     )
