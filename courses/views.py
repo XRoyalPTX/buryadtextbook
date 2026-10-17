@@ -12,6 +12,7 @@ from django.db.models import F, Case, When, Value, BooleanField, Count, Max
 from django.template.loader import render_to_string
 from django.utils import timezone
 from datetime import timedelta
+from django.utils.translation import gettext as _
 
 # Create your views here.
 
@@ -51,7 +52,7 @@ def open_course(request, course_id):
     is_author_or_admin = request.user.is_authenticated and (request.user == current_course.author or request.user.is_superuser)
 
     if not current_course.is_published and not is_author_or_admin:
-        raise Http404("Курс не найден.")
+        raise Http404(_("Курс не найден."))
 
     if is_author_or_admin:
         lessons = Lesson.objects.filter(course=current_course).order_by('order_num')
@@ -108,7 +109,7 @@ def create_course(request, username):
             try:
                 course.full_clean()
                 course.save()
-                messages.success(request, 'Курс успешно создан.')
+                messages.success(request, _('Курс успешно создан.'))
                 return redirect('studio_lessons', username=course.author.username, course_id=course.id)
             except ValidationError as e:
                 form.add_error(None, e)
@@ -131,10 +132,10 @@ def update_course(request, username, course_id):
             if form.is_valid():
                 if form.has_changed():
                     current_course = form.save()
-                    messages.success(request, 'Курс успешно отредактирован')
+                    messages.success(request, _('Курс успешно отредактирован'))
                     return redirect('studio_courses', username=author_username)
                 else:
-                    form.add_error(None, 'Вы не ввели никаких изменений')
+                    form.add_error(None, _('Вы не ввели никаких изменений'))
         else:
             form = UpdateCourseForm(instance=current_course)
     else:
@@ -151,14 +152,14 @@ def delete_course(request, username, course_id):
         raise PermissionDenied()
     
     current_course = get_object_or_404(Course, pk=course_id)
-    success_message = '''
+    success_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-success">Курс успешно удален.</div>
+            <div class="alert alert-success">{_("Курс успешно удален.")}</div>
         </div>
     '''
-    error_message = '''
+    error_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-error">У вас нет прав для удаления этого курса.</div>
+            <div class="alert alert-error">{_("У вас нет прав для удаления этого курса.")}</div>
         </div>
     '''
 
@@ -179,9 +180,9 @@ def open_lesson(request, course_id, lesson_order_num):
     is_author_or_admin = (request.user == current_course.author or request.user.is_superuser)
     if not is_author_or_admin:
         if not current_course.is_published or not current_lesson.is_published:
-            raise Http404("Урок не найден.")
+            raise Http404(_("Урок не найден."))
         if not CourseProgress.objects.filter(course=current_course, user=request.user).exists():
-            messages.warning(request, "Для просмотра уроков необходимо начать прохождение курса.")
+            messages.warning(request, _("Для просмотра уроков необходимо начать прохождение курса."))
             return redirect('open_course', course_id=course_id)
     
     from social.models import Like, Comment
@@ -239,7 +240,7 @@ def create_lesson(request, username, course_id):
             lesson = form.save(commit=False)
             lesson.course = current_course        
             lesson.save()
-            messages.success(request, f'Урок №{lesson.order_num} успешно создан.')
+            messages.success(request, _('Урок №%(order_num)s успешно создан.') % {'order_num': lesson.order_num})
             return redirect('studio_lessons', username=current_course.author.username, course_id=current_course.id) 
     else:
         form = CreateLessonForm()
@@ -268,10 +269,10 @@ def update_lesson(request, username, course_id, lesson_id):
         if form.is_valid():
             if form.has_changed():
                 current_lesson = form.save()
-                messages.success(request, f'Урок №{current_lesson.order_num} успешно изменен.')
+                messages.success(request, _('Урок №%(order_num)s успешно изменен.') % {'order_num': current_lesson.order_num})
                 return redirect('studio_lessons', username=current_course.author.username, course_id=current_course.id) 
             else:
-                form.add_error(None, 'Вы не ввели никаких изменений')
+                form.add_error(None, _('Вы не ввели никаких изменений'))
 
     else:
         form = UpdateLessonForm(instance=current_lesson)
@@ -293,14 +294,14 @@ def delete_lesson(request, username, course_id, lesson_id):
     current_lesson = get_object_or_404(Lesson, pk=lesson_id, course=current_course)
     deleted_order_num = current_lesson.order_num
 
-    success_message = '''
+    success_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-success">Урок успешно удален.</div>
+            <div class="alert alert-success">{_("Урок успешно удален.")}</div>
         </div>
     '''
-    error_message = '''
+    error_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-error">У вас нет прав для удаления этого урока.</div>
+            <div class="alert alert-error">{_("У вас нет прав для удаления этого урока.")}</div>
         </div>
     '''
 
@@ -393,14 +394,14 @@ def publish_course(request, username, course_id):
     current_course = get_object_or_404(Course, pk=course_id, author=current_author)
     current_course.lessons_count = current_course.lessons.count()
 
-    success_message = '''
+    success_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-success">Курс успешно опубликован.</div>
+            <div class="alert alert-success">{_("Курс успешно опубликован.")}</div>
         </div>
     '''
-    error_message = '''
+    error_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-danger">Курс не может быть опубликован, так как он не содержит ни одного опубликованного урока.</div>
+            <div class="alert alert-danger">{_("Курс не может быть опубликован, так как он не содержит ни одного опубликованного урока.")}</div>
         </div>
     '''
 
@@ -431,9 +432,9 @@ def unpublish_course(request, username, course_id):
     if request.user != current_author and not request.user.is_superuser:
         raise PermissionDenied()
     
-    success_message = '''
+    success_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-success">Курс успешно добавлен в черновик.</div>
+            <div class="alert alert-success">{_("Курс успешно добавлен в черновик.")}</div>
         </div>
     '''
 
@@ -456,9 +457,9 @@ def publish_lesson(request, username, course_id, lesson_id):
     if request.user != current_author and not request.user.is_superuser:
         raise PermissionDenied()
     
-    success_message = '''
+    success_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-success">Урок успешно опубликован.</div>
+            <div class="alert alert-success">{_("Урок успешно опубликован.")}</div>
         </div>
     '''
     
@@ -485,9 +486,9 @@ def unpublish_lesson(request, username, course_id, lesson_id):
     if request.user != current_author and not request.user.is_superuser:
         raise PermissionDenied()
     
-    success_message = '''
+    success_message = f'''
         <div id="id_messages-container" class="messages-container" hx-swap-oob="true">
-            <div class="alert alert-success">Урок успешно добавлен в черновик.</div>
+            <div class="alert alert-success">{_("Урок успешно добавлен в черновик.")}</div>
         </div>
     '''
     
@@ -502,7 +503,7 @@ def create_course_progress(request, course_id):
     current_course = get_object_or_404(Course, pk=course_id)
     is_author_or_admin = (request.user == current_course.author or request.user.is_superuser)
     if not current_course.is_published and not is_author_or_admin:
-        raise Http404("Курс не найден.")
+        raise Http404(_("Курс не найден."))
 
     current_user = request.user
     first_lesson = current_course.lessons.filter(
@@ -511,12 +512,12 @@ def create_course_progress(request, course_id):
     ).order_by('order_num').first()
 
     if not first_lesson:
-        messages.warning(request, 'В данном курсе пока нет опубликованных уроков.')
+        messages.warning(request, _('В данном курсе пока нет опубликованных уроков.'))
         return redirect('open_course', course_id=course_id)
 
     progress, created = CourseProgress.objects.get_or_create(course=current_course, user=current_user)
 
-    messages.success(request, 'Вы успешно записались на курс! Добро пожаловать на первый урок текущего курса.')
+    messages.success(request, _('Вы успешно записались на курс! Добро пожаловать на первый урок текущего курса.'))
 
     return redirect('open_lesson', course_id, first_lesson.order_num)
 
@@ -531,7 +532,7 @@ def complete_lesson(request, course_id, lesson_order_num):
     is_author_or_admin = (request.user == current_course.author or request.user.is_superuser)
     if not is_author_or_admin:
         if not current_course.is_published or not current_lesson.is_published:
-            raise Http404("Урок не найден.")
+            raise Http404(_("Урок не найден."))
 
     # Получаем прогресс текущего урока
     current_lesson_progress, _ = LessonProgress.objects.get_or_create(
@@ -563,7 +564,7 @@ def complete_lesson(request, course_id, lesson_order_num):
             if current_course_progress and not current_course_progress.complete_date:
                 current_course_progress.complete_date = timezone.now()
                 current_course_progress.save()
-                messages.success(request, 'Поздравляем! Вы полностью прошли курс!')
+                messages.success(request, _('Поздравляем! Вы полностью прошли курс!'))
 
         if current_user.streak_count == 0:
             current_user.last_activity_date = today
@@ -578,8 +579,8 @@ def complete_lesson(request, course_id, lesson_order_num):
             current_user.streak_count = 1
             current_user.save()
 
-        messages.success(request, 'Урок отмечен пройденным.')
+        messages.success(request, _('Урок отмечен пройденным.'))
     else:
-        messages.info(request, 'Вы уже проходили этот урок ранее.')
+        messages.info(request, _('Вы уже проходили этот урок ранее.'))
 
     return redirect('open_lesson', course_id, lesson_order_num)

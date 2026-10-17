@@ -3,6 +3,7 @@ from courses.models import Lesson
 from users.models import MyUser
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxLengthValidator, MinLengthValidator
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
@@ -14,13 +15,13 @@ class Quiz(models.Model):
         related_name='quiz',
     )
     title = models.CharField(
-        "Название теста", 
-        max_length=150, # Уменьшили со 255 до 150
-        validators=[MaxLengthValidator(150, message="Название теста не может быть длиннее 150 символов.")]
+        _("Название теста"), 
+        max_length=150,
+        validators=[MaxLengthValidator(150, message=_("Название теста не может быть длиннее 150 символов."))]
     )
     description = models.TextField(
-        "Описание теста",
-        validators=[MaxLengthValidator(1000, message="Описание теста не может быть длиннее 1000 символов.")]
+        _("Описание теста"),
+        validators=[MaxLengthValidator(1000, message=_("Описание теста не может быть длиннее 1000 символов."))]
     )
 
     def __str__(self):
@@ -30,26 +31,26 @@ class Quiz(models.Model):
 class Question(models.Model):
 
     types_choices = [
-        ('single_choice', 'Один правильный ответ'),
-        ('multiple_choice', 'Несколько правильных ответов')
+        ('single_choice', _('Один правильный ответ')),
+        ('multiple_choice', _('Несколько правильных ответов'))
     ]
 
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
     
     text = models.CharField(
-        "Текст вопроса",
+        _("Текст вопроса"),
         max_length=300, 
         validators=[
-            MinLengthValidator(3, message="Вопрос слишком короткий."),
-            MaxLengthValidator(300, message="Вопрос не может быть длиннее 300 символов.")
+            MinLengthValidator(3, message=_("Вопрос слишком короткий.")),
+            MaxLengthValidator(300, message=_("Вопрос не может быть длиннее 300 символов."))
         ]
     )
 
     content = models.TextField(
-        "Дополнительный контент", 
+        _("Дополнительный контент"), 
         null=True, 
         blank=True,
-        validators=[MaxLengthValidator(2000, message="Дополнительный контент не должен превышать 2000 символов.")]
+        validators=[MaxLengthValidator(2000, message=_("Дополнительный контент не должен превышать 2000 символов."))]
     )
 
     type = models.CharField(
@@ -83,11 +84,11 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     text = models.CharField(
-        "Текст ответа", 
+        _("Текст ответа"), 
         max_length=150,
-        validators=[MaxLengthValidator(150, message="Вариант ответа не может быть длиннее 150 символов.")]
+        validators=[MaxLengthValidator(150, message=_("Вариант ответа не может быть длиннее 150 символов."))]
     )
-    is_correct = models.BooleanField("Правильность ответа")
+    is_correct = models.BooleanField(_("Правильность ответа"))
 
     def __str__(self):
         status = 'Правильный' if self.is_correct else 'Неправильный'
@@ -97,7 +98,7 @@ class Answer(models.Model):
 class QuizProgress(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='quiz_progress')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='progresses')
-    pass_date = models.DateTimeField("Дата прохождения", auto_now_add=True)
+    pass_date = models.DateTimeField(_("Дата прохождения"), auto_now_add=True)
     is_passed = models.BooleanField(default=False)
     score = models.PositiveIntegerField(default=0)
     

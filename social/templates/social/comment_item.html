@@ -57,15 +57,15 @@
     <div class="comment-item {% if comment.parent %}reply-item{% endif %}">
         <p>
             <b>{{ comment.user.username }}</b>
-            &nbsp;|&nbsp;&nbsp;{{ comment.user.get_role_display|lower }}{% if current_course.author == comment.user %}, автор курса{% endif %}
+            &nbsp;|&nbsp;&nbsp;{{ comment.user.get_role_display|lower }}{% if current_course.author == comment.user %}, {% trans "автор курса" %}{% endif %}
         </p>
 
         {% if comment.is_deleted %}
             <p style="color: #64748b; font-style: italic;">
                 {% if comment.deleted_by == comment.user %}
-                    Комментарий удален пользователем
+                    {% trans "Комментарий удален пользователем" %}
                 {% else %}
-                    Комментарий удален администратором
+                    {% trans "Комментарий удален администратором" %}
                 {% endif %}
             </p>
             <small>{{ comment.created_at }}</small>
@@ -77,7 +77,7 @@
                 <button class="reply-btn" 
                         hx-get="{% url 'get_reply_form' current_course.id current_lesson.order_num comment.id %}" 
                         hx-target="#reply-form-{{ comment.id }}">
-                Ответить
+                {% trans "Ответить" %}
                 </button>
                 
                 {% if request.user == comment.user or request.user == current_course.author or request.user.is_superuser %}
@@ -86,9 +86,9 @@
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-post="{% url 'delete_comment' current_course.id current_lesson.order_num comment.id %}"
                         hx-target="#comment-{{ comment.id }}"
-                        hx-confirm="Вы действительно хотите удалить данный комментарий?"
+                        hx-confirm="{% trans 'Вы действительно хотите удалить данный комментарий?' %}"
                         hx-swap="outerHTML">
-                Удалить
+                {% trans "Удалить" %}
                 </button>
                 {% endif %}
             </div>

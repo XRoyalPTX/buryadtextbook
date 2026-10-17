@@ -7,15 +7,15 @@ User = get_user_model()
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label="Логин")
-    password = forms.CharField(label="Пароль", widget=forms.PasswordInput)
+    username = forms.CharField(label=_("Логин"))
+    password = forms.CharField(label=_("Пароль"), widget=forms.PasswordInput)
 
 
 class RegisterForm(UserCreationForm):
-    username = forms.CharField(label="Логин", required=True)
-    first_name = forms.CharField(label="Имя", required=True)
-    last_name = forms.CharField(label="Фамилия", required=True)
-    email = forms.EmailField(label="Электронная почта", required=True)
+    username = forms.CharField(label=_("Логин"), required=True)
+    first_name = forms.CharField(label=_("Имя"), required=True)
+    last_name = forms.CharField(label=_("Фамилия"), required=True)
+    email = forms.EmailField(label=_("Электронная почта"), required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User

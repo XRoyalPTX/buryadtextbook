@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Страница находится в разработке{% endblock %}
+{% block title %}Сэсэн | {% trans "Страница находится в разработке" %}{% endblock %}
 
 {% load static %}
 
@@ -17,10 +17,10 @@
 {% block main %}
 <div class="under-construction-main">
 
-    <h4>Данная страница находится в разработке.<br>Приносим прощения за доставленные неудобства</h4>
+    <h4>{% blocktrans %}Данная страница находится в разработке.<br>Приносим прощения за доставленные неудобства{% endblocktrans %}</h4>
 
     <a href="{{ previous_url }}" class="welcome-container-btn">
-        Вернуться назад
+        {% trans "Вернуться назад" %}
     </a>
 
 </div>

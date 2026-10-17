@@ -18,8 +18,8 @@ class MyUser(AbstractUser):
         ),
         validators=[
             UnicodeUsernameValidator(),
-            MinLengthValidator(3, message="Никнейм должен содержать минимум 3 символа."),
-            MaxLengthValidator(20, message="Никнейм не может быть длиннее 20 символов.")
+            MinLengthValidator(3, message=_("Никнейм должен содержать минимум 3 символа.")),
+            MaxLengthValidator(20, message=_("Никнейм не может быть длиннее 20 символов."))
         ],
         error_messages={
             "unique": _("Пользователь с таким никнеймом уже существует."),
@@ -31,8 +31,8 @@ class MyUser(AbstractUser):
         max_length=50, 
         blank=False,
         validators=[
-            MinLengthValidator(1, message="Имя должно содержать минимум 1 символ."),
-            MaxLengthValidator(50, message="Имя не может быть длиннее 50 символов.")
+            MinLengthValidator(1, message=_("Имя должно содержать минимум 1 символ.")),
+            MaxLengthValidator(50, message=_("Имя не может быть длиннее 50 символов."))
         ]
     )
 
@@ -41,23 +41,23 @@ class MyUser(AbstractUser):
         max_length=50, 
         blank=False,
         validators=[
-            MinLengthValidator(1, message="Фамилия должна содержать минимум 1 символ."),
-            MaxLengthValidator(50, message="Фамилия не может быть длиннее 50 символов.")
+            MinLengthValidator(1, message=_("Фамилия должна содержать минимум 1 символ.")),
+            MaxLengthValidator(50, message=_("Фамилия не может быть длиннее 50 символов."))
         ]
     )
 
-    email = models.EmailField(unique=True, verbose_name="Email")
+    email = models.EmailField(unique=True, verbose_name=_("Email"))
 
     STUDENT = "student"
     EXPERT = "expert"
 
     ROLE_CHOICES = [
-        (STUDENT, 'Студент'),
-        (EXPERT, 'Эксперт'),
+        (STUDENT, _('Студент')),
+        (EXPERT, _('Эксперт')),
     ]
 
-    streak_count = models.PositiveIntegerField("Ударная серия", default=0)
-    last_activity_date = models.DateField("Дата последней активности", default='1900-1-1')
+    streak_count = models.PositiveIntegerField(_("Ударная серия"), default=0)
+    last_activity_date = models.DateField(_("Дата последней активности"), default='1900-1-1')
 
     role = models.CharField(
         max_length=20,

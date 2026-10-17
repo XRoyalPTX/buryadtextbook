@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory, BaseInlineFormSet
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from .models import Quiz, Question, Answer
 
 
@@ -9,8 +10,8 @@ class QuizForm(forms.ModelForm):
         model = Quiz
         fields = ['title', 'description']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название теста'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Описание теста'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Название теста')}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': _('Описание теста')}),
         }
 
 
@@ -19,9 +20,9 @@ class QuestionForm(forms.ModelForm):
         model = Question
         fields = ['text', 'type', 'content']
         widgets = {
-            'text': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Текст вопроса'}),
+            'text': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Текст вопроса')}),
             'type': forms.Select(attrs={'class': 'form-select'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Дополнительный контент (при необходимости)'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': _('Дополнительный контент (при необходимости)')}),
         }
 
 
@@ -43,18 +44,18 @@ class BaseAnswerFormSet(BaseInlineFormSet):
                     correct_count += 1
 
         if filled_forms == 0:
-            raise ValidationError("Добавьте хотя бы один вариант ответа.")
+            raise ValidationError(_("Добавьте хотя бы один вариант ответа."))
 
         question_type = self.instance.type
 
         if question_type == 'single_choice' and correct_count != 1:
             raise ValidationError(
-                f"Для типа 'Один ответ' должен быть выбран ровно 1 верный вариант. Cейчас выбрано: {correct_count}"
+                _("Для типа 'Один ответ' должен быть выбран ровно 1 верный вариант. Cейчас выбрано: %(correct_count)s") % {'correct_count': correct_count}
             )
         
         if question_type == 'multiple_choice' and correct_count == 0:
             raise ValidationError(
-                "Для типа 'Несколько ответов' выберите хотя бы один верный вариант."
+                _("Для типа 'Несколько ответов' выберите хотя бы один верный вариант.")
             )
 
 

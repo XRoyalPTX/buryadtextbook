@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Студия | Курсы{% endblock %}
+{% block title %}Сэсэн | {% trans "Студия" %} | {% trans "Курсы" %}{% endblock %}
 
 {% load static %}
 
@@ -22,14 +22,14 @@
     <div class="welcome-container">
         {% if user == author_user %}
         <div>
-            <h1>Ваша студия эксперта</h1>
-            <p>Добро пожаловать в студию, {{ author_user.username }}. Время творить!</p>
+            <h1>{% trans "Ваша студия эксперта" %}</h1>
+            <p>{% blocktrans with username=author_user.username %}Добро пожаловать в студию, {{ username }}. Время творить!{% endblocktrans %}</p>
         </div>
-        <a href="{% url 'create_course' author_user.username %}">Создать новый курс</a>
+        <a href="{% url 'create_course' author_user.username %}">{% trans "Создать новый курс" %}</a>
         {% else %}
         <div>
-            <h1>Студия пользователя {{ author_user.username }}</h1>
-            <p>Добро пожаловать в студию {{ author_user.username }}. Посмотрим, что же создал данный эксперт?</p>
+            <h1>{% blocktrans with username=author_user.username %}Студия пользователя {{ username }}{% endblocktrans %}</h1>
+            <p>{% blocktrans with username=author_user.username %}Добро пожаловать в студию {{ username }}. Посмотрим, что же создал данный эксперт?{% endblocktrans %}</p>
         </div>
         {% endif %}
     </div>
@@ -40,7 +40,7 @@
                 <div class="stat-card">
                     <div class="stat-card-icon"><img src="{% static 'courses/images/studio_imgs/courses-card-icon.svg' %}"></div>
                     <div class="stat-card-text">
-                        <span>Курсов</span>
+                        <span>{% trans "Курсов" %}</span>
                         <h3>{{ courses.count }}</h3>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="stat-card">
                     <div class="stat-card-icon"><img src="{% static 'courses/images/studio_imgs/tests-card-icon.svg' %}"></div>
                     <div class="stat-card-text">
-                        <span>Тестов</span>
+                        <span>{% trans "Тестов" %}</span>
                         <h3>{{ total_quizzes_count }}</h3>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="stat-card">
                     <div class="stat-card-icon stat-card-icon-like"><img src="{% static 'courses/images/studio_imgs/heart-card-icon.svg' %}"></div>
                     <div class="stat-card-text">
-                        <span>Лайков</span>
+                        <span>{% trans "Лайков" %}</span>
                         <h3>{{ total_like_count }}</h3>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
     <div class="studio-courses">
         {% if courses.count != 0 %}
 
-            <h1>Управление курсами</h1>
+            <h1>{% trans "Управление курсами" %}</h1>
             {% for card in courses %}
                 {% include 'courses/course_card.html' with card=card %}
             {% endfor %}
@@ -77,7 +77,7 @@
         {% else %}
 
         <p style="display: block; margin-bottom: 0; margin-top: 1rem; font-size: 1rem; font-size: 24px;">
-            Ой, тут ничего нет. Видимо, Вы еще не создали ни один курс.
+            {% trans "Ой, тут ничего нет. Видимо, Вы еще не создали ни один курс." %}
         </p>
 
         {% endif %}

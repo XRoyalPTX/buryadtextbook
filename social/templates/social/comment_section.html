@@ -64,7 +64,7 @@
 </style>
 
 <div class="lesson-comments-section">
-    <h3>Комментарии</h3>
+    <h3>{% trans "Комментарии" %}</h3>
 
     <div class="comment-form">
         <form hx-post="{% url 'add_comment' current_course.id current_lesson.order_num %}" 
@@ -72,8 +72,8 @@
               hx-swap="afterbegin" 
               hx-on::after-request="this.reset()">
             {% csrf_token %}
-            <textarea name="text" placeholder="Поделитесь мыслями об уроке..." maxlength="1000" required></textarea>
-            <button type="submit" class="btn-comment">Оставить комментарий</button>
+            <textarea name="text" placeholder="{% trans 'Поделитесь мыслями об уроке...' %}" maxlength="1000" required></textarea>
+            <button type="submit" class="btn-comment">{% trans "Оставить комментарий" %}</button>
         </form>
     </div>
     

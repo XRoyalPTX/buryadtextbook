@@ -20,7 +20,7 @@
 <div class="log-main text-center">
 
     <div class="container log-form text-left">
-    <h3>Вход в аккаунт</h3>
+    <h3>{% trans "Вход в аккаунт" %}</h3>
         <form method="post">
             {% csrf_token %}
 
@@ -48,11 +48,11 @@
 
             {% endfor %}
 
-            <button type="submit" class="log-btn-form">Войти в аккаунт</button>
+            <button type="submit" class="log-btn-form">{% trans "Войти в аккаунт" %}</button>
         </form>
     <br>
-    <small>Забыли пароль? <a href="{% url 'password_reset' %}" class="to-reg-btn">Восстановить</a></small></small><br>
-    <small>Нет аккаунта? <a href="{% url 'register' %}" class="to-reg-btn">Зарегистрироваться</a></small>
+    <small>{% trans "Забыли пароль?" %} <a href="{% url 'password_reset' %}" class="to-reg-btn">{% trans "Восстановить" %}</a></small><br>
+    <small>{% trans "Нет аккаунта?" %} <a href="{% url 'register' %}" class="to-reg-btn">{% trans "Зарегистрироваться" %}</a></small>
 
     </div>
 

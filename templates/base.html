@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
 {% load i18n %}
-<html lang="ru" xmlns="http://www.w3.org/1999/html">
+{% get_current_language as CURRENT_LANG %}
+<html lang="{{ CURRENT_LANG|default:'ru' }}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +52,7 @@
                         hx-vals='{"language": "en", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="Switch to English">
+                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="{% trans 'Switch to English' %}">
                         </a>
                     {% else %}
                         <a href="#" 
@@ -60,13 +61,13 @@
                         hx-vals='{"language": "ru", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="Перейти на русский">
+                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="{% trans 'Перейти на русский' %}">
                         </a>
                     {% endif %}
                 </nav>
             {% else %}
                 <nav class="menu-help-btns">
-                    <a href="{% url 'login' %}" class="log-btn mx-3 {% if request.path == '/login/' %}active{% endif %} {% if request.path == '/register/' %}active{% endif %}">Войти</a>
+                    <a href="{% url 'login' %}" class="log-btn mx-3 {% if request.path == '/login/' %}active{% endif %} {% if request.path == '/register/' %}active{% endif %}">{% trans 'Войти' %}</a>
                     
                     {% get_current_language as LANGUAGE_CODE %}
                     {% if LANGUAGE_CODE == 'ru' %}
@@ -76,7 +77,7 @@
                         hx-vals='{"language": "en", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="Switch to English">
+                        <img src="{% static 'images/ruslang.png' %}" height="24px" width="24px" title="{% trans 'Switch to English' %}">
                         </a>
                     {% else %}
                         <a href="#" 
@@ -85,7 +86,7 @@
                         hx-vals='{"language": "ru", "next": "{{ request.path }}"}'
                         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
                         hx-on::after-request="location.reload()">
-                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="Перейти на русский">
+                        <img src="{% static 'images/englang.png' %}" height="24px" width="24px" title="{% trans 'Перейти на русский' %}">
                         </a>
                     {% endif %}
                     

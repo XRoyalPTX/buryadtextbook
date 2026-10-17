@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Результат теста | {{ progress.quiz.title }}{% endblock %}
+{% block title %}{% trans "Сэсэн" %} | {% trans "Результат теста" %} | {{ progress.quiz.title }}{% endblock %}
 
 {% load static %}
 {% block extrahead %}
@@ -24,15 +24,15 @@
 
             <h2 class="mb-3">
                 {% if progress.is_passed %}
-                    Поздравляем! Вы прошли тест.
+                    {% trans "Поздравляем! Вы прошли тест." %}
                 {% else %}
-                    К сожалению, тест не пройден.
+                    {% trans "К сожалению, тест не пройден." %}
                 {% endif %}
             </h2>
             
             <p>
-                Вы ответили правильно на <b>{{ progress.score }}</b> из <b>{{ total }}</b> вопросов.<br>
-                Для успешного прохождения необходимо набрать минимум 60%.
+                {% blocktrans with score=progress.score total=total %}Вы ответили правильно на <b>{{ score }}</b> из <b>{{ total }}</b> вопросов.{% endblocktrans %}<br>
+                {% trans "Для успешного прохождения необходимо набрать минимум 60%." %}
             </p>
 
         </div>
@@ -40,17 +40,17 @@
         <div class="result-btns">
             {% if progress.is_passed %}
                 <a href="{% url 'open_lesson' current_course.id current_lesson.order_num %}" class="to-lesson-btn" style="margin-bottom: 1rem;">
-                    Вернуться к уроку
+                    {% trans "Вернуться к уроку" %}
                 </a>
                 <a href="{% url 'open_quiz' current_course.id current_lesson.order_num progress.quiz.id %}" class="try-again-btn inactive">
-                    Попробовать еще раз
+                    {% trans "Попробовать еще раз" %}
                 </a>
             {% else %}
                 <a href="{% url 'open_quiz' current_course.id current_lesson.order_num progress.quiz.id %}" class="try-again-btn" style="margin-bottom: 1rem;">
-                    Попробовать еще раз
+                    {% trans "Попробовать еще раз" %}
                 </a>
                 <a href="{% url 'open_lesson' current_course.id current_lesson.order_num %}" class="to-lesson-btn inactive">
-                    Повторить материал
+                    {% trans "Повторить материал" %}
                 </a>
             {% endif %}
         </div>

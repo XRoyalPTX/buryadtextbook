@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Создание урока{% endblock %}
+{% block title %}Сэсэн | {% trans "Редактирование урока" %}{% endblock %}
 
 {% load static %}
 
@@ -17,7 +17,7 @@
 <div class="update-lesson-main">
 
     <div class="container update-lesson-form text-start">
-    <h3>Редактирование урока №{{ order_num }}</h3>
+    <h3>{% trans "Редактирование урока" %} №{{ order_num }}</h3>
         <form method="post">
             {% csrf_token %}
 
@@ -34,10 +34,10 @@
                 {{ field }}
                 <span class="help-text" id="{{ field.id_for_label }}-help">
                     {% if field.name == 'order_num' %}
-                        Не используйте занятые номера уроков.
+                        {% trans "Не используйте занятые номера уроков." %}
                     {% endif %}
                     {% if field.name == 'title' %}
-                        В названии можно ввести максимум 255 символов.
+                        {% trans "В названии можно ввести максимум 255 символов." %}
                     {% endif %}
                 </span>
 
@@ -52,7 +52,7 @@
 
             {% endfor %}
 
-            <button type="submit" class="update-lesson-btn-form">Изменить урок</button>
+            <button type="submit" class="update-lesson-btn-form">{% trans "Изменить урок" %}</button>
         </form>
     </div>
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Курсы{% endblock %}
+{% block title %}Сэсэн | {% trans "Курсы" %}{% endblock %}
 
 {% load static %}
 
@@ -19,8 +19,8 @@
 {% block main %}
 <div class="courses-main text-center">
 
-    <h1 style="font-weight: 600; text-align: left; font-size: 2.5rem;">Доступные курсы</h1>
-    <p style="text-align: left; color: rgb(71, 85, 105); margin-bottom: 2rem;">Откройте курс для просмотра описания и перечня уроков.</p>
+    <h1 style="font-weight: 600; text-align: left; font-size: 2.5rem;">{% trans "Доступные курсы" %}</h1>
+    <p style="text-align: left; color: rgb(71, 85, 105); margin-bottom: 2rem;">{% trans "Откройте курс для просмотра описания и перечня уроков." %}</p>
 
     <div class="row g-3">
 
@@ -29,16 +29,16 @@
             <div class="col-12 col-sm-6 col-md-4" id="course-{{ card.id }}">
                 <div class="course-card">
                     {% if card.status == 'not_begun' %}
-                        <span class="plate not-begun">Не начат</span>
+                        <span class="plate not-begun">{% trans "Не начат" %}</span>
                     {% elif card.status == 'completed' %}
-                        <span class="plate completed">Пройден</span>
+                        <span class="plate completed">{% trans "Пройден" %}</span>
                     {% elif card.status == 'begun' %}
-                        <span class="plate begun">Начат</span>
+                        <span class="plate begun">{% trans "Начат" %}</span>
                     {% endif %}
                     <h2>{{ card.title }}</h2>
-                    <span class="course-author"><small>Автор: {{ card.author.last_name }} {{ card.author.first_name }}</small></span>
+                    <span class="course-author"><small>{% trans "Автор" %}: {{ card.author.last_name }} {{ card.author.first_name }}</small></span>
                     <p>{{ card.description }}</p>
-                    <a href="{% url 'open_course' card.id %}" class="course-btn open-btn">Открыть курс</a>
+                    <a href="{% url 'open_course' card.id %}" class="course-btn open-btn">{% trans "Открыть курс" %}</a>
                 </div>
             </div>
             {% endif %}

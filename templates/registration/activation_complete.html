@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Сэсэн | Аккаунт активирован{% endblock %}
+{% load i18n %}
+{% block title %}Сэсэн | {% trans "Аккаунт активирован" %}{% endblock %}
 
 {% block extrahead %}
 <style>
@@ -13,11 +14,11 @@
 {% block main %}
 <div class="auth-main-container">
     <div class="auth-container text-center">
-        <h3>Успешная активация!</h3>
+        <h3>{% trans "Успешная активация!" %}</h3>
         <br>
-        <p>Ваш Email успешно подтвержден. Теперь профиль активен, и вы можете зайти на платформу.</p>
+        <p>{% trans "Ваш Email успешно подтвержден. Теперь профиль активен, и вы можете зайти на платформу." %}</p>
         <br>
-        <a href="{% url 'login' %}" class="btn-back">Войти в аккаунт</a>
+        <a href="{% url 'login' %}" class="btn-back">{% trans "Войти в аккаунт" %}</a>
     </div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Сэсэн | Урок | {{ current_lesson.title }}{% endblock %}
+{% block title %}Сэсэн | {% trans "Урок" %} | {{ current_lesson.title }}{% endblock %}
 
 {% load static %}
 
@@ -19,16 +19,16 @@
 {% block main %}
 <div class="lesson-main">
 
-    <a href="{% url 'open_course' current_course.id %}" class="to-lessons-btn">К списку уроков</a>
+    <a href="{% url 'open_course' current_course.id %}" class="to-lessons-btn">{% trans "К списку уроков" %}</a>
 
     <div class="lesson-content">
         <div class="lesson-content-header">
             {% if is_lesson_completed %}
-            <span class="plate completed">Пройден</span>
+            <span class="plate completed">{% trans "Пройден" %}</span>
             {% else %}
-            <span class="plate begun">Начат</span>
+            <span class="plate begun">{% trans "Начат" %}</span>
             {% endif %}
-            <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0;">Урок: {{ current_lesson.title }}</h2>
+            <h2 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0;">{% trans "Урок" %}: {{ current_lesson.title }}</h2>
         </div>
 
         <div class="lesson-content-text" id="lesson-content-text">
@@ -42,34 +42,34 @@
             <div class="row g-3">
                 <div class="col-12 col-sm-4">
                     {% if prev_lesson %}
-                    <a href="{% url 'open_lesson' current_course.id prev_lesson.order_num %}" class="lesson-btn lesson-btn-prev-next">Предыдущий урок</a>
+                    <a href="{% url 'open_lesson' current_course.id prev_lesson.order_num %}" class="lesson-btn lesson-btn-prev-next">{% trans "Предыдущий урок" %}</a>
                     {% else %}
-                    <a href="{% url 'open_course' current_course.id %}"  class="lesson-btn lesson-btn-prev-next">Вернуться к курсу</a>
+                    <a href="{% url 'open_course' current_course.id %}"  class="lesson-btn lesson-btn-prev-next">{% trans "Вернуться к курсу" %}</a>
                     {% endif %}
                 </div>
                 <div class="col-12 col-sm-4">
                     {% if not is_lesson_completed %}
                         {% if current_lesson.quiz and current_lesson.quiz.questions.all %}
-                        <a class="lesson-btn-complete" href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}">Пройти тест</a>
+                        <a class="lesson-btn-complete" href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}">{% trans "Пройти тест" %}</a>
                         {% else %}
                         <form method="post" action="{% url 'complete_lesson' current_course.id current_lesson.order_num %}">
                             {% csrf_token %}
-                            <button class="lesson-btn-complete" type="submit">Отметить пройденным</button>
+                            <button class="lesson-btn-complete" type="submit">{% trans "Отметить пройденным" %}</button>
                         </form>
                         {% endif %}
                     {% else %}
                         {% if current_lesson.quiz and current_lesson.quiz.questions.all %}
-                        <a href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}" class="lesson-btn-complete inactive">Перепройти тест</a>
+                        <a href="{% url 'open_quiz' current_course.id current_lesson.order_num current_lesson.quiz.id %}" class="lesson-btn-complete inactive">{% trans "Перепройти тест" %}</a>
                         {% else %}
-                        <a class="lesson-btn-complete inactive">Урок пройден</a>
+                        <a class="lesson-btn-complete inactive">{% trans "Урок пройден" %}</a>
                         {% endif %}
                     {% endif %}
                 </div>
                 <div class="col-12 col-sm-4">
                     {% if next_lesson %}
-                    <a href="{% url 'open_lesson' current_course.id next_lesson.order_num %}"  class="lesson-btn lesson-btn-prev-next">Следующий урок</a>
+                    <a href="{% url 'open_lesson' current_course.id next_lesson.order_num %}"  class="lesson-btn lesson-btn-prev-next">{% trans "Следующий урок" %}</a>
                     {% else %}
-                    <a href="{% url 'open_course' current_course.id %}"  class="lesson-btn lesson-btn-prev-next">Вернуться к курсу</a>
+                    <a href="{% url 'open_course' current_course.id %}"  class="lesson-btn lesson-btn-prev-next">{% trans "Вернуться к курсу" %}</a>
                     {% endif %}
                 </div>
             </div>
